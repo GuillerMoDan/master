@@ -1,0 +1,13 @@
+// Items Additional Database
+//
+// Structure of Database:
+// ID,Name,Name,Type,Price,Sell,Weight,ATK[:MATK],DEF,Range,Slot,Job,Class,Gender,Loc,wLV,eLV[:maxLevel],Refineable,View,{ Script },{ OnEquip_Script },{ OnUnequip_Script }
+//
+
+
+27051,Anubis_&_Teddy_Bear_Card,Anubis & Teddy Bear Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Angel,30; bonus2 bSubRace,RC_Undead,30; },{},{}
+27050,Sky_Petite_&_Penomena_Card,Sky Petite & Penomena Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Dragon,30; bonus2 bSubRace,RC_Formless,30; },{},{}
+27051,Anubis_&_Teddy_Bear_Card,Anubis & Teddy Bear Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Angel,30; bonus2 bSubRace,RC_Undead,30; },{},{}
+27052,Orc_Warrior_&_Rafflesia_Card,Orc Warrior & Rafflesia Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Brute,30; bonus2 bSubRace,RC_Fish,30; },{},{}
+27053,Alnoldi_&_Bigfoot_Card,Alnoldi & Bigfoot Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Plant,30; bonus2 bSubRace,RC_Insect,30; },{},{}
+27054,Khalitzburg_&_Thara_Frog_Card,Khalitzburg & Thara Frog Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_DemiHuman,30; bonus2 bSubRace,RC_Player,30; bonus2 bSubRace,RC_Demon,30;  },{},{}
