@@ -1,0 +1,128 @@
+//======================================================================
+itemmall,191,64,4	script	Card Fuser	542,{
+mes "^DF7401Fuser^000000";
+mes "Hi, my name is Josh!.";
+mes "I'm specialized in fusing some cards.";
+next;
+mes "^DF7401Fuser^000000";
+mes "It's a 5 limited section, but still functional.";
+mes "I will show my available combinations";
+next;
+menu
+"^AC58FASky Petite & Penomena^000000",skap,
+"^DF0101Anubis & Teddy Bear^000000",aatb,
+"^04B404Orc Warrior & Rafflesia^000000",owar,
+"^FE2EF7Alnoldi & Bigfoot^000000",aab,
+"^8A0829Thara Frog & Khalitzburg^000000",tfak,
+"^FF0000Cancel^000000",L_sal;
+
+skap:
+mes "^DF7401Fuser^000000";
+mes "^D358F7Sky Petite & Penomena^000000 card can be merged into a stronger one.";
+mes "This fusion reduce both damage sources from ^6666CCDragon^000000 & ^6666CCFormless^000000 Race, this is mostly used to tank both Nydhogg and it's Dark Shadows summons.";
+next;
+mes "^DF7401Fuser^000000";
+mes "<ITEM>Sky Petite & Penomena<INFO>27050</INFO></ITEM>.";
+next;
+if( countitem(4314) < 1 || countitem(4120) < 1) callsub Falta;
+emotion ET_HUK;
+npctalk "Seems that you have all to perform this fusion!.";
+progressbar "ffff00",2;
+specialeffect 101;
+sleep2 500;
+specialeffect2 106;
+delitem 4314,1;
+delitem 4120,1;
+getitem 27050,1;
+end;
+
+aatb:
+mes "^DF7401Fuser^000000";
+mes "Anubis & Teddy Bear, this";
+mes "fusion, reduces damage received from ^6666CCAngel^000000 & ^6666CCUndead^000000 race monsters.";
+next;
+mes "^DF7401Fuser^000000";
+mes "<ITEM>Anubis & Teddy Bear<INFO>27051</INFO></ITEM>.";
+next;
+if( countitem(4138) < 1 || countitem(4340) < 1) callsub Falta;
+emotion ET_HUK;
+npctalk "Seems that you have all to perform this fusion!.";
+progressbar "ffff00",2;
+specialeffect 101;
+sleep2 500;
+specialeffect2 106;
+delitem 4138,1;
+delitem 4340,1;
+getitem 27051,1;
+end;
+
+owar:
+mes "^DF7401Fuser^000000";
+mes "Orc Warrior & Rafflesia, this fusion, reduces received damage from ^6666CCBrute^000000 & ^6666CCFish^000000 monsters. Can be usefull in malangdo memorial dungeons.";
+next;
+mes "^DF7401Fuser^000000";
+mes "<ITEM>Orc Warrior & Rafflesia<INFO>27052</INFO></ITEM>.";
+next;
+if( countitem(4066) < 1 || countitem(4083) < 1) callsub Falta;
+emotion ET_HUK;
+npctalk "Seems that you have all to perform this fusion!.";
+progressbar "ffff00",2;
+specialeffect 101;
+sleep2 500;
+specialeffect2 106;
+delitem 4066,1;
+delitem 4083,1;
+getitem 7539,3;
+getitem 27052,1;
+end;
+
+aab:
+mes "^DF7401Fuser^000000";
+mes "Alnoldi & Bigfoot card, this fusion reduces incoming damage from ^6666CCPlant^000000 &^6666CCInsect^000000 Races.";
+next;
+mes "^DF7401Fuser^000000";
+mes "<ITEM>Alnoldi & Bigfoot<INFO>27053</INFO></ITEM>.";
+next;
+if( countitem(4074) < 1 || countitem(4515) < 1) callsub Falta;
+emotion ET_HUK;
+npctalk "Seems that you have all to perform this fusion!.";
+progressbar "ffff00",2;
+specialeffect 101;
+sleep2 500;
+specialeffect2 106;
+delitem 4074,1;
+delitem 4515,1;
+getitem 27053,1;
+end;
+
+tfak:
+mes "^DF7401Fuser^000000";
+mes "^8A0829Khalitzburg & Thara Frog^000000, this fusion reduce the damage received from ^6666CCDemihuman^000000 & ^6666CCDemon^000000 Races, this card can be very usefull in Bio Labs & Geffenia.";
+next;
+mes "^DF7401Fuser^000000";
+mes "<ITEM>Khalitzburg & Thara Frog<INFO>27054</INFO></ITEM>.";
+next;
+if( countitem(4136) < 1 || countitem(4515) < 1) callsub Falta;
+emotion ET_HUK;
+npctalk "Seems that you have all to perform this fusion!.";
+progressbar "ffff00",2;
+specialeffect 101;
+sleep2 500;
+specialeffect2 106;
+delitem 4136,1;
+delitem 4058,1;
+getitem 7539,3;
+getitem 27054,1;
+end;
+
+
+Falta:
+mes "^DF7401Fuser^000000";
+mes "Cards are missing for your choice, check your items.";
+end;
+
+L_sal:
+mes "^DF7401Fuser^000000";
+mes "Good Luck.";
+close;
+}
