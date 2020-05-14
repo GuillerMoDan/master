@@ -1,0 +1,1699 @@
+//=-=-=-=-=-=-=-= Script For Party Ro =-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-= CUSTOM EXCLUSSIVE ZONE FOR PORING =-=-=-=-=-=-=-=
+//-----Modified poring_w01 map-----
+//-----Added Poring Roulette--------------------
+//-----Added Poring Tematic Headgear quests--------------------
+//-----Added Claw n' Shits Doll Grabber Machine, Cutin Based Script-------------
+//-----Added King Poring Summon Quest--------------------
+//-----Added Event Poring Special Fields WARPER 1Hour duration--------------------
+//-----Added Sweet Poring Coins Festival Exchanger NPC--------------------
+
+-	script	PoringSlotsCh	-1,{
+	end;
+
+OnInit:
+	set $PSItem,7539;
+	set $PSre,7539; //Prize
+	set $NMItem,1;
+	end;
+}
+
+poring_w01,74,78,6	duplicate(PoringSlotsCh)	PoringSlots#01	1002
+poring_w01,76,78,6	duplicate(PoringSlotsCh)	PoringSlots#02	1002
+poring_w01,78,78,6	duplicate(PoringSlotsCh)	PoringSlots#03	1031
+poring_w01,80,78,6	duplicate(PoringSlotsCh)	PoringSlots#04	1113
+poring_w01,82,78,6	duplicate(PoringSlotsCh)	PoringSlots#05	1002
+poring_w01,84,78,6	duplicate(PoringSlotsCh)	PoringSlots#06	950
+poring_w01,86,78,6	duplicate(PoringSlotsCh)	PoringSlots#07	1002
+poring_w01,88,78,6	duplicate(PoringSlotsCh)	PoringSlots#08	1096
+poring_w01,90,78,6	duplicate(PoringSlotsCh)	PoringSlots#09	1002
+poring_w01,92,78,6	duplicate(PoringSlotsCh)	PoringSlots#10	1113
+
+poring_w01,92,76,6	duplicate(PoringSlotsCh)	PoringSlots#11	1031
+poring_w01,92,74,6	duplicate(PoringSlotsCh)	PoringSlots#12	1031
+poring_w01,92,72,6	duplicate(PoringSlotsCh)	PoringSlots#13	1002
+poring_w01,92,70,6	duplicate(PoringSlotsCh)	PoringSlots#14	1113
+
+poring_w01,92,68,6	duplicate(PoringSlotsCh)	PoringSlots#15	1002
+poring_w01,90,68,6	duplicate(PoringSlotsCh)	PoringSlots#16	1031
+poring_w01,88,68,6	duplicate(PoringSlotsCh)	PoringSlots#17	1002
+poring_w01,86,68,6	duplicate(PoringSlotsCh)	PoringSlots#18	1113
+poring_w01,84,68,6	duplicate(PoringSlotsCh)	PoringSlots#19	1002
+poring_w01,82,68,6	duplicate(PoringSlotsCh)	PoringSlots#20	950
+poring_w01,80,68,6	duplicate(PoringSlotsCh)	PoringSlots#21	1002
+poring_w01,78,68,6	duplicate(PoringSlotsCh)	PoringSlots#22	1031
+poring_w01,76,68,6	duplicate(PoringSlotsCh)	PoringSlots#23	1113
+poring_w01,74,68,6	duplicate(PoringSlotsCh)	PoringSlots#24	1002
+
+poring_w01,74,70,6	duplicate(PoringSlotsCh)	PoringSlots#25	1388 
+poring_w01,74,72,6	duplicate(PoringSlotsCh)	PoringSlots#26	1113
+poring_w01,74,74,6	duplicate(PoringSlotsCh)	PoringSlots#27	1002
+poring_w01,74,76,6	duplicate(PoringSlotsCh)	PoringSlots#28	1096
+
+poring_w01,74,78,6	script	PoringSlotsPoint	2248,1,1,{}
+
+-	script	PoringSlotsSetter	-1,{
+
+OnInit:
+								//--TOP					//--RIGHT					//BOTTOM						//LEFT
+	setarray $PoringSlotsX,74,76,78,80,82,84,86,88,90,	92,92,92,92,92,		92,90,88,86,84,82,80,78,76,74,		74,74,74,74,74;
+	setarray $PoringSlotsY,78,78,78,78,78,78,78,78,78,	78,76,74,72,70,		68,68,68,68,68,68,68,68,68,68,		70,72,74,76,78;
+
+
+	set $@PoringSlotsPlaying,	0;
+	set $@PoringSlotsRunning,	0;
+
+	donpcevent "PoringSlotsChoose#01::OnResetRoom";
+	donpcevent "PoringSlotsChoose#02::OnResetRoom";
+	donpcevent "PoringSlotsChoose#03::OnResetRoom";
+	donpcevent "PoringSlotsChoose#04::OnResetRoom";
+	donpcevent "PoringSlotsChoose#05::OnResetRoom";
+	end;
+}
+
+poring_w01,82,73,6	script	Poring Slots Play	693,{
+
+	mes "[ Poring Slots Play ]";
+	mes "Bienvenido a la ruleta poring";
+	mes "Antes de girar la ruleta, procura hacer tus apuestas ok? ";
+	mes "- Se cobra [ ^9900FF" +$NMItem+ "^000000 ] ^00AA55"+getitemname($PSItem)+"^000000 por lanzamiento.";
+	next;
+	if(select("- Girar la Ruleta","- Cancelar")==2)
+		close;
+	if($@PoringSlotsPlaying==1){
+		mes "[ Poring Slots Play ]";
+		mes "Ya hay un lanzamiento en fila. Debes esperar que termine para iniciar otro.";
+		close;
+	}
+	if(countitem($PSItem)<$NMItem){
+		mes "[ Poring Slots Play ]";
+		mes " No tienes la cantidad necesaria de monedas para girar la ruleta.";
+		close;
+	}
+	delitem $PSItem,$NMItem;
+	mes "[ Poring Slots Play ]";
+	mes "Comenzamos..";
+	donpcevent "Poring Slots Play::OnPoringSlotsAnnounce";
+	close;
+
+OnPoringSlotsAnnounce:
+	set $@PoringSlotsPlaying,1;
+	mapannounce "poring_w01","[ PoringSlots ] : Atencion a todos, la ruleta va a dar inicio en 1 Minuto a partir de este momento.",bc_map;
+	
+	sleep 20000;
+	npctalk "La ruleta va a girar dentro 40 segundos, vayan cerrando sus apuestas.";
+	sleep 20000;
+	npctalk "Dentro de poco iniciara el lanzamiento! quedan 20 Segundos";
+	sleep 5000;
+	npctalk "15 segundos restantes para el lanzamiento dela ruleta Poring.";
+	sleep 5000;
+	npctalk "Inicia el conteo regresivo de 10 segundos.";
+	sleep 1000; npctalk "9";
+	sleep 1000; npctalk "8";
+	sleep 1000; npctalk "7";
+	sleep 1000; npctalk "6";
+	sleep 1000; npctalk "5";
+	sleep 1000; npctalk "4";
+	sleep 1000; npctalk "3";
+	sleep 1000; npctalk "2";
+	sleep 1000; npctalk "1";
+	sleep 1000; npctalk "It's Show Time!!";	
+	donpcevent "Poring Slots Play::OnPoringSlotsPlaying";
+	end;
+
+OnPoringSlotsPlaying:
+	set $@PoringSlotsRunning,1;
+	set $PoringSlotsRound,$PoringSlotsRound+1;
+	set $@PoringSlotsSpeed,10;
+		for(set $@PoringSlotsRound,0;$@PoringSlotsRound<8;set $@PoringSlotsRound,$@PoringSlotsRound+1){
+			set $@PoringSlotsTemp,rand(20,40);
+			for(set $@i,0;$@i<$@PoringSlotsTemp;set $@i,$@i+1){
+				movenpc "PoringSlotsPoint",$PoringSlotsX[$@PoringSlotsPoint],$PoringSlotsY[$@PoringSlotsPoint];
+				set $@PoringSlotsPoint,$@PoringSlotsPoint+1;
+				if($@PoringSlotsPoint>=28)
+				set $@PoringSlotsPoint,0;
+				sleep $@PoringSlotsSpeed;
+			}
+			set $@PoringSlotsSpeed,$@PoringSlotsSpeed+10;
+		}
+	set $@PoringSlotsTemp,rand(5,10);
+		for(set $@i,0;$@i<$@PoringSlotsTemp;set $@i,$@i+1){
+			movenpc "PoringSlotsPoint",$PoringSlotsX[$@PoringSlotsPoint],$PoringSlotsY[$@PoringSlotsPoint];
+			set $@PoringSlotsPoint,$@PoringSlotsPoint+1;
+			if($@PoringSlotsPoint>=28)
+			set $@PoringSlotsPoint,0;
+			set $@PoringSlotsSpeed,$@PoringSlotsSpeed+100;
+			sleep $@PoringSlotsSpeed;
+		}
+	set $@PoringSlotsTemp,rand(8,15);
+		for(set $@i,0;$@i<$@PoringSlotsTemp;set $@i,$@i+1){
+			movenpc "PoringSlotsPoint",$PoringSlotsX[$@PoringSlotsPoint],$PoringSlotsY[$@PoringSlotsPoint];
+			set $@PoringSlotsPoint,$@PoringSlotsPoint+1;
+			if($@PoringSlotsPoint>=28)
+			set $@PoringSlotsPoint,0;
+			set $@PoringSlotsSpeed,$@PoringSlotsSpeed+150;
+			sleep $@PoringSlotsSpeed;
+		}
+	switch($@PoringSlotsPoint)
+	{
+		case 6:case 20:
+			set $FSC_Win,0;break;
+		case 1:case 2:case 5:case 7:case 9:case 12:case 13:case 15:case 17:case 19:case 21:case 24:case 27:
+			set $FSC_Win,1;break;
+		case 4:case 10:case 14:case 18:case 23:case 26:
+			set $FSC_Win,2;break;
+		case 3:case 11:case 16:case 22:
+			set $FSC_Win,3;break;
+		case 8:case 0:
+			set $FSC_Win,4;break;
+		case 25:
+			set $FSC_Win,5;break;
+	}
+	specialeffect 577;
+	if($FSC_Win==0) { npctalk "Ups.. se detuvo en un Ghostring"; sleep 1000; npctalk "Todos Pierden... Muahaha!!!"; }
+	if($FSC_Win==1) { npctalk "La ruleta se detuvo en Poring, Aquel que aposto al poring ha ganado del doble de la inversion!"; sleep 1000; npctalk "Quien haya ganado, retire su premio!"; }
+	if($FSC_Win==2) { npctalk "La ruleta se detuvo en Drops, Aquel que aposto al Drops, ganaria el Triple de la Inversion"; sleep 1000; npctalk "Quien haya ganado, retire su premio!"; }
+	if($FSC_Win==3) { npctalk "La ruleta se detuvo en Poporing"; sleep 1000; npctalk "Gana x 5 tu inversion"; sleep 1000; npctalk "Retiren su premio si han ganado!"; }
+	if($FSC_Win==4) { npctalk "La ruleta se detuvo en el exquisito Angeling.. multiplicando la inversion x9"; sleep 1000; npctalk "El feliz ganador puede retirar su botin!"; }
+	if($FSC_Win==5) { npctalk "Oh por Dios, La ruleta se detuvo en el el Arch Angeling..."; sleep 1000; npctalk "Quien haya apostado al Arch Angeling habra multiplicado » 17 Veces lo que invirtio!!";}
+
+	donpcevent "PoringSlotsChoose#01::OnResetRoom";
+	donpcevent "PoringSlotsChoose#02::OnResetRoom";
+	donpcevent "PoringSlotsChoose#03::OnResetRoom";
+	donpcevent "PoringSlotsChoose#04::OnResetRoom";
+	donpcevent "PoringSlotsChoose#05::OnResetRoom";
+	donpcevent "PoringSlotsChoose#0"+$FSC_Win+"::OnEffect";
+	set $@PoringSlotsPlaying,0;
+	set $@PoringSlotsRunning,0;
+	end;
+}
+
+function	script	FuncPoringSlotsChoose	{
+
+	if($@PoringSlotsRunning==1){
+		mes "[ Poring Slots Play ]";
+		mes "- Hay un juego en proceso";
+		mes "- debes esperar que termine para volver a apostar.";
+		close;
+		end;
+	}
+
+	set .@FSC_Poring,getarg(0);
+	set .@FSC_GetPoint,getarg(1);
+
+	if(getd("FSC_Coin"+.@FSC_Poring)>0){
+		if(getd("PoringSlotsRound"+.@FSC_Poring)==$PoringSlotsRound-1&&.@FSC_Poring==$FSC_Win){
+			set .@FSC_Temp,getd("FSC_Coin"+.@FSC_Poring)*.@FSC_GetPoint;
+			getitem $PSRe,.@FSC_Temp;
+			specialeffect2 18;
+			setd "FSC_Coin"+.@FSC_Poring,0;
+			mes "[ Poring Slots Play ]";
+			mes "- Ganaste la bolsa de ^00AA55"+getitemname($PSRe)+"^000000";
+			mes "- Premio [ ^AA3366"+.@FSC_Temp+"^000000 ]";
+			close;
+		}
+	}
+	mes "[ Poring Slots Play ]";
+	mes "Deseas apostar ^00AA55"+getitemname($PSItem)+"^000000?";
+	mes "- Ganaras ^0000FF"+getitemname($PSRe)+" * "+.@FSC_GetPoint+"^000000 ";
+	if(getd("FSC_Coin"+.@FSC_Poring)!=0&&getd("PoringSlotsRound"+.@FSC_Poring)==$PoringSlotsRound){
+		mes "- La bolsa actual es [ ^AA3333"+getd("FSC_Coin"+.@FSC_Poring)+"^000000 ]";
+		mes "- Habla conmigo despues de girar y te entregare tu premio.";
+		close;
+	}
+	mes "^FF0000Consejos:^000000";	
+	mes "El stack maximo es de ^FF000030,000 Coins^000000";
+	mes "Conserva monedas para pagar el lanzamiento.";
+	next;
+	input .@FSC_Input;
+	mes "[ Poring Slots Play ]";
+	mes "- Haz ingresado [ ^2236BB"+.@FSC_Input+"^000000 ] unidades.";
+	next;
+	if(select("- Confirmar","- Cambie de idea")==2)
+		close;
+	if(countitem($PSItem)<.@FSC_Input){
+		mes "[ Poring Slots Play ]";
+		mes "No tienes suficientes  [ ^2236BB"+getitemname($PSItem)+"^000000 ] para la cantidad que elegiste.";
+		close;
+		return;
+	}
+	if(.@FSC_Input==0){
+		mes "[ Poring Slots Play ]";
+		mes "Debes apostar como minimo ^0000FF1^000000 moneda..";
+		close;
+		return;
+	}
+	delitem $PSItem,.@FSC_Input;
+	setd "FSC_Coin"+.@FSC_Poring,.@FSC_Input;
+	delwaitingroom "PoringSlotsChoose#0"+.@FSC_Poring;
+	setd "$FSC_Coin"+.@FSC_Poring,getd("$FSC_Coin"+.@FSC_Poring)+.@FSC_Input;
+	setd "$FSC_Player"+.@FSC_Poring,getd("$FSC_Player"+.@FSC_Poring)+1;
+	waitingroom "Bets ["+getd("$FSC_Player"+.@FSC_Poring)+"] Inv ["+getd("$FSC_Coin"+.@FSC_Poring)+"]",0;
+	setd "PoringSlotsRound"+.@FSC_Poring,$PoringSlotsRound;
+	mes "[ Poring Slots Play ]";
+	mes "Tu apuesta ha sido registrada, todavia puedes apostar a otros porings o lanzar la ruleta.";
+	mes "Buena suerte.";
+	close;
+	return;
+}
+
+poring_w01,96,80,4	script	PoringSlotsChoose#01	1002,{
+	callfunc("FuncPoringSlotsChoose",1,2);
+end;
+OnEffect:
+	for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){
+		specialeffect 377;
+		sleep 800;
+		}
+	end;
+OnResetRoom:
+	delwaitingroom "PoringSlotsChoose#01";
+	set $FSC_Coin1,0;
+	set $FSC_Player1,0;
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+OnInit:
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+}
+
+poring_w01,96,75,4	script	PoringSlotsChoose#02	1113,{
+	callfunc("FuncPoringSlotsChoose",2,3);
+end;
+OnEffect:
+	for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){
+		specialeffect 377;
+		sleep 800;
+		}
+	end;
+OnResetRoom:
+	delwaitingroom "PoringSlotsChoose#02";
+	set $FSC_Coin2,0;
+	set $FSC_Player2,0;
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+OnInit:
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+}
+
+poring_w01,96,70,4	script	PoringSlotsChoose#03	1031,{
+	callfunc("FuncPoringSlotsChoose",3,5);
+end;
+OnEffect:
+	for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){
+		specialeffect 377;
+		sleep 800;
+		}
+	end;
+OnResetRoom:
+	delwaitingroom "PoringSlotsChoose#03";
+	set $FSC_Coin3,0;
+	set $FSC_Player3,0;
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+OnInit:
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+}
+
+poring_w01,101,72,4	script	PoringSlotsChoose#04	1096,{
+	callfunc("FuncPoringSlotsChoose",4,9);
+end;
+OnEffect:
+	for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){
+		specialeffect 377;
+		sleep 800;
+		}
+	end;
+OnResetRoom:
+	delwaitingroom "PoringSlotsChoose#04";
+	set $FSC_Coin4,0;
+	set $FSC_Player4,0;
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+OnInit:
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+}
+
+poring_w01,101,77,4	script	PoringSlotsChoose#05	1388 ,{
+	callfunc("FuncPoringSlotsChoose",5,17);
+	end;
+OnEffect:
+	for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){
+		specialeffect 377;
+		sleep 800;
+		}
+	end;
+OnResetRoom:
+	delwaitingroom "PoringSlotsChoose#05";
+	set $FSC_Coin5,0;
+	set $FSC_Player5,0;
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+OnInit:
+	waitingroom"Bets [0] $ [0]",0;
+	end;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------Jumping Poring Hat----------------------
+poring_w01,92,120,6	script	Jumping Poring	909,{
+
+mes "^6600CCSmall Poring^000000";
+mes "Hola "+strcharinfo(0)+", quieres elaborar un <ITEM>Jumping Poring<INFO>5640</INFO></ITEM>.?";
+mes "Este hat es base para crear otros hats con los Npc de esta zona.";
+next;
+mes "^6600CCSmall Poring^000000";
+mes "Tambien puedo transformar el Jumping Poring Hat a un Costume Rainbow Jumping Poring que podras ver en el menu.";
+next;
+mes "^6600CCSmall Poring^000000";
+mes "Para hacer el jumping poring necesitas:";
+mes "- 1 Poring Egg"; // 9001
+mes "- 1 4leaf clover"; // 706
+mes "- 100 Jellopy"; // 909
+mes "- 1,000,000 Zeny";
+next;
+menu
+"^088A08Jumping Poring^000000",jump,
+"^04B4AECostume Rainbow Poring Hat^000000",cosjump,
+"^FF0080Costume Poring in Shoulder^000000",poshold,
+"^F00000Cancelar^000000",L_sal;
+
+jump:
+mes "^6600CCSmall Poring^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(9001) < 1 || countitem(706) < 1 || countitem(909) <100) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 9001,1;
+delitem 706,1;
+delitem 909,100;
+set Zeny,Zeny-1000000;
+specialeffect2 18;
+getitem 7539,1;
+getitem 5640,1;
+
+mes "^6600CCSmall Poring^000000";
+mes "Aqui tienes tu nuevo Hat!";
+end;
+
+cosjump:
+mes "^6600CCSmall Poring^000000";
+mes "Cambiare el Jumping Poring que tengas a un Costume Rainbow Jumping Poring Hat, esta accion no se podra revertir";
+mes "<ITEM>Costume Rainbow Poring Hat<INFO>19676</INFO></ITEM>.";
+next;
+mes "^6600CCSmall Poring^000000";
+mes "para esto necesitare el hat y 1 de cada piedra elemental:";
+mes "- 1 Jumping Poring"; // 5640
+mes "- 1 Flame Heart"; //994
+mes "- 1 Mystic Frozen"; //995
+mes "- 1 Rough Wind"; //996
+mes "- 1 Great Nature"; //997
+next;
+mes "^6600CCSmall Poring^000000";
+mes "Veamos si tienes todo!.";
+next;
+
+if( countitem(5640) < 1 || countitem(994) < 1 || countitem(995) <1 || countitem(996) <1 || countitem(997) <1) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5640,1;
+delitem 994,1;
+delitem 995,1;
+delitem 996,1;
+delitem 997,1;
+specialeffect2 18;
+getitem 19676,1;
+
+mes "^6600CCSmall Poring^000000";
+mes "Aqui tienes costume arcoiris, no hay devoluciones,!";
+end;
+
+poshold:
+mes "^6600CCSmall Poring^000000";
+mes "Cambiare el Jumping Poring que tengas a un Costume Poring in Shoulder, esta accion no se podra revertir";
+mes "<ITEM>Costume Poring in Shoulder<INFO>31688</INFO></ITEM>.";
+next;
+mes "^6600CCSmall Poring^000000";
+mes "para esto necesitare el Jumping poring Hat";
+mes "- 1 Jumping Poring"; // 5640
+
+next;
+mes "^6600CCSmall Poring^000000";
+mes "Veamos si tienes todo!.";
+next;
+if( countitem(5640) < 1) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5640,1;
+
+specialeffect2 18;
+getitem 31688,1;
+
+mes "^6600CCSmall Poring^000000";
+mes "Aqui tienes tu poring miniatura, ya sabes.. no hay devoluciones,!";
+end;
+
+
+Faltaz:
+mes "^6600CCSmall Poring^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCSmall Poring^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCSmall Poring^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------Poring Cake Hat----------------------
+poring_w01,104,98,4	script	Poring Hats	1090,{
+
+mes "^6600CCMastering^000000";
+mes "Conmigo puedes crear hats con tematica de fiesta";
+mes "De momento puedo crear:";
+mes "<ITEM>Poring Cake Hat (1)<INFO>5590</INFO></ITEM>.";
+mes "y";
+mes "<ITEM>Poring Party Hat<INFO>5318</INFO></ITEM>.";
+next;
+menu
+"^088A08Poring Cake Hat^000000",poch,"^FA58F4Poring Party Hat^000000",pph,"^F00000Cancelar^000000",L_sal;
+
+//--cake hat--
+poch:
+mes "^6600CCMastering^000000";
+mes "Para el ^088A08Poring Cake Hat^000000 voy a necesitar:";
+mes "- 50 Peaked Hat"; // 6021
+mes "- 1 Jumping Poring"; // 5640
+mes "- 1 Cake Hat"; // 5024
+mes "- 2,000,000 Zeny";
+next;
+mes "^6600CCMastering^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 2000000 ) goto Faltaz;
+if( countitem(5024) < 1 || countitem(6021) < 50 || countitem(5640) <1) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5024,1;
+delitem 6021,50;
+delitem 5640,1;
+set Zeny,Zeny-2000000;
+specialeffect2 18;
+getitem 7539,3;
+getitem 5590,1;
+mes "^6600CCMastering^000000";
+mes "Aqui tienes tu Poring Cake Hat y algo de mi parte!";
+end;
+
+//--party poring--
+pph:
+mes "^6600CCMastering^000000";
+mes "Para el ^FA58F4Poring Party Hat^000000 voy a necesitar:";
+mes "- 1 Wrapping Paper ID(7175)"; //7115
+mes "- 50 Peaked Hat"; // 6021
+mes "- 1 Jumping Poring"; // 5640
+mes "- 1,000,000 Zeny";
+next;
+mes "^6600CCMastering^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(7115) < 1 || countitem(6021) < 50 || countitem(5640) <1) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 7115,1;
+delitem 6021,50;
+delitem 5640,1;
+set Zeny,Zeny-2000000;
+specialeffect2 18;
+getitem 7539,1;
+getitem 5318,1;
+mes "^6600CCMastering^000000";
+mes "Aqui tienes tu nuevo Poring Fiestero!";
+end;
+
+Faltaz:
+mes "^6600CCMastering^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCMastering^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCMastering^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------Poring Beret----------------------
+poring_w01,124,96,4	script	Poring Beret	3620,{
+
+mes "^6600CCNeko Ring^000000";
+mes "Hola "+strcharinfo(0)+", quieres elaborar un <ITEM>Poring Beret?<INFO>31667</INFO></ITEM>.?";
+mes "Este hat Tiene 1 Slot.";
+next;
+
+mes "^6600CCNeko Ring^000000";
+mes "Para hacerlo necesitas:";
+mes "- 1 Jumping Poring"; // 5640
+mes "- 1 Fearther Beret"; // 5170
+mes "- 1000 Fur"; // 6020
+mes "- 1 Scarlet Dyestuffs"; // 975
+mes "- 1 White Dyestuffs"; // 982
+mes "- 1 Violet Dyestuffs"; // 981
+mes "- 10,000,000 Zeny";
+
+
+next;
+menu
+"^088A08Poring Beret^000000",pober,"^F00000Cancelar^000000",L_sal;
+
+pober:
+mes "^6600CCNeko Ring^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(5640) < 1 || countitem(5170) < 1 || countitem(975) <1 || countitem(981) <1 || countitem(982) <1 || countitem(6020) <1000) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5640,1;
+delitem 5170,1;
+delitem 6020,1000;
+delitem 975,1;
+delitem 981,1;
+delitem 982,1;
+set Zeny,Zeny-10000000;
+specialeffect2 18;
+getitem 7539,5;
+getitem 31667,1;
+
+mes "^6600CCNeko Ring^000000";
+mes "Aqui tienes tu nuevo Hat! Felicidades.!";
+announce ""+strcharinfo(0)+" ha creado un Poring Beret.",bc_all,0xFFFF00;
+end;
+
+Faltaz:
+mes "^6600CCNeko Ring^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCNeko Ring^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCNeko Ring^000000";
+mes "Hasta pronto.";
+close;
+}
+
+
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------Small Poring Band----------------------
+poring_w01,111,98,6	script	Small Poring Band	3206,{
+mes "^6600CCSmall Poring^000000";
+mes "Conmigo puedes crear porings saltarines!";
+next;
+menu
+"^0000FFSmall Poring Band^000000",spb,"^F00000Cancelar^000000",L_sal;
+
+
+spb:
+mes "^6600CCSmall Poring^000000";
+mes "Para el <ITEM>Small Poring Band (1)<INFO>18841</INFO></ITEM> voy a necesitar:";
+mes "- 3 Costume Poring in Shoulder, se pueden hacer con el NPC Jumping Poring Hat.";
+mes "- 1,000,000 Zeny";
+next;
+
+mes "^6600CCSmall Poring^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(31688) < 3 ) callsub Falta;
+specialeffect 101;
+progressbar "ffff00",1;
+delitem 31688,3;
+set Zeny,Zeny-1000000;
+specialeffect2 18;
+getitem 7539,1;
+getitem 18841,1;
+mes "^6600CCSmall Poring^000000";
+mes "Aqui tienes tu hermoso Small Poring Band!";
+end;
+
+Faltaz:
+mes "^6600CCSmall Poring^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCSmall Poring^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCSmall Poring^000000";
+mes "Hasta pronto.";
+close;
+}
+
+
+
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------Poring Clips----------------------
+poring_w01,86,115,6	script	Poring Clips	3790,{
+
+mes "^6600CCSweet Drops^000000";
+mes "Conmigo puedes crear poring clips de colores. Cada color otorgara un stat diferente!";
+next;
+menu
+"^FF8000Yellow Poring Hairpin^000000",yph,"^FA58F4Poring Hairpin^000000",pohai,"^0B610BGreen Poring Hairpin^000000",popoh,"^0000FFBlue Poring Hairpin^000000",bph,"^F00000Cancelar^000000",L_sal;
+
+//--drops hairpin--
+yph:
+mes "^6600CCSweet Drops^000000";
+mes "Para el <ITEM>Yellow Poring Hairpin (1)<INFO>18632</INFO></ITEM> voy a necesitar:";
+mes "- 1 Clip (1)"; // 2607
+mes "- 1 Drops Card"; // 4004
+mes "- 1,000,000 Zeny";
+next;
+
+mes "^6600CCSweet Drops^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(2607) < 1 || countitem(4004) <1) callsub Falta;
+specialeffect 101;
+progressbar "ffff00",1;
+delitem 2607,1;
+delitem 4004,1;
+set Zeny,Zeny-1000000;
+specialeffect2 18;
+getitem 7539,1;
+getitem 18632,1;
+mes "^6600CCSweet Drops^000000";
+mes "Aqui tienes tu hermoso Drops Clip!";
+end;
+
+//--poring hairpin--
+pohai:
+mes "^6600CCSweet Drops^000000";
+mes "Para el <ITEM>Poring Hairpin (1)<INFO>18633</INFO></ITEM> voy a necesitar:";
+mes "- 1 Clip (1)"; // 2607
+mes "- 1 Poring Card"; // 4001
+mes "- 1,000,000 Zeny";
+next;
+mes "^6600CCSweet Drops^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(2607) < 1 || countitem(4001) <1) callsub Falta;
+specialeffect 101;
+progressbar "ffff00",1;
+delitem 2607,1;
+delitem 4001,1;
+set Zeny,Zeny-1000000;
+specialeffect2 18;
+getitem 7539,1;
+getitem 18633,1;
+mes "^6600CCSweet Drops^000000";
+mes "Aqui tienes tu hermoso Poring Hair Clip!";
+end;
+
+//--PoPoring hairpin--
+popoh:
+mes "^6600CCSweet Drops^000000";
+mes "Para el <ITEM>PoPoring Hairpin (1)<INFO>18634</INFO></ITEM> voy a necesitar:";
+mes "- 1 Clip (1)"; // 2607
+mes "- 1 PoPoring Card"; // 4033
+mes "- 1,000,000 Zeny";
+next;
+mes "^6600CCSweet Drops^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(2607) < 1 || countitem(4033) <1) callsub Falta;
+specialeffect 101;
+progressbar "ffff00",1;
+delitem 2607,1;
+delitem 4033,1;
+set Zeny,Zeny-1000000;
+specialeffect2 18;
+getitem 7539,1;
+getitem 18634,1;
+mes "^6600CCSweet Drops^000000";
+mes "Aqui tienes tu hermoso PoPoring Hair Clip!";
+end;
+
+
+//--Marin hairpin--
+bph:
+mes "^6600CCSweet Drops^000000";
+mes "Para el <ITEM>Blue Poring Hairpin (1)<INFO>18635</INFO></ITEM> voy a necesitar:";
+mes "- 1 Clip (1)"; // 2607
+mes "- 1 Marin Card"; // 4196
+mes "- 1,000,000 Zeny";
+next;
+mes "^6600CCSweet Drops^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(2607) < 1 || countitem(4196) <1) callsub Falta;
+specialeffect 101;
+progressbar "ffff00",1;
+delitem 2607,1;
+delitem 4196,1;
+set Zeny,Zeny-1000000;
+specialeffect2 18;
+getitem 7539,1;
+getitem 18635,1;
+mes "^6600CCSweet Drops^000000";
+mes "Aqui tienes tu hermoso Marin Hair Clip!";
+end;
+
+Faltaz:
+mes "^6600CCSweet Drops^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCSweet Drops^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCSweet Drops^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------Wild Poring Rider----------------------
+poring_w01,96,125,6	script	Wild Poring Rider	909,{
+
+mes "^6600CCPoring^000000";
+mes "Hola "+strcharinfo(0)+", quieres elaborar un <ITEM>Wild Poring Rider<INFO>19108</INFO></ITEM>.?";
+mes "Este hat te ayudara a farmear Mastella Fruits.";
+next;
+
+mes "^6600CCPoring^000000";
+mes "Para hacerlo necesitas:";
+mes "- 1 Jumping Poring"; // 5640
+mes "- 1 Wild Rose Hat"; // 5557
+mes "- 1 Big Ribbon"; // 2244
+mes "- 1 Cobaltblue Dyestuffs"; // 978
+mes "- 500 Raccoon Leaf"; // 945
+mes "- 5,000,000 Zeny";
+next;
+menu
+"^088A08Wild Poring Rider^000000",wrid,"^F00000Cancelar^000000",L_sal;
+
+wrid:
+mes "^6600CCPoring^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(5640) < 1 || countitem(5557) < 1 || countitem(2244) <1 || countitem(978) <1 || countitem(945) <1) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+
+delitem 5640,1;
+delitem 5557,1;
+delitem 2244,1;
+delitem 978,1;
+delitem 945,500;
+set Zeny,Zeny-5000000;
+specialeffect2 18;
+getitem 7539,3;
+getitem 19108,1;
+
+mes "^6600CCPoring^000000";
+mes "Aqui tienes tu nuevo Hat!";
+end;
+
+Faltaz:
+mes "^6600CCPoring^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCPoring^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCPoring^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------Gold Ingot Poring Hat----------------------
+poring_w01,80,108,6	script	Gold Ingot Poring Hat	2248,{
+
+mes "^FF8000Gold Poring^000000";
+mes "Hola "+strcharinfo(0)+", quieres elaborar un <ITEM>Gold Ingot Poring Hat<INFO>18748</INFO></ITEM>.?";
+mes "Este hat te ayudara a farmear Zeny de mobs.";
+next;
+
+mes "^FF8000Gold Poring^000000";
+mes "Para hacerlo necesitas:";
+mes "- 1 Jumping Poring"; // 5640
+mes "- 1 Wanderer Card"; // 4210
+mes "- 10 Gold"; // 969
+next;
+menu
+"^088A08Gold Ingot Poring Hat^000000",pingon,"^F00000Cancelar^000000",L_sal;
+
+pingon:
+mes "^FF8000Gold Poring^000000";
+mes "Veamos si tienes todo!.";
+next;
+if( countitem(5640) < 1 || countitem(4210) < 1 || countitem(969) <10) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5640,1;
+delitem 4210,1;
+delitem 969,10;
+specialeffect2 18;
+getitem 7539,2;
+getitem 18748,1;
+
+mes "^FF8000Gold Poring^000000";
+mes "Aqui tienes tu nuevo Hat!";
+end;
+
+Falta:
+mes "^FF8000Gold Poring^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^FF8000Gold Poring^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------PORING GLASSES----------------------
+poring_w01,115,115,4	script	Poring Glasses	909,{
+
+mes "^6600CCPoring^000000";
+mes "Hola "+strcharinfo(0)+", quieres elaborar un <ITEM>Poring Glasses<INFO>5879</INFO></ITEM>.?";
+mes "- Estos lentes tienen 1 slot y otorga ventajas contra la raza Plant!.";
+next;
+
+mes "^6600CCPoring^000000";
+mes "Para hacerlo necesitas:";
+mes "- 1 Sloted Glasses"; // 2202
+mes "- 1 Romantic Flower"; // 2269
+mes "- 1 Romantic Leaf"; // 2270
+mes "- 1,000,000z.";
+next;
+menu
+"^088A08Poring Glasses^000000",poglass,"^F00000Cancelar^000000",L_sal;
+
+poglass:
+mes "^6600CCPoring^000000";
+mes "Veamos si tienes todo!.";
+next;
+
+if(Zeny < 1000000 ) goto Faltaz;
+if( countitem(2202) < 1 || countitem(2269) < 1 || countitem(2270) <1) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 2202,1;
+delitem 2269,1;
+delitem 2270,1;
+set Zeny,Zeny-1000000;
+specialeffect2 18;
+getitem 7539,2;
+getitem 5879,1;
+mes "^6600CCPoring^000000";
+mes "Aqui tienes tus bellos lentes!";
+end;
+
+
+Faltaz:
+mes "^6600CCPoring^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCPoring^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCPoring^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------PORING UFO HAT----------------------
+poring_w01,119,109,4	script	UFO Poring Hat	909,{
+
+mes "^6600CCPoring^000000";
+mes "Hola "+strcharinfo(0)+", quieres elaborar un <ITEM>UFO Poring Hat<INFO>18892</INFO></ITEM>.?";
+next;
+
+mes "^6600CCPoring^000000";
+mes "Para hacerlo necesitas:";
+mes "- 1 Jumping Poring"; // 5640
+mes "- 100 FlashLight"; // 7327
+mes "- 100 CogWheel"; // 7093
+mes "- 100 Fragment"; // 7094
+mes "- 25 <ITEM>Transparent Plate<INFO>7353</INFO></ITEM> ID:7353."; // 7353
+mes "- 5,000,000z.";
+
+next;
+menu
+"^088A08UFO Poring Hat^000000",ufo,"^F00000Cancelar^000000",L_sal;
+
+ufo:
+mes "^6600CCPoring^000000";
+mes "Veamos si tienes todo!.";
+next;
+
+if(Zeny < 5000000 ) goto Faltaz;
+if( countitem(5640) < 1 || countitem(7327) < 100 || countitem(7093) <100 || countitem(7094) <100 || countitem(7353) <25 ) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5640,1;
+delitem 7327,100;
+delitem 7093,100;
+delitem 7094,100;
+delitem 7353,25;
+set Zeny,Zeny-5000000;
+specialeffect2 18;
+getitem 7539,3;
+getitem 18892,1;
+
+mes "^6600CCPoring^000000";
+mes "Aqui tienes tu poring volador no identificado!";
+end;
+
+
+Faltaz:
+mes "^6600CCPoring^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCPoring^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCPoring^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------NOVICE DOLL----------------------
+poring_w01,131,82,7	script	Turles	567,{
+
+mes "Es un novice cansado de caminar..";
+mes "Buscando un voluntario que lo lleve a conocer el mundo.";
+mes "<ITEM>Costume Piggyback<INFO>31165</INFO></ITEM>";
+next;
+mes "Con los materiales suficientes podriamos crear una montura especial para llevarlo con nosotros.";
+mes "- 100 ^61210BElastic Band^000000"; //7200
+mes "- 100 ^61210BSpool^000000"; //7217
+mes "- 100 ^FE2E9ANeedle Packet^000000"; //7213
+next;
+menu
+"^088A08Costume Piggyback^000000",piggy,
+"^F00000Cancelar^000000",L_sal;
+
+piggy:
+if( countitem(7200) < 100 || countitem(7217) < 100 || countitem(7213) <100) callsub Falta;
+delitem 7200,100;
+delitem 7217,100;
+delitem 7213,100;
+specialeffect2 18;
+getitem 31165,1;
+mes "Se ira feliz contigo";
+specialeffect 304;
+disablenpc "Turles";
+close2;
+sleep 100000000;
+enablenpc "Turles";
+end; 
+
+Falta:
+mes "^FF0000Me faltan items, deberia darme prisa antes que otro se lo lleve! y no es broma..^000000";
+end;
+
+L_sal:
+mes "Bueno..";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------SANTA PORINGS HAT----------------------
+poring_w01,124,103,4	script	Santa Poring	1062,{
+
+mes "^6600CCSanta Poring^000000";
+mes "Hola "+strcharinfo(0)+", quieres elaborar un <ITEM>Santa Poring Hat<INFO>5381</INFO></ITEM>.?";
+mes "Este hat te ayudara a combatir los monstruos de elemento Shadow.";
+next;
+mes "^6600CCSanta Poring^000000";
+mes "Tambien podre mejorar el Santa Poring Hat a Golden Santa poring Hat que podras ver en el menu.";
+next;
+mes "^6600CCSanta Poring^000000";
+mes "Para hacer el Santa Poring Hat necesitas:";
+mes "- 1 Jumping Poring"; // 5640
+mes "- 1 Santa Hat"; // 2236
+mes "3,000,000 zeny.";
+next;
+menu
+
+"^088A08Santa Poring Hat^000000",santa,
+"^FF8000Shining Santa Poring Hat^000000",shisanta,
+"^F00000Cancelar^000000",L_sal;
+
+//----normal----
+santa:
+mes "^6600CCSanta Poring^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 3000000 ) goto Faltaz;
+if( countitem(5640) < 1 || countitem(2236) < 1) callsub Falta;
+
+mes "requisitos confirmados, prodedo a hacer el hat.!";
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5640,1;
+delitem 2236,1;
+set Zeny,Zeny-3000000;
+specialeffect2 18;
+getitem 7539,1;
+getitem 5381,1;
+mes "^6600CCSmall Poring^000000";
+mes "Aqui tienes tu nuevo Hat!";
+end;
+
+//----dorado----
+shisanta:
+mes "^6600CCSanta Poring^000000";
+mes "Mejorare el Santa Poring que tengas a uno Dorado, se perderan las cartas compuestas o enchants en el proceso.";
+mes "<ITEM>Shine Stanta Poring<INFO>19685</INFO></ITEM>.";
+
+next;
+mes "^6600CCSanta Poring^000000";
+mes "para esto necesitare:";
+mes "- 1 Santa Poring Hat"; // 5381
+mes "- 1 Gold Ore"; //7231
+mes "- 100 Holy Water"; //523
+mes "- 1 Santa Poring Card"; //4005
+mes "La santa poring card se puede conseguir en las gift box, o farmeando los slave del angeling!.";
+next;
+mes "^6600CCSanta Poring^000000";
+mes "Veamos si tienes todo!.";
+next;
+
+if( countitem(5381) < 1 || countitem(7231) < 1 || countitem(523) <100 || countitem(4005) <1) callsub Falta;
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5381,1;
+delitem 7231,1;
+delitem 523,100;
+delitem 4005,1;
+specialeffect2 18;
+getitem 7539,1;
+getitem 19685,1;
+mes "^6600CCSanta Poring^000000";
+mes "Aqui tu Santa Poring Shiny!";
+end;
+
+Faltaz:
+mes "^6600CCSanta Poring^000000";
+mes "^FF0000No tienes suficiente Zeny..^000000";
+end;
+
+Falta:
+mes "^6600CCSanta Poring^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCSmall Poring^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Headgear Quest =-=-=-=-=-=-=-=
+//-----------------Triple Poring Hat----------------------
+poring_w01,89,98,6	script	Triple Poring Hat	1096,{
+
+mes "^6600CCAngeling^000000";
+mes "Hola "+strcharinfo(0)+", quieres elaborar un <ITEM>Triple Poring Hat?<INFO>5255</INFO></ITEM>.?";
+mes "Este hat Tiene 1 Slot.";
+
+next;
+mes "^6600CCAngeling^000000";
+mes "Para hacerlo necesitas:";
+mes "- 3 Jumping Poring"; // 5640
+mes "- 1 Angel Wing"; // 2254
+mes "- 1 Unicorn Horn"; // 2257
+next;
+
+menu
+"^088A08Triple Poring Hat^000000",tphat,"^F00000Cancelar^000000",L_sal;
+
+tphat:
+mes "^6600CCAngeling^000000";
+mes "Veamos si tienes todo!.";
+next;
+if( countitem(5640) < 3 || countitem(2254) < 1 || countitem(2257) <1) callsub Falta;
+
+specialeffect 101; 
+progressbar "ffff00",1;
+delitem 5640,3;
+delitem 2254,1;
+delitem 2257,1;
+specialeffect2 18;
+getitem 7539,1;
+getitem 5255,1;
+
+mes "^6600CCAngeling^000000";
+mes "Aqui tienes tu nuevo Hat! Felicidades.!";
+end;
+
+Falta:
+mes "^6600CCAngeling^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+L_sal:
+mes "^6600CCAngeling^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//=-=-=-=-=-=-=-= Summon =-=-=-=-=-=-=-=
+//-----------------Convocar al Poring King----------------------
+poring_w01,124,54,4	script	Poring King	2538,{
+
+if(getgroupid() >= 99) goto gaem;
+
+mes "^6600CCPoring King^000000";
+mes "Te gustaria poder combatir conmigo?.. Yo soy demasiado poderoso para 1 vs 1 muahahaha, Lo mio es arrasar ciudades!..";
+next;
+
+mes "^6600CCPoring King^000000";
+mes "Si quieres pelear conmigo, tendras que hacerlo defendiendo la ciudad de Prontera, Ire alla a atacar todo lo que se mueva.. si me traes los siguientes objetos:";
+next;
+mes "^6600CCPoring King^000000";
+mes "1 Poring Card";
+mes "1 PoPoring Card";
+mes "1 Drops Card";
+mes "1 Santa Poring Card";
+mes "1 Marin Card";
+mes "2000 Jellopy";
+next;
+mes "^6600CCPoring King^000000";
+mes "Esta invocacion solo puede ocurrir una vez al dia en todo el servidor, quien me derrote obtendra:";
+mes "<ITEM>King Poring Hat<INFO>18785</INFO></ITEM>";
+mes "como MVP Reward.";
+next;
+mes "^6600CCPoring King^000000";
+mes "Mi ID es 2538, esto es para advertirte con que te voy a patear el trasero! Muahahahaha";
+next;
+
+menu
+"^088A08Invocar Rey Poring^000000",skp,
+"^F00000Cancelar^000000",L_sal;
+
+
+skp:
+mes "^6600CCPoring King^000000";
+mes "Tienes los ****** bien grandes para hacer esto.!";
+next;
+
+if( countitem(4001) < 1 || countitem(4033) < 1 || countitem(4004) < 1 || countitem(4196) < 1 || countitem(4005) < 1 || countitem(909) <2000) callsub Falta;
+mes "^6600CCPoring King^000000";
+mes "requisitos confirmados, Provocaras el desastre inminente!";
+specialeffect 368;
+specialeffect 220;
+progressbar "ffff00",1;
+delitem 4001,1;
+delitem 4033,1;
+delitem 4004,1;
+delitem 4196,1;
+delitem 4005,1;
+delitem 909,2000;
+areamonster "prontera",156,186,155,174,"King Poring 12th",2538,1,"kingporingsillo::OnMobKilled";
+mes "________________";
+mes "Adios insolente! Los matare a todos Muahahaha!";
+next;
+announce ""+strcharinfo(0)+" Libero al Rey Poring.",bc_all,0xFFFF00;
+specialeffect 304;
+disablenpc "Poring King";
+close2;
+sleep 86400000;
+enablenpc "Poring King";
+announce "El Rey ha vuelto a la Zona Poring. Pasaron 24h desde su ultima invocacion,",bc_all,0xFF0000,FW_NORMAL,12;
+end; 
+
+
+gaem:
+mes "^6600CCPoring King^000000";
+mes "Mi señor, estoy a sus servicios!";
+next;
+menu
+"^088A08Invocar Rey Poring^000000",sumongm,
+"^F00000Cancelar^000000",L_sal;
+
+
+sumongm:
+areamonster "prontera",156,186,155,174,"King Poring 12th",2538,1,"kingporingsillo::OnMobKilled";
+mes "________________";
+mes "Como usted ordene mi amo!";
+next;
+announce "El Rey Poring ha sido liberado por un GM.",bc_all,0xFFFF00;
+specialeffect 304;
+disablenpc "Poring King";
+close2;
+sleep 86400000;
+enablenpc "Poring King";
+announce "El Rey ha vuelto a la Zona Poring. Pasaron 24h desde su ultima invocacion,",bc_all,0xFF0000,FW_NORMAL,12;
+end; 
+
+Falta:
+mes "^6600CCPoring King^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+
+L_sal:
+mes "^6600CCPoring King^000000";
+mes "Hasta pronto.";
+close;
+}
+
+
+-	script	kingporingsillo	-1,{
+OnMobKilled:
+announce strcharinfo(0)+" Se hizo cargo del King Poring! -Cooldown: 24 Hrs.",bc_all,0xFF9900;
+makeitem 7539,1,"prontera",159,174; makeitem 7539,1,"prontera",152,177; makeitem 7539,1,"prontera",158,181; makeitem 7539,1,"prontera",151,183; makeitem 7539,1,"prontera",156,190;
+makeitem 7539,1,"prontera",142,178; makeitem 7539,1,"prontera",151,168; makeitem 7539,1,"prontera",160,166; makeitem 7539,1,"prontera",153,172; makeitem 7539,1,"prontera",151,179; 
+makeitem 7539,1,"prontera",162,170; makeitem 7539,1,"prontera",162,179; makeitem 7539,1,"prontera",162,186; makeitem 7539,1,"prontera",151,166; makeitem 7539,1,"prontera",149,177;
+
+
+makeitem 6987,1,"prontera",159,174; makeitem 6987,1,"prontera",152,177; makeitem 6987,1,"prontera",158,181; makeitem 6987,1,"prontera",151,183; makeitem 6987,1,"prontera",156,190;
+makeitem 6987,1,"prontera",142,178; makeitem 6987,1,"prontera",151,168; makeitem 6987,1,"prontera",160,166; makeitem 6987,1,"prontera",153,172; makeitem 6987,1,"prontera",151,179;
+makeitem 6987,1,"prontera",162,170; makeitem 6987,1,"prontera",162,179; makeitem 6987,1,"prontera",162,186; makeitem 6987,1,"prontera",151,166; makeitem 6987,1,"prontera",149,177;
+
+makeitem 6480,1,"prontera",159,174; makeitem 6480,1,"prontera",152,177; makeitem 6480,1,"prontera",158,181; makeitem 6480,1,"prontera",151,183; makeitem 6480,1,"prontera",156,190;
+makeitem 6480,1,"prontera",142,178; makeitem 6480,1,"prontera",151,168; makeitem 6480,1,"prontera",160,166; makeitem 6480,1,"prontera",153,172; makeitem 6480,1,"prontera",151,179;
+makeitem 6480,1,"prontera",162,170; makeitem 6480,1,"prontera",162,179; makeitem 6480,1,"prontera",162,186; makeitem 6480,1,"prontera",151,166; makeitem 6480,1,"prontera",149,177;
+end;
+}
+
+
+//=-=-=-=-=-=-=-=GARRA=-=-=-=-=-=-=-=
+//-----------------SACA MUÑECAS Y OTRAS SHITS----------------------
+poring_w01,111,73,6	script	Claw'N Shits	562,{
+
+
+if (gettimetick(2) < poringdelay) {
+specialeffect 2;
+end;
+}
+
+
+if(countitem(1014) < 1) goto cranesc;
+goto jugareant;
+
+cranesc:
+if(countitem(6480) < 1) callsub Falta;
+goto jugarec;
+
+jugarec:
+set poringdelay, gettimetick(2) + 2;
+delitem 6480,1;
+if(rand(1,100) < 80){
+cutin "crane0",2;
+sleep2 250;
+specialeffect 18;
+cutin "crane01",2;
+sleep2 250;
+cutin "crane1",2;
+sleep2 250;
+cutin "crane2",2;
+soundeffectall "dimik_stand.wav",0;
+sleep2 500;
+cutin "crane1",2;
+soundeffectall "venatu_stand.wav",0;
+sleep2 500;
+soundeffectall "swordman_provoke.wav",0;
+npctalk "Claw & Shits: Perdiste!.";
+specialeffect 548;
+cutin "",255;
+set #CASHPOINTS,#CASHPOINTS+3;
+dispbottom "Haz obtenido 3 CP!, Cash Total: " +#CASHPOINTS+ " Cash Points";
+end;
+}else{
+specialeffect 18;
+cutin "crane0",2;
+sleep2 250;
+cutin "crane01",2;
+sleep2 250;
+cutin "crane1",2;
+sleep2 250;
+cutin "crane2",2;
+soundeffectall "dimik_stand.wav",0;
+sleep2 500;
+cutin "crane3",2;
+soundeffectall "dimik_stand.wav",0; soundeffectall "se_equip_item_06.wav",0;
+sleep2 500;
+soundeffectall "st_job_level_up.wav",0; 
+npctalk "Claw & Shits: Sacaste Algo!.";
+cutin "",255;
+specialeffect2 18;
+goto prize;
+end; 
+
+
+jugareant:
+set poringdelay, gettimetick(2) + 5;
+delitem 1014,1;
+cutin "cranej",2;
+sleep2 333;
+specialeffect 4;
+specialeffect 431;
+npctalk "Error... Error..!.";
+specialeffect 373;
+specialeffect 431;
+specialeffect 548;
+cutin "cranej2",2;
+soundeffectall "cookie_attack.wav",0;
+soundeffectall "pendalk_stand.wav",0;
+sleep2 333;
+specialeffect 373;
+specialeffect 431;
+specialeffect 548;
+cutin "cranej3",2;
+sleep2 222;
+specialeffect 373;
+specialeffect 549;
+specialeffect 431;
+soundeffectall "dimik_stand.wav",0;
+sleep2 111;
+specialeffect 373;
+specialeffect 431;
+specialeffect 548;
+soundeffectall "strouf_attack.wav",0;
+sleep2 222;
+specialeffect 373;
+specialeffect 431;
+specialeffect 549;
+soundeffectall "cookie_attack.wav",0;
+soundeffectall "pendalk_stand.wav",0;
+sleep2 111;
+if(rand(1,100) < 50){
+specialeffect 373;
+cutin "crane3",2;
+specialeffect 431;
+specialeffect 548;
+soundeffectall "dimik_stand.wav",0; soundeffectall "se_equip_item_06.wav",0;
+sleep2 250;
+specialeffect 373;
+specialeffect 549;
+specialeffect 373;
+sleep2 250;
+specialeffect 548;
+soundeffectall "cookie_attack.wav",0;
+soundeffectall "st_job_level_up.wav",0; 
+npctalk "Claw & Shits: Sacaste Algo!.";
+emotion ET_KIK, playerattached();
+cutin "",255;
+specialeffect2 18;
+goto prize;
+end; 
+}else{
+sleep2 222;
+specialeffect 373;
+sleep2 50;
+specialeffect 431;
+sleep2 50;
+specialeffect 549;
+sleep2 50;
+specialeffect2 431;
+sleep2 50;
+specialeffect2 426;
+sleep2 50;
+specialeffect2 146;
+sleep2 50;
+emotion ET_HUK, playerattached();
+soundeffectall "cookie_attack.wav",0;
+soundeffectall "pendalk_stand.wav",0;
+soundeffectall "doppleganger_damage.wav",0;
+specialeffect2 373;
+sleep2 50;
+showscript strcharinfo(0)+" : whaaaaahh....me electrocuto.....";
+specialeffect 373;
+sleep2 50;
+specialeffect 431;
+sleep2 50;
+specialeffect 548;
+sleep2 50;
+specialeffect2 431;
+sleep2 50;
+specialeffect2 426;
+sleep2 50;
+specialeffect2 146;
+sleep2 50;
+showscript strcharinfo(0)+" : whaaaaahh.tatataaaaaa.....";
+soundeffectall "cookie_attack.wav",0;
+soundeffectall "pendalk_stand.wav",0;
+soundeffectall "doppleganger_damage.wav",0;
+specialeffect2 373;
+sleep2 50;
+specialeffect 373;
+sleep2 50;
+specialeffect 431;
+sleep2 50;
+specialeffect 549;
+sleep2 50;
+specialeffect2 431;
+sleep2 50;
+specialeffect2 426;
+sleep2 50;
+specialeffect2 146;
+sleep2 50;
+showscript strcharinfo(0)+" : aashgg tatat atatata ra taaah......";
+soundeffectall "cookie_attack.wav",0;
+soundeffectall "pendalk_stand.wav",0;
+soundeffectall "doppleganger_damage.wav",0;
+specialeffect2 373;
+sleep2 50;
+specialeffect 373;
+sleep2 50;
+specialeffect 431;
+sleep2 50;
+specialeffect 548;
+sleep2 50;
+specialeffect2 431;
+sleep2 50;
+specialeffect2 426;
+sleep2 50;
+specialeffect2 146;
+sleep2 50;
+specialeffect2 373;
+soundeffectall "cookie_attack.wav",0;
+soundeffectall "pendalk_stand.wav",0;
+soundeffectall "doppleganger_damage.wav",0;
+sleep2 50;
+specialeffect 183;
+atcommand "@nuke "+strcharinfo(0)+"";
+pushpc 4,4; specialeffect2 426;
+makeitem 7539,1,"poring_w01",114,76;
+specialeffect 373;
+sleep2 50;
+makeitem 741,1,"poring_w01",111,72; 
+sleep2 50;
+makeitem 754,1,"poring_w01",113,73; 
+sleep2 50;
+specialeffect 549;
+makeitem 754,1,"poring_w01",113,75; 
+sleep2 50;
+makeitem 754,1,"poring_w01",110,73;
+makeitem 752,1,"poring_w01",113,72;
+cutin "",255;
+end; 
+}}
+
+prize:
+switch( rand(35) ) {
+case 0: getitem 31051,1; break; //poring visor
+case 1: getitem 31664,1; break; //lobo con corona costume
+case 2: getitem 31631,1; break;//schimidt
+case 3: getitem 31632,1; break;// oscar
+case 4: getitem 31633,1; break;// heinrich
+case 5: getitem  31196,1; break;//pinguino
+case 6: getitem  31193,1; break;//ahat
+case 7: getitem  31147,1; break;//domovi
+case 8: getitem  31031,1; break;//pope
+case 9: getitem  31032,1; break;//luwmin
+case 10: getitem  20434,1; break;//guns
+case 11: getitem  20346,1; break;//permeter
+case 12: getitem  20253,1; break;//alicel
+case 13: getitem  20177,1; break;//dorasuke
+case 14: getitem  20103,1; break;// panda
+case 15: getitem  19959,1; break;//agriope
+case 16: getitem  19878,1; break;//conejo
+case 17: getitem  19818,1; break;//exorcista
+case 18: getitem  19600,1; break;//kiel
+case 19: getitem  19601,1; break;//aliot
+case 20: getitem  31562,1; break;//zealot
+case 21: getitem  20329,1; break;//maidschool
+case 22: getitem  20053,1; break;//kingblanco
+case 23: getitem  20242,1; break;//sowman
+case 24: getitem  20263,1; break;//laurert
+case 25: getitem  20338,1; break;//pulpoarcoiris
+case 26: getitem  20179,1; break;//monillo
+case 27: getitem  20129,1; break;//poporing
+case 28: getitem  31404,1; break;//traffic poring
+case 29: getitem  20447,1; break;//smal porings 
+case 30: getitem  31547,1; break;//poporing mascot
+case 31: getitem  20133,1; break;//poring mascot
+case 32: getitem  19930,1; break;//angel mini silk
+case 33: getitem  31190,1; break;//angel mini silk black
+case 34: getitem  31577,1; break;//roast memory
+end;
+
+Falta:
+mes "^B40486Claw'N Shits^000000";
+mes "Esta maquina solo acepta Poring Silvers, participa en eventos o mata al King Poring para conseguirlas.";
+close;
+}}
+
+//-------------------------------------------------EVENTO CAMPOS ESPECIALES-----------------------------------------------------------------------
+-	script	specialzone announce	-1,{
+
+OnInit:
+disablenpc "Angeling#Campos Especiales";
+end;
+
+OnClock0356:
+announce "Angeling: Se han abierto los campos especiales poring aprovechen.",0;
+sleep 5000;
+announce "Angeling: Estare en prontera durante 1 hora, para acceder solo habla conmigo.",0;
+enablenpc "Angeling#Campos Especiales";
+sleep 5000;
+atcommand "@npctalk Angeling#Campos Especiales,Hola hola hola! adivinen quien llego? así es, yo mismo Papi Angeling!";
+sleep 3000; 
+emotion ET_KIK, getnpcid(0, "Angeling#Campos Especiales"); 
+initnpctimer;
+end;
+
+OnTimer3600000:   // default 30000ms = (30 segundos)
+announce "Angeling: Se acabo el tiempo, los campos especiales poring han sido cerrados, todo el que este ahi sera recaleado en 5 segundos.",0;
+sleep 2500; 
+emotion ET_CRY, getnpcid(0, "Angeling#Campos Especiales"); 
+atcommand "@npctalk Angeling#Campos Especiales,Adios chicos, hasta el proximo evento!.";
+sleep 2250;
+specialeffect 183,0,"Angeling#Campos Especiales";
+sleep 250;
+makeitem 7539,1,"prontera",165,167; makeitem 7539,1,"prontera",165,167; makeitem 7539,1,"prontera",165,167;
+disablenpc "Angeling#Campos Especiales";
+mapwarp "pozone", "prontera",155,172;
+stopnpctimer;
+end;
+}
+
+
+prontera,165,167,4	script	Angeling#Campos Especiales	1096,{
+mes "^6600CCAngeling^000000";
+mes "Quieres ir a matar porings en los campos especiales?";
+mes "en ese lugar los monstruos tienen probabilidades de dropear monedas.";
+next;
+menu "Ir a los campos especiales",spec,"Informacion",info,"Nada",L_sal;
+
+spec: 
+warp "pozone",0,0;
+end;
+
+info:
+mes "^6600CCAngeling^000000";
+mes "soon";
+end;
+
+L_sal:
+mes "^6600CCAngeling^000000";
+mes "Deberias aprovechar, ya que solo abren 1 vez al dia y dura solo una hora.";
+close;
+}
+
+
+//-----------SWEET COINS EXCHANGER-----------------------------------------------------------------------------
+poring_w01,127,70,4	script	Sweet Coins Exchanger	612,{
+
+mes "Maggi";
+mes "Hola, aqui puedes cambiar las Sweet Coins que hayas obtenido en los campos poring especiales.";
+cutin "bu_maggi2",2;
+next;
+menu
+"Consumibles",Consu,
+"Costumes",Costum;
+
+Consu:
+mes "^0B610B[Sweet Festival Coin Shop]^000000";	
+mes "-----------------------------------";
+mes "Abriras la tienda de consumibles.";
+mes "Los descuentos no aplican aunque se muestren.";
+mes "-----------------------------------";
+close2;
+cutin "",255;
+specialeffect 377;
+specialeffect 775;
+emotion ET_CHUPCHUP;
+specialeffect 969;
+playBGM "shoptheme";
+soundeffectall "se_crow2.wav",0;
+callshop "Consu",0;
+end;
+
+Costum:
+mes "^0B610B[Sweet Festival Coin Shop]^000000";	
+mes "-----------------------------------";
+mes "Abriras la tienda de Costume Gears.";
+mes "Los descuentos no aplican aunque se muestren.";
+mes "-----------------------------------";
+close2;
+cutin "",255;
+specialeffect 377;
+specialeffect 775;
+emotion ET_CHUPCHUP;
+specialeffect 969;
+playBGM "shoptheme";
+soundeffectall "se_crow2.wav",0;
+callshop "Costum",0;
+end;
+}
+
+-	itemshop	Consu	81,25290{:0},23260:1,11607:1,23259:2,22991:2,23261:2,23045:10,23079:10}
+-	itemshop	Costum	81,25290{:0},20826:25,20505:25,20504:25,31195:50,5412:50,40056:50,40057:50,40062:10,40058:50,40059:50,40060:50,40061:50,40063:50,40064:50,40065:50,40066:50,40067:50,40070:50,40068:50,20548:75,40069:75,40071:100}
