@@ -1,0 +1,1793 @@
+//=========Miscs=========//
+celestiaj,77,110,4	script	Hint#consejo	857,9,9,{
+mes "Board";
+mes "Rota 5 veces los Phen y descubriras algo..";
+end;
+
+ontouch:
+specialeffect 500;
+end;
+}
+
+
+celestiaj,83,126,4	script	Fish#cele1	1158,15,8,{
+end;
+
+ontouch:
+specialeffect 100;
+specialeffect 890;
+specialeffect 500;
+callfunc "rotaphen";
+end;
+}
+
+celestiaj,68,126,6	script	Fish#cele2	1158,15,8,{
+end;
+
+ontouch:
+specialeffect 100;
+specialeffect 890;
+specialeffect 500;
+end;
+
+}
+//==============================Jumper========================================
+celestiaj,42,142,0	script	Jumper#Jumpcelej	406,{
+		
+	if (gettimetick(2) < poringdelay) {
+	end;
+	}
+	set poringdelay, gettimetick(2) + 4;	
+	sleep2 300;
+	specialeffect2 890;
+	specialeffect2 500;
+	sleep2 700;
+	specialeffect2 445;	
+	showscript strcharinfo(0)+" : whaaaaahh......";
+	sleep2 1000;
+	warp "celestiaj",70,145;	
+	sleep2 300;
+	specialeffect2 446;
+	sleep2 500;		
+	emotion ET_SMILE, playerattached();
+	end;
+	}
+	
+//==============================Retorno Celestiaj========================================
+celestiaj,72,39,4	script	Conductor de Bus#retornoflor	448,8,8,{
+mes "Chof";
+mes "Que te parece el lugar?, Te puedo llevar a la Zona Quest#1.";
+next;
+menu "Zona Quest #1",flor,"Nada",L_sal;
+
+flor:
+mes "Chof";
+mes "Listo! Nos vamos de regreso a la primera zona";
+next;
+specialeffect2 367;
+specialeffect2 71;
+sleep2 1000;
+warp "florian", 160, 125;
+end;
+
+L_sal:
+mes "Chof";
+mes "Aqui estare!";
+close;
+
+ontouch:
+specialeffect 391;
+npctalk "Conductor: Estamos en la Zona Quest #2, cuando quieras moverte de mapa, estare a tu servicio.";
+end;
+}
+
+
+//==============================Creador de Botas Ungoliant========================================
+celestiaj,84,156,6	script	Rebel#rebelung	633,10,10,{
+mes "^6600CCRebel^000000";
+mes "Bienvenido a mi humilde morada... veo que te interesa mi anuncio..";
+next;
+
+mes "^6600CCRebel^000000";
+mes "Puedo fabricarte unas botas especiales, se llaman";
+mes "<ITEM>Ungoliant Boots<INFO>22037</INFO></ITEM>.";
+mes "tienen un slot.";
+next;
+mes "^6600CCRebel^000000";
+mes "Para hacerlas necesito:";
+mes "500 Fluorescent Liquid";
+mes "10 Peridot";
+mes "1 Black Leather Boots (1)";
+next;
+mes "^6600CCRebel^000000";
+mes "El reto de este requisito es poder slotear primero las black leather boots, lo demas es facil, solo tomara tiempo y te aseguro que valdra la pena.";
+next;
+
+menu
+"^8A2908Fabricar Ungoliant Boots^000000",unbot,"^F00000Cancelar^000000",L_sal;
+
+unbot:
+mes "^6600CCRebel^000000";
+mes "Humm ya veo, estas decidido! veamos si tienes todo!.";
+next;
+if( countitem(2434) < 1 || countitem(7326) < 500 || countitem(7289) < 10) callsub Falta;
+progressbar "ffff00",1;
+delitem 2434,1;
+delitem 7326,500;
+delitem 7289,10;
+specialeffect2 717; 
+specialeffect2 682;
+getitem 22037,1;
+end;
+
+Falta:
+mes "^6600CCRebel^000000";
+mes "^FF0000Vaya.. parece que te faltan objetos para esto.. vuelve en cuanto los tengas!.^000000";
+end;
+
+L_sal:
+mes "^6600CCRebel^000000";
+mes "Nos vemos.";
+close;
+
+ontouch:
+specialeffect 154;
+npctalk "Rebel: Si quieres las mejores botas de agilidad, yo soy la indicada!..";
+end;
+}
+
+//================================-----------Alice Doll Hat-----------======================================
+celestiaj,70,62,6	script	Alice Doll	1275,7,7,{
+mes "^0000FFAlice^000000";
+mes "Vienes a hacer el alice doll?";
+mes "<ITEM>Alice Doll<INFO>5137</INFO></ITEM>.";
+mes "te puedo hacer uno si me traes lo siguiente:";
+next;
+mes "^0000FFAlice^000000";
+mes "20,000,000 Zeny";
+mes "100 Alice Apron"; //7047
+mes "100 Soft Feather"; //7063
+mes "30 Soft Apron"; //661
+mes "6 Aliza Card"; //4400
+mes "1 Alice Card"; //4253
+next;
+
+menu
+"^088A08Alice Doll^000000",alicehat,"^F00000Cancelar^000000",L_sal;
+
+alicehat:
+mes "^0000FFAlice^000000";
+mes "Veamos si tienes todo!.";
+next;
+if(Zeny < 20000000 ) goto Faltaz;
+if( countitem(7047) < 100 || countitem(7063) < 100 || countitem(661) < 30 || countitem(4400) < 6 || countitem(4253) < 1) callsub Falta;
+progressbar "ffff00",1;
+delitem 7047,100;
+delitem 7063,100;
+delitem 661,30;
+delitem 4400,6;
+delitem 4253,1;
+set Zeny,Zeny-20000000;
+specialeffect 101; 
+specialeffect2 622;
+getitem 5137,1;
+mes "^0000FFAlice^000000";
+mes "Disfruta mi Hat!";
+end;
+
+Faltaz:
+mes "^0000FFAlice^000000";
+mes "^FF0000No tienes suficiente zeny..^000000";
+end;
+
+Falta:
+mes "^0000FFAlice^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+ontouch:
+emotion ET_THROB;
+soundeffectall "alice_stand.wav",0;
+end;
+
+L_sal:
+mes "^0000FFAlice^000000";
+mes "Hasta pronto.";
+close;
+}
+
+//================================-----------Snowman Hat-----------======================================
+celestiaj,44,110,6	script	Jack Frost	710,11,5,{
+cutin "rutie_snownow02",2;
+mes "^0000FFJack^000000";
+mes "Vienes a hacer el Snowman Hat?";
+mes "<ITEM>Snowman Hat<INFO>5738</INFO></ITEM>.";
+mes "te puedo hacer uno si me traes lo siguiente:";
+next;
+menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+L_required:
+	cutin "",255;
+	mes "^0000FFJack^000000";
+	mes "^FF0000100^000000 Ice Cubic"; //7066
+	mes "^FF000050^000000 Red Muffler"; //7216
+	mes "^FF000010^000000 Magician Hat"; //5045
+	mes "^FF00001^000000 Carrot"; //515
+	mes "^0000FF5000^000000 zeny";
+	close;
+
+	L_check:
+		if(countitem(7066) < 100) goto L_manque;
+		if(countitem(7216) < 50) goto L_manque;
+		if(countitem(5045) < 10) goto L_manque;
+		if(countitem(515) < 1) goto L_manque;
+		if(Zeny < 5000) goto L_manque;
+		mes "^0000FFJack^000000";
+		mes "Aqui esta tu item de Navidad.";
+		cutin "rutie_snownow01",2;
+		next;
+		delitem 7066,100;
+		delitem 7216,50;
+		delitem 5045,10;
+		delitem 515,1;
+		set Zeny, Zeny -5000;
+		specialeffect2 18;
+		getitem 5738,1;
+		cutin "",255;
+		close;
+
+	L_manque:
+		cutin "rutie_snownow03",2;
+		mes "^0000FFJack^000000";
+		mes "Te faltan: ";
+		if(countitem(7066) < 100) mes "^FF0000"+(100 - countitem(7066)) +"^000000 Ice Cubic";
+		if(countitem(7216) < 50) mes "^FF0000"+(50 - countitem(7216)) +"^000000 Red Muffler";
+		if(countitem(5045) < 10) mes "^FF0000"+(10 - countitem(5045)) +"^000000 Magician Hat";
+		if(countitem(515) < 1) mes "^FF0000"+(1 - countitem(515)) +"^000000 Carrot";
+		if(Zeny < 5000) mes "^0000FF"+(5000 - Zeny)+"^000000 Zeny";
+		next;
+		cutin "",255;
+		close;
+
+	L_partir:
+		mes "^0000FFJack^000000";
+		mes "Disfruta del Servidor.";
+		cutin "",255;
+		close;
+	ontouch:	
+	specialeffect 28;
+	end;	
+}
+
+//================================-----------Hunter's Cap-----------======================================
+celestiaj,51,110,6	script	Hunter Cap	954,{
+	mes "[^000000Hunter Cap^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Hunter Cap, te interesa?";
+	mes "<ITEM>Hunting Cap<INFO>5383</INFO></ITEM>.";
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Hunter Cap^000000]";
+		mes "^FF000010^000000 Darkgreen Dyestuff"; //979
+		mes "^FF00001^000000 Cap[1]"; //2227
+		mes "^FF0000100^000000 Cat's Eye"; //7263
+		mes "^FF000030^000000 Green Bijou"; //7445
+		mes "^0000FF10,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(979) < 10) goto L_manque;
+		if(countitem(2227) < 1) goto L_manque;
+		if(countitem(7263) < 100) goto L_manque;
+		if(countitem(7445) < 30) goto L_manque;
+		if(Zeny < 10000000) goto L_manque;
+		mes "[^000000Hunter Cap^000000]";
+		mes "Aqui esta tu Hunter Cap";
+		delitem 979,10;
+		delitem 2227,1;
+		delitem 7263,100;
+		delitem 7445,30;
+		set Zeny, Zeny - 10000000;
+		getitem 5383,1;
+		close;
+
+	L_manque:
+		mes "[^000000Hunter Cap^000000]";
+		mes "Te faltan: ";
+		if(countitem(979) < 10) mes "^FF0000"+(10 - countitem(979)) +"^000000 DarkGreen Dyestuff";
+		if(countitem(2227) < 1) mes "^FF0000"+(1 - countitem(2227)) +"^000000 Cap[1]";
+		if(countitem(7263) < 100) mes "^FF0000"+(100 - countitem(949)) +"^000000 Cat's Eye";
+		if(countitem(7445) < 30) mes "^FF0000"+(30 - countitem(7445)) +"^000000 Green Bijou";
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Hunter Cap^000000]";
+		mes "Buen dia";
+		close;
+}
+
+//================================-----------Red Glasses-----------======================================
+celestiaj,58,110,6	script	Red Glasses	113,{
+	mes "[^000000Red Glasses^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte unas Red Glasses, te interesa?";
+	mes "<ITEM>Red Glasses<INFO>5288</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Red Glasses^000000]";
+		mes "^FF000050^000000 Red Bijou"; //7447
+		mes "^FF00005^000000 Scarlet Dyestuff"; //975
+		close;
+
+	L_check:
+		if(countitem(7447) < 50) goto L_manque;
+		if(countitem(975) < 5) goto L_manque;
+		mes "[^000000Red Glasses^000000]";
+		mes "Aqui estan tus Red Glasses";
+		delitem 7447,50;
+		delitem 975,5;
+		getitem 5288,1;
+		close;
+
+	L_manque:
+		mes "[^000000Red Glasses^000000]";
+		mes "Te faltan: ";
+		if(countitem(7447) < 50) mes "^FF0000"+(50 - countitem(7447)) +"^000000 Red Bijou";
+		if(countitem(975) < 5) mes "^FF0000"+(5 - countitem(975)) +"^000000 Scarlet Dyestuff";
+		close;
+
+	L_partir:
+		mes "[^000000Red Glasses^000000]";
+		mes "Buen dia";
+		close;
+}
+
+//================================-----------Koneko hat-----------======================================
+celestiaj,65,110,6	script	Koneko Hat	498,{
+	mes "[^000000Koneko Hat^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Koneko Hat, te interesa?";
+	mes "<ITEM>Koneko Hat<INFO>5372</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Koneko Hat^000000]";
+		mes "^FF0000100^000000 Black Cat Doll"; //7206
+		mes "^FF00001^000000 White Dyestuff"; //982
+		mes "^0000FF5,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(7206) < 100) goto L_manque;
+		if(countitem(982) < 1) goto L_manque;
+		if(Zeny < 5000000) goto L_manque;
+		mes "[^000000Koneko Hat^000000]";
+		mes "Aqui esta tu Koneko Hat";
+		delitem 7206,100;
+		delitem 982,1;
+		set Zeny, Zeny - 5000000;
+		getitem 5372,1;
+		close;
+
+	L_manque:
+		mes "[^000000Koneko Hat^000000]";
+		mes "Te faltan: ";
+		if(countitem(7206) < 100) mes "^FF0000"+(100 - countitem(7206)) +"^000000 Black Cat Doll";
+		if(countitem(982) < 1) mes "^FF0000"+(1 - countitem(982)) +"^000000 White Dyestuff";
+		if(Zeny < 5000000) mes "^0000FF"+(5000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Koneko Hat^000000]";
+		mes "Buen dia";
+		close;
+}
+
+//================================-----------Leaf Cat hat-----------======================================
+celestiaj,72,110,6	script	Leaf Cat Hat	515,{
+	mes "[^000000Leaf Cat Hat^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Leaf Cat Hat, te interesa?";
+	mes "<ITEM>Leaf Cat Hat<INFO>5555</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Leaf Cat Hat^000000]";
+		mes "^FF00005^000000 Leaf Cat Card"; //4195
+		mes "^FF000050^000000 Shrimp"; //567
+		mes "^FF00001^000000 Darkgreen Dyestuff"; //979
+		mes "^0000FF3,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(4195) < 5) goto L_manque;
+		if(countitem(567) < 50) goto L_manque;
+		if(countitem(979) < 1) goto L_manque;
+		if(Zeny < 3000000) goto L_manque;
+		mes "[^000000Leaf Cat Hat^000000]";
+		mes "Aqui esta tu Leaf Cat Hat";
+		delitem 4195,5;
+		delitem 567,50;
+		delitem 979,1;
+		set Zeny, Zeny - 3000000;
+		getitem 5555,1;
+		close;
+
+	L_manque:
+		mes "[^000000Leaf Cat Hat^000000]";
+		mes "Te faltan: ";
+		if(countitem(4195) < 5) mes "^FF0000"+(5 - countitem(4195)) +"^000000 Leaf Cat Card";
+		if(countitem(567) < 50) mes "^FF0000"+(50 - countitem(567)) +"^000000 Shrimp";
+		if(countitem(979) < 1) mes "^FF0000"+(1 - countitem(979)) +"^000000 Darkgreen Dyestuff";
+		if(Zeny < 3000000) mes "^0000FF"+(3000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Leaf Cat Hat^000000]";
+		mes "Buen dia";
+		close;
+}
+
+//================================-----------Odin Mask-----------======================================
+celestiaj,81,62,4	script	Odin Mask	461,9,5,{
+	mes "[^000000Odin Mask^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Odin Mask, te interesa?";
+	mes "<ITEM>Odin Mask<INFO>5483</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Odin Mask^000000]";
+		mes "^FF0000100^000000 Rune of Darkness"; //7511
+		mes "^FF00003^000000 Valhalla's Flower"; //7510
+		mes "^FF000020^000000 Soft Feather"; //7063
+		mes "^0000FF10,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(7511) < 100) goto L_manque;
+		if(countitem(7510) < 3) goto L_manque;
+		if(countitem(7063) < 20) goto L_manque;
+		if(Zeny < 10000000) goto L_manque;
+		mes "[^000000Odin Mask^000000]";
+		mes "Aqui esta tu Odin Mask";
+		delitem 7511,100;
+		delitem 7510,3;
+		delitem 7063,20;
+		set Zeny, Zeny - 10000000;
+		getitem 5483,1;
+		close;
+
+	L_manque:
+		mes "[^000000Odin Mask^000000]";
+		mes "Te faltan: ";
+		if(countitem(7511) < 100) mes "^FF0000"+(100 - countitem(7511)) +"^000000 Rune of Darkness";
+		if(countitem(7510) < 3) mes "^FF0000"+(3 - countitem(7510)) +"^000000 Valhalla's Flower";
+		if(countitem(7063) < 20) mes "^FF0000"+(20 - countitem(7063)) +"^000000 Soft Feather";
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Odin Mask^000000]";
+		mes "Buen dia";
+		close;
+		
+	ontouch:	
+	emotion ET_WRAP;
+	end;
+}
+
+//================================-----------Shark Hat-----------======================================
+celestiaj,70,73,6	script	Shark Hat	845,{
+	mes "[^000000Shark Hat^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Shark Hat, te interesa?";
+	mes "<ITEM>Shark Hat<INFO>5508</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Shark Hat^000000]";
+		mes "^FF000070^000000 Ancient Lips"; //1054
+		mes "^FF000050^000000 Sharp Scale"; //963
+		mes "^FF000020^000000 Aquamarine"; //720
+		mes "^0000FF2,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(1054) < 70) goto L_manque;
+		if(countitem(963) < 50) goto L_manque;
+		if(countitem(720) < 20) goto L_manque;
+		if(Zeny < 2000000) goto L_manque;
+		mes "[^000000Shark Hat^000000]";
+		mes "Aqui esta tu Shark Hat";
+		delitem 1054,70;
+		delitem 963,50;
+		delitem 720,20;
+		set Zeny, Zeny - 2000000;
+		getitem 5508,1;
+		close;
+
+	L_manque:
+		mes "[^000000Shark Hat^000000]";
+		mes "Te faltan: ";
+		if(countitem(1054) < 70) mes "^FF0000"+(70 - countitem(1054)) +"^000000 Ancient Lips";
+		if(countitem(963) < 50) mes "^FF0000"+(50 - countitem(963)) +"^000000 Sharp Scale";
+		if(countitem(720) < 20) mes "^FF0000"+(20 - countitem(720)) +"^000000 Aquamarine";
+		if(Zeny < 2000000) mes "^0000FF"+(2000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Shark Hat^000000]";
+		mes "Buen dia";
+		close;
+}
+
+//================================-----------Skeleton Manteau-----------======================================
+celestiaj,81,73,4	script	Skeleton Manteau	997,{
+	mes "[^000000Skeleton Manteau^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte una Skeleton Manteau, te interesa?";
+	mes "<ITEM>Skeleton Manteau<INFO>2511</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Skeleton Manteau^000000]";
+		mes "^FF0000100^000000 Old Manteau"; //7207
+		mes "^FF00003^000000 Skull Ring"; //2609
+		mes "^FF00003^000000 Piece of Shield"; //7108
+		mes "^0000FF10,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(7207) < 100) goto L_manque;
+		if(countitem(2609) < 10) goto L_manque;
+		if(countitem(7108) < 3) goto L_manque;
+		if(Zeny < 10000000) goto L_manque;
+		mes "[^000000Skeleton Manteau^000000]";
+		mes "Aqui esta tu Skeleton Manteau";
+		delitem 7207,100;
+		delitem 2609,10;
+		delitem 7108,10;
+		set Zeny, Zeny - 10000000;
+		getitem 2511,1;
+		close;
+
+	L_manque:
+		mes "[^000000Skeleton Manteau^000000]";
+		mes "Te faltan: ";
+		if(countitem(7207) < 100) mes "^FF0000"+(100 - countitem(7207)) +"^000000 Old Mnateau";
+		if(countitem(2609) < 10) mes "^FF0000"+(10 - countitem(2609)) +"^000000 Skull Ring";
+		if(countitem(7108) < 3) mes "^FF0000"+(3 - countitem(7108)) +"^000000 Piece of Shield";
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Skeleton Manteau^000000]";
+		mes "Buen dia";
+		close;
+}
+
+//================================-----------Satellite Hairband-----------======================================
+celestiaj,112,77,4	script	Satellite Hairband	98,4,4,{
+	mes "[^000000Satellite Hairband^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Satellite Hairband, te interesa?";
+	mes "<ITEM>Satellite Hairband<INFO>5212</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Satellite Hairband^000000]";
+		mes "^FF0000100^000000 Steel"; // 999
+		mes "^FF00001^000000 Horong Card"; //4103
+		mes "^FF00001^000000 Hair Band (id: 2210)"; //2210 
+		close;
+
+	L_check:
+		if(countitem(999) < 100) goto L_manque;
+		if(countitem(4103) < 1) goto L_manque;
+		if(countitem(2210) < 1) goto L_manque;
+		
+		mes "[^000000Satellite Hairband]";
+		mes "Aqui esta tu Satelite Hairband";
+		delitem 999,100;
+		delitem 4103,1;
+		delitem 2210,1;
+		getitem 5212,1;
+		close;
+
+	L_manque:
+			mes "[^000000Satellite Hairband]";
+		mes "Te faltan: ";
+		if(countitem(999) < 100) mes "^FF0000"+(100 - countitem(999)) +"^000000 Steel";
+		if(countitem(4103) < 1) mes "^FF0000"+(1 - countitem(2609)) +"^000000 Horong Card";
+		if(countitem(2210) < 1) mes "^FF0000"+(1 - countitem(2210)) +"^000000 Hair Band ";
+		close;
+
+	L_partir:
+			mes "[^000000Satellite Hairband]";
+		mes "Buen dia";
+		close;
+		
+	ontouch:
+	specialeffect2 709;
+	sleep2 500;
+	specialeffect2 682;	
+	end;		
+	}
+	
+//================================-----------LightBulb Hairband-----------======================================
+celestiaj,119,77,4	script	Electric Bulb Hairband	402,4,4,{
+	mes "[^000000Electric Bulb Hairband^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Shining Electric Bulb Hairband, te interesa?";
+	mes "<ITEM>Shining Electric Bulb Hairband<INFO>5310</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Electric Bulb Hairband^000000]";
+		mes "^FF0000100^000000 Steel"; // 999
+		mes "^FF00001^000000 Horong Card"; //4103
+		mes "^FF00001^000000 Circlet (id: 2233 )"; //2233  
+		close;
+
+	L_check:
+		if(countitem(999) < 100) goto L_manque;
+		if(countitem(4103) < 1) goto L_manque;
+		if(countitem(2233 ) < 1) goto L_manque;
+		
+		mes "[^000000Electric Bulb Hairband^000000]";
+		mes "Aqui esta tu Electric Bulb Hairband";
+		delitem 999,100;
+		delitem 4103,1;
+		delitem 2233 ,1;
+		getitem 5310,1;
+		close;
+
+	L_manque:
+		mes "[^000000Electric Bulb Hairband^000000]";
+		mes "Te faltan: ";
+		if(countitem(999) < 100) mes "^FF0000"+(100 - countitem(999)) +"^000000 Steel";
+		if(countitem(4103) < 1) mes "^FF0000"+(1 - countitem(2609)) +"^000000 Horong Card";
+		if(countitem(2233 ) < 1) mes "^FF0000"+(1 - countitem(2233 )) +"^000000 Circlet";
+		close;
+
+	L_partir:
+		mes "[^000000Electric Bulb Hairband^000000]";
+		mes "Buen dia";
+		close;
+		
+	ontouch:
+	specialeffect2 709;
+	sleep2 500;
+	specialeffect2 682;	
+	end;		
+	}
+
+
+//================================-----------Valkyrie Feather Band-----------======================================
+celestiaj,126,77,4	script	Valkyrie Feather Band	504,4,4,{
+	mes "[^000000Valkyrie Feather Band^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Valkyrie Feather Band, te interesa?";
+	mes "<ITEM>Valkyrie Feather Band<INFO>5256</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Valkyrie Feather Band^000000]";
+		mes "^FF0000100^000000 Soft Feather"; // 7063
+		mes "^FF00001^000000 Valhalla Flower"; //7510
+		mes "^FF00001^000000 Cute Ribbon (id: 2250  )"; //2250   
+		close;
+
+	L_check:
+		if(countitem(7063) < 100) goto L_manque;
+		if(countitem(7510) < 1) goto L_manque;
+		if(countitem(2250  ) < 1) goto L_manque;
+		
+		mes "[^000000Valkyrie Feather Band^000000]";
+		mes "Aqui esta tu Valkyrie Feather Band";
+		delitem 7063,100;
+		delitem 7510,1;
+		delitem 2250  ,1;
+		getitem 5256,1;
+		close;
+
+	L_manque:
+		mes "[^000000Valkyrie Feather Band^000000]";
+		mes "Te faltan: ";
+		if(countitem(7063) < 100) mes "^FF0000"+(100 - countitem(7063)) +"^000000 Soft Feathers";
+		if(countitem(7510) < 1) mes "^FF0000"+(1 - countitem(7510)) +"^000000 Valhalla's Flower";
+		if(countitem(2250  ) < 1) mes "^FF0000"+(1 - countitem(2250  )) +"^000000 Cute Ribbon";
+		close;
+
+	L_partir:
+		mes "[^000000Valkyrie Feather Band^000000]";
+		mes "Buen dia";
+		close;
+		
+	ontouch:
+	specialeffect2 709;
+	sleep2 500;
+	specialeffect2 682;	
+	end;		
+	}
+
+//================================-----------Red Pirate Bandanna-----------======================================
+celestiaj,45,139,4	script	Red Pirate Bandana	1071,{
+	mes "[^000000Red Pirate Bandana^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte una Red Pirate Bandana, te interesa?";
+	mes "<ITEM>Red Pirate Bandana<INFO>5661</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Red Pirate Bandana^000000]";
+		mes "^FF00001^000000 Pirate Bandanna (1)"; //5350
+		mes "^FF00001^000000 Scarlet Dyestuffs"; //975
+		mes "^0000FF10,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(5350) < 1) goto L_manque;
+		if(countitem(975) < 1) goto L_manque;
+		if(Zeny < 10000000) goto L_manque;
+		
+		mes "[^000000Red Pirate Bandana^000000]";
+		mes "Aqui esta tu Red Pirate Bandanna";
+		delitem 5350,1;
+		delitem 975,1;
+		set Zeny, Zeny - 10000000;
+		getitem 5661,1;
+		close;
+
+	L_manque:
+		mes "[^000000Red Pirate Bandana^000000]";
+		mes "Te faltan: ";
+		if(countitem(5350) < 1) mes "^FF0000"+(1 - countitem(5350)) +"^000000 Pirate Bandanna";
+		if(countitem(975) < 1) mes "^FF0000"+(1 - countitem(975)) +"^000000 Scarlet Dyestuffs";
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";	
+		close;
+
+	L_partir:
+		mes "[^000000Red Pirate Bandana^000000]";
+		mes "Buen dia";
+		close;
+	}
+//================================-----------Tiger Mask-----------======================================
+celestiaj,133,77,4	script	Tiger Mask	505,4,4,{
+	mes "[^000000Tiger Mask^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte una Tiger Mask, te interesa?";
+	mes "<ITEM>Tiger Mask<INFO>5098</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"^FF0000Cambiar Color^000000",recolor,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Tiger Mask^000000]";
+		mes "^FF00005^000000 Tiger Skins"; //1029
+		mes "^0000FF1,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(1029) < 5) goto L_manque;
+		if(Zeny < 10000000) goto L_manque;
+		
+		mes "[^000000Tiger Mask^000000]";
+		mes "Aqui esta tu Tiger Mask";
+		delitem 1029,5;
+		set Zeny, Zeny - 1000000;
+		getitem 5098,1;
+		close;
+
+	L_manque:
+		mes "[^000000Tiger Mask^000000]";
+		mes "Te faltan: ";
+		if(countitem(1029) < 5) mes "^FF0000"+(5 - countitem(1029)) +"^000000 Tiger Skin";
+		if(Zeny < 1000000) mes "^0000FF"+(1000000 - Zeny)+"^000000 Zeny";		
+		close;
+		
+		recolor:
+		mes "[^000000Tiger Mask^000000]";
+		mes "Que tal "+strcharinfo(0)+", Si posees mi hat, puedes cambiarlo de color, y afortunadamente esto se puede revertir.";
+		next;
+		menu
+		"Pintar de Azul",blu,"Pintar de Rojo",black,"Revertir Original",revert;
+
+		blu:
+		mes "[^000000Tiger Mask^000000]";
+		mes "Para esto necesitare el hat original y un Cobaltblue Dyestuffs.";
+		mes "vere si lo tienes y procedere con el recolor.";
+		next;
+		if (countitem(5098) < 1 || countitem(978) < 1) goto Falta2;
+		progressbar "ffff00",1;
+		delitem 5098,1;
+		delitem 978,1;
+		specialeffect2 18;
+		getitem 18582,1;
+		mes "[^000000Tiger Mask^000000]";
+		mes "Aqui tienes, es el color Azul.";
+		end;
+	
+		black:
+		mes "[^000000Tiger Mask^000000]";
+		mes "Para esto necesitare el hat original y un Scarlet Dyestuffs.";
+		mes "vere si lo tienes y procedere con el recolor.";
+		next;
+		if (countitem(5098) < 1 || countitem(975) < 1) goto Falta2;
+		progressbar "ffff00",1;
+		delitem 5098,1;
+		delitem 975,1;
+		specialeffect2 18;
+		getitem 18581,1;
+		mes "[^000000Tiger Mask^000000]";
+		mes "Aqui tienes, es el color Rojo.";
+		end;	
+	
+		revert:
+		cutin "",255;
+		mes "[^000000Tiger Mask^000000]";
+		mes "Dime cual de los 2 hats tienes, para revertir al original?";
+		next;
+		menu
+		"Blue",blurev,"Red",blarev;
+
+		blurev:
+		cutin "",255;
+		if (countitem(18582) < 1) goto Falta3;	
+		delitem 18582,1;
+		specialeffect2 18;
+		getitem 5098,1;
+		mes "[^000000Tiger Mask^000000]";
+		mes "El hat se ha revertido al original";
+		end;
+	
+		blarev:
+		cutin "",255;
+		if (countitem(18581) < 1) goto Falta3;
+		specialeffect2 18;
+		delitem 18581,1;
+		getitem 5098,1;
+		mes "[^000000Tiger Mask^000000]";
+		mes "El hat se ha revertido al original";
+		end;	
+		
+		Falta2:
+		cutin "",255;
+		mes "[^000000Tiger Mask^000000]";
+		mes "No tienes lo necesario para esta modificacion.";
+		end;
+		
+		Falta3:
+		cutin "",255;
+		mes "[^000000Tiger Mask^000000]";
+		mes "No tienes el Hat para revertir.";
+		end;		
+
+		L_partir:
+		mes "[^000000Tiger Mask^000000]";
+		mes "Buen dia";
+		close;
+	
+		ontouch:
+		specialeffect2 709;
+		sleep2 500;
+		specialeffect2 682;	
+		end;
+	}
+	
+//================================-----------Scarf-----------======================================
+celestiaj,140,77,4	script	Scarf	10283,4,4,{	
+	mes "[^000000Scarf^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte una Scarf, te interesa?";
+	mes "<ITEM>Scarf (1)<INFO>42077</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Scarf^000000]";
+		mes "^FF0000100^000000 Matchsticks"; //7035
+		mes "^FF0000200^000000 Old White Cloths"; //7751
+		mes "^FF0000100^000000 Opal"; //727
+		mes "^FF0000300^000000 White Spider Limb"; //6325
+		mes "^FF0000300^000000 Small Bradium"; //6319		
+		mes "^FF0000200^000000 Fur"; //6020	
+		mes "^FF000020^000000 White Dyestuffs"; //982
+		mes "^FF0000500^000000 Alcohol"; //970
+		mes "^0000FF10,000,000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(7035) < 100) goto L_manque;
+		if(countitem(7751) < 200) goto L_manque;
+		if(countitem(727) < 100) goto L_manque;
+		if(countitem(6325) < 300) goto L_manque;
+		if(countitem(6319) < 300) goto L_manque;
+		if(countitem(6020) < 200) goto L_manque;
+		if(countitem(982) < 20) goto L_manque;
+		if(countitem(970) < 500) goto L_manque;		
+		if(Zeny < 10000000) goto L_manque;
+		mes "[^000000Scarf^000000]";
+		mes "Aqui esta tu Scarf";
+		delitem 7035,100;
+		delitem 7751,200;
+		delitem 727,100;
+		delitem 6325,300;		
+		delitem 6319,300;		
+		delitem 6020,200;
+		delitem 982,20;
+		delitem 970,500;
+		set Zeny, Zeny - 10000000;
+		getitem 42077,1;
+		close;
+
+	L_manque:
+		mes "[^000000Scarf^000000]";
+		mes "Te faltan: ";
+		if(countitem(7035) < 100) mes "^FF0000"+(100 - countitem(7035)) +"^000000 Match Sticks";	
+		if(countitem(7751) < 200) mes "^FF0000"+(200 - countitem(7751)) +"^000000 Old White Cloths";
+		if(countitem(727) < 100) mes "^FF0000"+(100 - countitem(727)) +"^000000 Opals";
+		if(countitem(6325) < 300) mes "^FF0000"+(300 - countitem(6325)) +"^000000 White Spider Limb";
+		if(countitem(6319) < 300) mes "^FF0000"+(300 - countitem(6319)) +"^000000 Small Bradium";		
+		if(countitem(6020) < 200) mes "^FF0000"+(200 - countitem(6020)) +"^000000 Fur";
+		if(countitem(982) < 20) mes "^FF0000"+(20 - countitem(982)) +"^000000 White Dyestuffs";		
+		if(countitem(970) < 500) mes "^FF0000"+(500 - countitem(970)) +"^000000 Alcohol";
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";		
+		close;
+
+	L_partir:
+		mes "[^000000Scarf^000000]";
+		mes "Buen dia";
+		close;
+		
+	ontouch:
+	specialeffect2 709;
+	sleep2 500;
+	specialeffect2 682;	
+	end;		
+	}
+
+//================================-----------Charm of Flame Heart-----------======================================
+celestiaj,61,73,6	script	Flame Heart Charm	579,7,4,{
+	mes "[^000000Charm of Flame Heart^000000]";
+	mes "Hola!";
+	mes "Sabias que puedo fabricar el lower elemental de fuego!";
+	mes "<ITEM>Charm of Flame Heart<INFO>5926</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Charm of Flame Heart^000000]";
+		mes "^FF00001^000000 Pasana Card"; //4099
+		mes "^FF00001^000000 Jakk Card"; //4109
+		mes "^FF00001^000000 Kaho Card"; //4065
+		mes "^FF00001^000000 Unidentified Ore"; //6048
+		mes "^FF000010^000000 Emperium"; //714
+		close;
+
+	L_check:
+		if(countitem(4099) < 1) goto L_manque;
+		if(countitem(4109) < 1) goto L_manque;
+		if(countitem(4065) < 1) goto L_manque;
+		if(countitem(6048) < 1) goto L_manque;
+		if(countitem(714) < 10) goto L_manque;
+		
+		mes "[^000000Charm of Flame Heart^000000]";
+		mes "Comenzamos";
+		delitem 4099,1;
+		delitem 4109,1;
+		delitem 4065,1;		
+		delitem 6048,1;		
+		delitem 714,10;
+
+		specialeffect 101;
+		sleep2 500;
+		cutin "mocseal_fire02",2;
+		sleep2 1000;
+		specialeffect 518;
+		cutin "mocseal_fire01",2;
+		sleep2 1000;
+		cutin "",255;
+		specialeffect2 18;
+		getitem 5926,1;
+		mes "Aqui tienes.. espero que te guste!";
+		close;
+
+	L_manque:
+		mes "[^000000Charm of Flame Heart^000000]";
+		mes "Te faltan: ";
+		if(countitem(4099) < 1) mes "^FF0000"+(1 - countitem(4099)) +"^000000 Pasana Card";	
+		if(countitem(4109) < 1) mes "^FF0000"+(1 - countitem(4109)) +"^000000 Jakk Card";
+		if(countitem(4065) < 1) mes "^FF0000"+(1 - countitem(4065)) +"^000000 Kaho Card";
+		if(countitem(6048) < 1) mes "^FF0000"+(1 - countitem(6048)) +"^000000 Unidentified Ore";
+		if(countitem(714) < 10) mes "^FF0000"+(10 - countitem(714)) +"^000000 Emperium";		
+		close;
+
+	L_partir:
+		mes "[^000000Charm of Flame Heart^000000]";
+		mes "Buen dia";
+		close;
+		
+	ontouch:
+	specialeffect 410;
+	end;		
+	}
+
+//================================-----------Charm of Mystic Frozen-----------======================================
+celestiaj,61,68,6	script	Mystic Frozen Charm	582,7,4,{
+	mes "[^000000Charm of Mystic Frozen^000000]";
+	mes "Hola!";
+	mes "Sabias que puedo fabricar el lower elemental de hielo!";
+	mes "<ITEM>Charm of Mystic Frozen<INFO>5927</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+			mes "[^000000Charm of Mystic Frozen^000000]";
+		mes "^FF00001^000000 Swordfish Card"; //4089
+		mes "^FF00001^000000 Marse Card"; //4095
+		mes "^FF00001^000000 Vadon Card"; //4049
+		mes "^FF00001^000000 Unidentified Ore"; //6048
+		mes "^FF000010^000000 Emperium"; //714
+		close;
+
+	L_check:
+		if(countitem(4089) < 1) goto L_manque;
+		if(countitem(4095) < 1) goto L_manque;
+		if(countitem(4049) < 1) goto L_manque;
+		if(countitem(6048) < 1) goto L_manque;
+		if(countitem(714) < 10) goto L_manque;
+		
+		mes "[^000000Charm of Mystic Frozen^000000]";
+		mes "Comenzamos";
+		delitem 4089,1;
+		delitem 4095,1;
+		delitem 4049,1;		
+		delitem 6048,1;		
+		delitem 714,10;
+
+		specialeffect 101;
+		sleep2 500;
+		cutin "mocseal_ice02",2;
+		sleep2 1000;
+		specialeffect 518;
+		cutin "mocseal_ice01",2;
+		sleep2 1000;
+		cutin "",255;
+		specialeffect2 18;
+		getitem 5927,1;
+		mes "Aqui tienes.. espero que te guste!";
+		
+		
+		close;
+
+	L_manque:
+		mes "[^000000Charm of Mystic Frozen^000000]";
+		mes "Te faltan: ";
+		if(countitem(4089) < 1) mes "^FF0000"+(1 - countitem(4089)) +"^000000 Swordfish Card";	
+		if(countitem(4095) < 1) mes "^FF0000"+(1 - countitem(4095)) +"^000000 Marse Card";
+		if(countitem(4049) < 1) mes "^FF0000"+(1 - countitem(4049)) +"^000000 Vadon Card";
+		if(countitem(6048) < 1) mes "^FF0000"+(1 - countitem(6048)) +"^000000 Unidentified Ore";
+		if(countitem(714) < 10) mes "^FF0000"+(10 - countitem(714)) +"^000000 Emperium";		
+		close;
+
+	L_partir:
+		mes "[^000000Charm of Mystic Frozen^000000]";
+		mes "Buen dia";
+		close;
+		
+	ontouch:
+	specialeffect 410;
+	end;		
+	}
+
+//================================-----------Charm of Rough Wind-----------======================================
+celestiaj,61,63,6	script	Rough Wind Charm	583,7,4,{
+	mes "[^000000Charm of Rough Wind^000000]";
+	mes "Hola!";
+	mes "Sabias que puedo fabricar el lower elemental de viento!";
+	mes "<ITEM>Charm of Rough Wind<INFO>5928</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+	mes "[^000000Charm of Rough Wind^000000]";
+	mes "^FF00001^000000 Dokkebi Card"; //4098
+	mes "^FF00001^000000 Steel ChonChon Card"; //4042
+	mes "^FF00001^000000 Drainliar Card"; //4069
+	mes "^FF00001^000000 Unidentified Ore"; //6048
+	mes "^FF000010^000000 Emperium"; //714
+	close;
+
+	L_check:
+		if(countitem(4098) < 1) goto L_manque;
+		if(countitem(4042) < 1) goto L_manque;
+		if(countitem(4069) < 1) goto L_manque;
+		if(countitem(6048) < 1) goto L_manque;
+		if(countitem(714) < 10) goto L_manque;
+		
+	mes "[^000000Charm of Rough Wind^000000]";
+	mes "Comenzamos";
+	delitem 4098,1;
+	delitem 4042,1;
+	delitem 4069,1;		
+	delitem 6048,1;		
+	delitem 714,10;
+	specialeffect 101;
+	sleep2 500;
+	cutin "mocseal_wind02",2;
+	sleep2 1000;
+	specialeffect 518;
+	cutin "mocseal_wind01",2;
+	sleep2 1000;
+	cutin "",255;
+	specialeffect2 18;
+	getitem 5928,1;
+	mes "Aqui tienes.. espero que te guste!";
+	close;
+
+	L_manque:
+		mes "[^000000Charm of Rough Wind^000000]";
+		mes "Te faltan: ";
+		if(countitem(4098) < 1) mes "^FF0000"+(1 - countitem(4098)) +"^000000 Dokebi Card";	
+		if(countitem(4042) < 1) mes "^FF0000"+(1 - countitem(4042)) +"^000000 Steel ChonChon Card";
+		if(countitem(4069) < 1) mes "^FF0000"+(1 - countitem(4069)) +"^000000 Drainliar Card";
+		if(countitem(6048) < 1) mes "^FF0000"+(1 - countitem(6048)) +"^000000 Unidentified Ore";
+		if(countitem(714) < 10) mes "^FF0000"+(10 - countitem(714)) +"^000000 Emperium";		
+		close;
+
+	L_partir:
+		mes "[^000000Charm of Rough Wind^000000]";
+		mes "Buen dia";
+		close;
+
+	ontouch:
+	specialeffect 410;
+	end;		
+	}
+
+
+//================================-----------Charm of Great Nature-----------======================================
+celestiaj,61,58,6	script	Charm of Great Nature	581,7,4,{
+	mes "[^000000Charm of Great Nature^000000]";
+	mes "Hola!";
+	mes "Sabias que puedo fabricar el lower elemental de tierra!";
+	mes "<ITEM>Charm of Great Nature<INFO>5929</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+	L_required:
+	mes "[^000000Charm of Great Nature^000000]";
+	mes "^FF00001^000000 Sandman Card"; //4101
+	mes "^FF00001^000000 Hode Card"; //4081
+	mes "^FF00001^000000 Mandragora Card"; //4030
+	mes "^FF00001^000000 Unidentified Ore"; //6048
+	mes "^FF000010^000000 Emperium"; //714
+	close;
+
+	L_check:
+		if(countitem(4101) < 1) goto L_manque;
+		if(countitem(4081) < 1) goto L_manque;
+		if(countitem(4030) < 1) goto L_manque;
+		if(countitem(6048) < 1) goto L_manque;
+		if(countitem(714) < 10) goto L_manque;
+		
+	mes "[^000000Charm of Great Nature^000000]";
+	mes "Comenzamos";
+	delitem 4101,1;
+	delitem 4081,1;
+	delitem 4030,1;		
+	delitem 6048,1;		
+	delitem 714,10;
+	specialeffect 101;
+	sleep2 500;
+	cutin "mocseal_earth02",2;
+	sleep2 1000;
+	specialeffect 518;
+	cutin "mocseal_earth01",2;
+	sleep2 1000;
+	cutin "",255;
+	specialeffect2 18;
+	getitem 5929,1;
+	mes "Aqui tienes.. espero que te guste!";
+	close;
+
+	L_manque:
+	mes "[^000000Charm of Great Nature^000000]";
+		mes "Te faltan: ";
+		if(countitem(4101) < 1) mes "^FF0000"+(1 - countitem(4101)) +"^000000 Sandman Card";	
+		if(countitem(4081) < 1) mes "^FF0000"+(1 - countitem(4081)) +"^000000 Hode Card";
+		if(countitem(4030) < 1) mes "^FF0000"+(1 - countitem(4030)) +"^000000 Mandragora Card";
+		if(countitem(6048) < 1) mes "^FF0000"+(1 - countitem(6048)) +"^000000 Unidentified Ore";
+		if(countitem(714) < 10) mes "^FF0000"+(10 - countitem(714)) +"^000000 Emperium";		
+		close;
+
+	L_partir:
+	mes "[^000000Charm Charm of Great Nature^000000]";
+		mes "Buen dia";
+		close;
+		
+	ontouch:
+	specialeffect 410;
+	end;		
+	}
+
+
+//================================-----------Fox Ears----------======================================
+celestiaj,39,144,6	script	Kitsune EarBell Ribbon	1150,9,9,{
+	mes "[^000000Kitsune Earbell Ribbon^000000]";
+	mes "Hola! Me alegra que descubrieras como llegar!";
+	mes "Sabias que puedo fabricar un Kitsune Earbell Ribbon! aqui una vista previa:";
+	mes "<ITEM>Kitsune Earbell Ribbon<INFO>18934</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"^B40404TRANSFORMAR A COSTUME^000000",costama,"Salir",L_partir;
+
+
+	L_required:
+	mes "[^000000Kitsune Earbell Ribbon^000000]";
+	mes "Has venido al mejor lugar, te cuento que hacer mi objeto te ayudara a farmear items de las old blue box, algunos raros que puedes usar para desbloquear portales o algunas quest! es ganancia segura!";
+	next;
+	mes "[^000000Kitsune Earbell Ribbon^000000]";
+	mes "Para hacerlo Necesitas:";
+	mes "^FF00001^000000 Elven Ears"; //2286
+	mes "^FF00001000^000000 Ninetails"; //1022
+	mes "^FF00002^000000 Golden Bells (id: 10016)"; //10016
+	mes "^FF00001^000000 Circlet (id: 2233)"; //2233
+	mes "^FF00005^000000 Gold (id: 969 )"; //969
+	close;
+	
+	L_check:
+		if(countitem(2286) < 1) goto L_manque;
+		if(countitem(1022) < 1000) goto L_manque;
+		if(countitem(10016) < 2) goto L_manque;
+		if(countitem(2233) < 1) goto L_manque;
+		if(countitem(969) < 5) goto L_manque;
+		
+		mes "[^000000Kitsune Earbell Ribbon^000000]";
+		delitem 2286,1;
+		delitem 1022,1000;
+		delitem 10016,2;		
+		delitem 2233,1;		
+		delitem 969,5;
+		getitem 18934,1;
+		specialeffect2 18;
+		mes "Aqui tienes.. espero que te guste!";
+		close;
+		
+	L_manque:
+	mes "[^000000Kitsune Earbell Ribbon^000000]";
+		mes "Te faltan: ";
+		if(countitem(2286) < 1) mes "^FF0000"+(1 - countitem(2286)) +"^000000 Elven Ear";	
+		if(countitem(1022) < 1000) mes "^FF0000"+(1000 - countitem(1022)) +"^000000 Ninetails";
+		if(countitem(10016) < 2) mes "^FF0000"+(2 - countitem(10016)) +"^000000 Golden Bell";
+		if(countitem(2233) < 1) mes "^FF0000"+(1 - countitem(2233)) +"^000000 Circlet ";
+		if(countitem(969) < 5) mes "^FF0000"+(5 - countitem(969)) +"^000000 Gold";		
+		close;
+
+		costama:
+		mes "[^000000Kitsune Earbell Ribbon^000000]";
+		mes "Si posees mi creacion, podras convertirla en una de sus 4 posibles costumes.";
+		next;
+		mes "[^000000Kitsune Earbell Ribbon^000000]";
+		mes "El objeto perdera su funcion normal, su defensa, su refine, slot, enchant y cartas compuestas.";
+		next;
+		mes "[^000000Kitsune Earbell Ribbon^000000]";
+		mes "Pero conservara la funcion de transformarte y el autobonus de critical, Por cierto, te transformaras en una moonlight del mismo color del costume!.";
+		next;
+		mes "[^000000Kitsune Earbell Ribbon^000000]";
+		mes "Elige un objeto del menu para intentar transformarlo, esta accion no se podra revertir una vez hayas elegido un modelo.";	
+		next;
+		menu 
+		"Costume Fox Ear Ribbon mismo color.",cnormal,
+		"Costume Black Fox Ear Ribbon.",cblack,
+		"Costume White Fox Ear Bibbon",cwhite,
+		"Costume Fox Ears of Tamamo Loa",tamaoloa,
+		"Salir",L_partir;
+
+		cnormal:	
+		if (countitem(18934)< 1) callsub Falta;
+		delitem 18934,1;
+		specialeffect2 18;
+		getitem 20262,1;
+		end;		
+		
+		cblack:	
+		if (countitem(18934)< 1) callsub Falta;
+		delitem 18934,1;
+		specialeffect2 18;
+		getitem 31475,1;
+		end;
+
+		cwhite:	
+		if (countitem(18934)< 1) callsub Falta;
+		delitem 18934,1;
+		specialeffect2 18;
+		getitem 20269,1;
+		end;
+	
+		tamaoloa:
+		if (countitem(18934)< 1) callsub Falta;
+		delitem 18934,1;
+		specialeffect2 18;
+		getitem 31098,1;
+		end;		
+		
+
+		Falta:
+		mes "[^000000Kitsune Earbell Ribbon^000000]";
+		mes "No tienes el hat que te he creado para poder transformarlo a costume.";
+		end;	
+	
+		L_partir:
+		mes "[^000000Kitsune Earbell Ribbon^000000]";
+		mes "Buen dia";
+		close;
+		
+		
+		ontouch:
+		emotion ET_HUK;
+		end;		
+}
+	
+//================================-----------Spectacle Wing----------======================================
+celestiaj,71,82,6	script	Rufaku	528,5,5,{
+cutin "rufaku",2;
+mes "^6600CCWing Form Spectacle^000000";
+mes "Como estas, "+strcharinfo(0)+", Sabias que puedo hacerte unos divertidos sunglasses con slot?.";
+mes "<ITEM>Wing Form Spectacle<INFO>18808</INFO></ITEM>.";
+mes "te puedo hacer uno si me traes lo siguiente:";
+next;
+mes "^6600CCWing Form Spectacle^000000";
+mes "- 1 Sunglass (1) con slot "; // 2202
+mes "- Nightmare Card"; // 4127
+mes "- 1 Unidentified Ore"; // 6048
+mes "- 5,000,000 Zeny"; //
+next;
+
+menu
+"^088A08Crear Wing Form Spectacle^000000",wfe,"^F00000Cancelar^000000",L_sal;
+wfe:
+mes "^6600CCWing Form Spectacle^000000";
+mes "Veamos si tienes todo!.";
+next;
+if( countitem(2202) < 1 || countitem(4127) < 1 || countitem(6048) < 1) callsub Falta;
+if(Zeny < 5000000 ) callsub Faltaz;
+progressbar "ffff00",1;
+delitem 2202,1;
+delitem 4127,1;
+delitem 6048,1;
+set Zeny, Zeny - 5000000;
+specialeffect 101; 
+specialeffect2 622;
+getitem 18808,1;
+
+mes "^6600CCWing Form Spectacle^000000";
+mes "Disfruta mi Hat!";
+cutin "",255;
+end;
+
+Falta:
+mes "^6600CCWing Form Spectacle^000000";
+mes "^FF0000Te faltan items.^000000";
+cutin "",255;
+end;
+
+Faltaz:
+mes "^6600CCWing Form Spectacle^000000";
+mes "No tienes suficiente zeny para pagarme...";
+cutin "",255;
+end;
+
+ontouch:
+specialeffect 191;
+end;
+
+L_sal:
+mes "^6600CCWing Form Spectacle^000000";
+mes "Hasta pronto.";
+cutin "",255;
+close;
+}
+
+
+//================================-----------Star-Spangled Bandanna----------======================================
+celestiaj,80,82,4	script	Jill	756,7,7,{
+
+cutin "4fson",2;
+mes "^6600CCUSA Bandanna^000000";
+mes "Como estas, "+strcharinfo(0)+", Te confeccionare el objeto mas increible?.";
+mes "<ITEM>Star-Spangled Bandanna<INFO>5876</INFO></ITEM>.";
+mes "te puedo hacer esta maravilla si me traes lo siguiente:";
+next;
+mes "^6600CCUSA Bandanna^000000";
+mes "- 1 Red Silk Seal ID: 2700"; // 2700
+mes "- 200 <ITEM>Blood of Wolf<INFO>6252</INFO></ITEM>"; // 6252
+mes "- 100 <ITEM>Twin-Horned Helmet<INFO>6323</INFO></ITEM>"; // 6323
+mes "- 100 <ITEM>Yarn<INFO>7038</INFO></ITEM>"; // 7038
+mes "- 1 <ITEM>Blue Anolian Skin<INFO>8970</INFO></ITEM> ID: 8970"; // 8970
+mes "- 5,000,000 Zeny";
+next;
+
+menu
+"^088A08Star-Spangled Bandanna^000000",band,"^F00000Cancelar^000000",L_sal;
+
+band:
+mes "^6600CCUSA Bandanna^000000";
+mes "Veamos si tienes todo!.";
+next;
+if( countitem(2700) < 1 || countitem(6252) < 200 || countitem(6323) < 100 || countitem(7038) < 100 || countitem(8970) < 1) callsub Falta;
+if(Zeny < 5000000 ) callsub Faltaz;
+
+progressbar "ffff00",1;
+delitem 2700,1;
+delitem 6252,200;
+delitem 6323,100;
+delitem 7038,100;
+delitem 8970,1;
+set Zeny, Zeny - 5000000;
+specialeffect 101;
+specialeffect 969;
+specialeffect2 622;
+getitem 5876,1;
+
+mes "^6600CCUSA Bandanna^000000";
+mes "Disfruta mi Hat!";
+cutin "",255;
+end;
+
+Falta:
+mes "^6600CCUSA Bandanna^000000";
+mes "^FF0000Te faltan items.^000000";
+cutin "",255;
+end;
+
+Faltaz:
+mes "^6600CCUSA Bandanna^000000";
+mes "No tienes suficiente zeny para pagarme...";
+cutin "",255;
+end;
+
+ontouch:
+emotion ET_CHUPCHUP;
+sleep2 200;
+specialeffect 509;
+end;
+
+L_sal:
+mes "^6600CCUSA Bandanna^000000";
+mes "Hasta pronto.";
+cutin "",255;
+close;
+}
+
+
+//================================-----------Captain's Hat-----------======================================
+celestiaj,33,138,6	script	Captain Felock	873,{
+	cutin "fly_felrock",2;
+	mes "[^000000Captain Felock^000000]";
+	mes "Hola "+strcharinfo(0)+"!";
+	mes "Puedo hacerte un Ship Captain's Hat, te interesa?";
+	mes "<ITEM>Ship Captain's Hat(1)<INFO>5359</INFO></ITEM>.";	
+	next;
+	menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"^0000FFCAMBIAR COLOR^000000",recolor,"Salir",L_partir;
+	L_required:
+		mes "[^000000Captain Felock^000000]";
+		mes "^FF00001^000000 Boy's Cap"; //5016
+		mes "^FF00001^000000 Antlers"; //2284
+		mes "^FF000010^000000 Skirt of Virgin"; //1049 
+		mes "^FF000010^000000 Scarlet Dyestuffs"; //975
+		mes "^FF000050^000000 Candy Cane"; //530 		
+		mes "^FF0000100^000000 Black Cat Doll"; //7206
+		mes "^FF0000100^000000 Well-Baked Cookie"; //538
+		mes "^FF0000100^000000 Puppet"; //740
+		mes "^FF0000100^000000 Striped Sock"; //7219
+		mes "^0000FF1,000,000^000000 zeny";
+		cutin "",255;
+		close;
+
+	L_check:
+		cutin "",255;
+		if(countitem(5016) < 1) goto L_manque;
+		if(countitem(2284) < 1) goto L_manque;		
+		if(countitem(1049) < 10) goto L_manque;
+		if(countitem(975) < 10) goto L_manque;
+		if(countitem(530) < 50) goto L_manque;
+		if(countitem(7206) < 100) goto L_manque;
+		if(countitem(538) < 100) goto L_manque;		
+		if(countitem(740) < 100) goto L_manque;
+		if(countitem(7219) < 100) goto L_manque;
+		if(Zeny < 1000000) goto L_manque;
+		
+		mes "[^000000Captain Felock^000000]";
+		mes "Aqui tienes tu Captain's Ship Hat";
+		delitem 5016,1;
+		delitem 2284,1;
+		delitem 1049,10;
+		delitem 975,10;	
+		delitem 530,50;		
+		delitem 7206,100;
+		delitem 538,100;
+		delitem 740,100;
+		delitem 7219,100;		
+		set Zeny, Zeny - 1000000;
+		announce ""+strcharinfo(0)+" ha creado un Captain's Ship Hat.",bc_all,0xFFFF00;
+		getitem 5359,1;
+		close;
+
+		recolor:
+		cutin "",255;
+		mes "[^000000Captain Felock^000000]";
+		mes "Que tal "+strcharinfo(0)+", Si posees mi hat, puedes cambiarlo de color, y afortunadamente esto se puede revertir.";
+		next;
+		menu
+		"Pintar de Azul",blu,"Pintar de Negro",black,"Revertir Original",revert;
+
+		blu:
+		mes "[^000000Captain Felock^000000]";
+		mes "Para esto necesitare el hat original y un Cobaltblue Dyestuffs.";
+		mes "vere si lo tienes y procedere con el recolor.";
+		next;
+		if (countitem(5359) < 1 || countitem(978) < 1) goto Falta2;
+		progressbar "ffff00",1;
+		delitem 5359,1;
+		delitem 978,1;
+		specialeffect2 18;
+		getitem 19914,1;
+		mes "[^000000Captain Felock^000000]";
+		mes "Aqui tienes, es el color Azul.";
+		end;
+	
+		black:
+		cutin "",255;
+		mes "[^000000Captain Felock^000000]";
+		mes "Para esto necesitare el hat original y un BlackDyestuffs.";
+		mes "vere si lo tienes y procedere con el recolor.";
+		next;
+		if (countitem(5359) < 1 || countitem(983) < 1) goto Falta2;
+		progressbar "ffff00",1;
+		delitem 5359,1;
+		delitem 983,1;
+		specialeffect2 18;
+		getitem 19144,1;
+		mes "[^000000Captain Felock^000000]";
+		mes "Aqui tienes, es el color Negro.";
+		end;	
+	
+		revert:
+		cutin "",255;
+		mes "[^000000Captain Felock^000000]";
+		mes "Dime cual de los 2 hats tienes, para revertir al original?";
+		next;
+		menu
+		"Blue",blurev,"Black",blarev;
+
+		blurev:
+		cutin "",255;
+		if (countitem(19914) < 1) goto Falta3;	
+		delitem 19914,1;
+		specialeffect2 18;
+		getitem 5359,1;
+		mes "[^000000Captain Felock^000000]";
+		mes "El hat se ha revertido al original";
+		end;
+	
+		blarev:
+		cutin "",255;
+		if (countitem(19144) < 1) goto Falta3;
+		specialeffect2 18;
+		delitem 19144,1;
+		getitem 5359,1;
+		mes "[^000000Captain Felock^000000]";
+		mes "El hat se ha revertido al original";
+		end;	
+		
+	L_manque:
+		mes "[^000000Captain Felock^000000]";
+		mes "Te faltan: ";
+		if(countitem(5016) < 1) mes "^FF0000"+(1 - countitem(5016)) +"^000000 Boy's Cap";
+		if(countitem(2284) < 1) mes "^FF0000"+(1 - countitem(2284)) +"^000000 Antlers";
+		if(countitem(1049) < 10) mes "^FF0000"+(10 - countitem(1049)) +"^000000 Skit of Virgin";
+		if(countitem(975) < 10) mes "^FF0000"+(10 - countitem(975)) +"^000000 Scarlet Dyestuffs";
+		if(countitem(530) < 50) mes "^FF0000"+(50 - countitem(530)) +"^000000 Candy Cane";
+		if(countitem(7206) < 100) mes "^FF0000"+(100 - countitem(7206)) +"^000000 Black Cat Doll";
+		if(countitem(538) < 100) mes "^FF0000"+(100 - countitem(538)) +"^000000 Well-Baked Cookie";
+		if(countitem(740) < 100) mes "^FF0000"+(100 - countitem(740)) +"^000000 Puppet";
+		if(countitem(7219) < 100) mes "^FF0000"+(100 - countitem(7219)) +"^000000 Stripped Sock";		
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";	
+		cutin "",255;
+		close;
+	
+		Falta2:
+		cutin "",255;
+		mes "[^000000Captain Felock^000000]";
+		mes "No tienes lo necesario para esta modificacion.";
+		end;
+		
+		Falta3:
+		cutin "",255;
+		mes "[^000000Captain Felock^000000]";
+		mes "No tienes el Hat para revertir.";
+		end;
+				
+		
+	L_partir:
+		cutin "",255;
+		mes "[^000000Captain Felock^000000]";
+		mes "Buen dia";
+		close;	
+	}
+	
+//================================-----------Black Feather Beret----------======================================
+celestiaj,89,80,4	script	Black Feather Beret	709,{
+
+mes "^6600CCBlack Feather Beret^000000";
+mes "Como estas, "+strcharinfo(0)+", Te confeccionare un objeto especial.";
+mes "<ITEM>Black Feather Beret<INFO>18561</INFO></ITEM>.";
+mes "te puedo hacer esta maravilla si me traes lo siguiente:";
+next;
+mes "^6600CCBlack Feather Beret^000000";
+mes "- 1 <ITEM>Black Beret<INFO>42020</INFO></ITEM>"; // 42020
+mes "- 200 <ITEM>Golden Bracelet<INFO>7435</INFO></ITEM>"; // 7435
+mes "- 500 <ITEM>Soft Feather<INFO>7063</INFO></ITEM>"; // 7063
+mes "- 1000 <ITEM>Rune of Darkness<INFO>7511</INFO></ITEM>"; // 7511
+mes "- 10,000,000 Zeny";
+next;
+
+menu
+"^088A08Black Feather Beret^000000",bfber,"^F00000Cancelar^000000",L_sal;
+
+bfber:
+mes "^6600CCBlack Feather Beret^000000";
+mes "Veamos si tienes todo!.";
+next;
+if( countitem(42020) < 1 || countitem(7435) < 200 || countitem(7063) < 500 || countitem(7511) < 1000) callsub Falta;
+if(Zeny < 10000000 ) callsub Faltaz;
+specialeffect 101;
+progressbar "ffff00",1;
+delitem 42020,1;
+delitem 7435,200;
+delitem 7063,500;
+delitem 7511,1000;
+set Zeny, Zeny - 10000000;
+specialeffect2 18;
+getitem 18561,1;
+mes "^6600CCBlack Feather Beret^000000";
+mes "Disfruta mi Hat!";
+end;
+
+Falta:
+mes "^6600CCBlack Feather Beret^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+Faltaz:
+mes "^6600CCBlack Feather Beret^000000";
+mes "No tienes suficiente zeny para pagarme...";
+end;
+
+L_sal:
+mes "^6600CCBlack Feather Beret^000000";
+mes "Hasta pronto.";
+close;
+}	
+	
+	
+//================================-----------White Feather----------======================================
+celestiaj,90,70,4	script	White Feather	908,{
+
+mes "^6600CCWhite Feather^000000";
+mes "Como estas, "+strcharinfo(0)+", Puedo hacer otra variable del beret.";
+mes "<ITEM>White Feather<INFO>18573</INFO></ITEM>.";
+mes "es muy diferente a lo usual..";
+next;
+mes "^6600CCWhite Feather^000000";
+mes "- 1 Beret (Normal)"; // 5172
+mes "- 50 Soft Silk"; // 7166 
+mes "- 100 <ITEM>Soft Feather<INFO>7063</INFO></ITEM>"; // 7063
+mes "- 5,000,000 Zeny";
+next;
+
+menu
+"^088A08White Feather^000000",whitber,"^F00000Cancelar^000000",L_sal;
+
+whitber:
+mes "^6600CCWhite Feather^000000";
+mes "Veamos si tienes todo!.";
+next;
+if( countitem(5172) < 1 || countitem(7166) < 50 || countitem(7063) < 100) callsub Falta;
+if(Zeny < 10000000 ) callsub Faltaz;
+specialeffect 101;
+progressbar "ffff00",1;
+delitem 5172,1;
+delitem 7166,50;
+delitem 7063,100;
+set Zeny, Zeny - 50000000;
+specialeffect2 18;
+getitem 18573,1;
+mes "^6600CCWhite Feather^000000";
+mes "Disfruta mi Hat!";
+end;
+
+Falta:
+mes "^6600CCWhite Feather^000000";
+mes "^FF0000Te faltan items.^000000";
+end;
+
+Faltaz:
+mes "^6600CCWhite Feather^000000";
+mes "No tienes suficiente zeny para pagarme...";
+end;
+
+L_sal:
+mes "^6600CCWhite Feather^000000";
+mes "Hasta pronto.";
+close;
+}	
+
+//================================-----------Mosquito Coil-----------======================================
+celestiaj,85,28,4	script	Mosquito Coil	848,5,5,{
+mes "^0000FFMosquito Coil^000000";
+mes "Quieres librarte de los Bichos?";
+mes "<ITEM>Mosquito Coil<INFO>5586</INFO></ITEM>.";
+mes "te puedo hacer uno si me traes lo siguiente:";
+next;
+menu "Que necesito?",L_required,"Claro que si, aqui estan tus items",L_check,"Salir",L_partir;
+
+L_required:
+	mes "^0000FFMosquito Coil^000000";
+	mes "^FF000010^000000 Ora Ora"; // 701
+	mes "^FF0000100^000000 Sticky Poison"; // 7565
+	mes "^FF0000100^000000 Trunk"; // 1019 
+	mes "^FF0000100^000000 Resin"; // 907
+	close;
+
+	L_check:
+		if(countitem(701) < 10) goto L_manque;
+		if(countitem(7565) < 100) goto L_manque;
+		if(countitem(1019) < 100) goto L_manque;
+		if(countitem(907) < 100) goto L_manque;
+		mes "^0000FFMosquito Coil^000000";
+		mes "Aqui esta tu cenicero.";
+		next;
+		delitem 701,10;
+		delitem 7565,100;
+		delitem 1019,100;
+		delitem 907,100;
+		specialeffect2 18;
+		getitem 5586,1;
+		cutin "",255;
+		close;
+
+	L_manque:
+		mes "^0000FFMosquito Coil^000000";
+		mes "Te faltan: ";
+		if(countitem(701) < 10) mes "^FF0000"+(10 - countitem(701)) +"^000000 Ora Ora";
+		if(countitem(7565) < 100) mes "^FF0000"+(100 - countitem(7565)) +"^000000 Sticky Poison";
+		if(countitem(1019) < 100) mes "^FF0000"+(100 - countitem(1019)) +"^000000 Trunk";
+		if(countitem(907) < 100) mes "^FF0000"+(100 - countitem(907)) +"^000000 Resin";
+		close;
+
+	L_partir:
+		mes "^0000FFMosquito Coil^000000";
+		mes "Que no te piquen los bichos.";
+		close;
+		
+	ontouch:	
+	soundeffectall "se_bee_02.wav",0;
+	end;	
+}
+	

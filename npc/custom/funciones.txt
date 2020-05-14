@@ -1,0 +1,192 @@
+function	script	endower	{
+
+	if(endostart == 0){
+	if( countitem(909) < 1) callsub Falta;
+		specialeffect2 583;
+		delitem 909,1;
+		sc_start SC_FIREWEAPON,300000,1;
+		set endostart, 1;
+		end;
+	}
+	if(endostart == 1){
+		specialeffect2 257;
+		sc_start SC_WINDWEAPON,300000,1;
+		set endostart, 2;
+		end;
+	}
+	if(endostart == 2){
+		specialeffect2 116;
+		sc_start SC_WATERWEAPON,300000,1;
+		set endostart, 3;
+		end;
+	}
+	if(endostart == 3){
+		specialeffect2 255;
+		sc_start SC_EARTHWEAPON,300000,1;
+		set endostart, 4;
+		end;
+	}
+	if(endostart == 4){
+		specialeffect2 403;
+		sc_start SC_SHADOWWEAPON,300000,1;
+		set endostart, 0;
+		end;
+	}
+	
+Falta:
+dispbottom "Cuidado! No tienes jellopy para catalyzar! podria explotar el Endower.";
+specialeffect2 3;
+sleep2 300;
+heal -100,0;
+specialeffect2 864;
+if (rand(100) < 2) goto explotion; // 2% 
+end;
+
+explotion:
+dispbottom "El endower ha explotado en mil pedazos!.";
+atcommand "@nuke "+strcharinfo(0)+"";
+delitem 31496,1;
+end;	
+}
+
+function	script	widevision	{
+//	heal -1000,-500;	
+	if (getcharid(1)) {
+		getmapxy(.@map1$, .@x1, .@y1, 0);
+		getpartymember getcharid(1), 1;
+		getpartymember getcharid(1), 2;
+			for(set .@i,0; .@i < $@partymembercount; set .@i,.@i+1) {
+			if (isloggedin($@partymemberaid[.@i], $@partymembercid[.@i])) {
+				attachrid $@partymemberaid[.@i];
+				if (HP > 0) {
+					getmapxy(.@map2$,.@x2,.@y2,0);
+					if ((.@map1$ == .@map2$) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30)) {
+						specialeffect2 43;
+						specialeffect2 572;
+						specialeffect2 500;
+						sc_start SC_INCREASEAGI,400000,10;
+						sc_start SC_BLESSING,400000,10;
+					}
+				}
+			}
+		}
+	} else {
+specialeffect2 43;
+specialeffect2 572;
+specialeffect2 500;
+		sc_start SC_INCREASEAGI,400000,10;
+		sc_start SC_BLESSING,400000,10;
+	}
+	end;
+} 
+
+
+function	script	widetuna	{
+	if (getcharid(1)) {
+		getmapxy(.@map1$, .@x1, .@y1, 0);
+		getpartymember getcharid(1), 1;
+		getpartymember getcharid(1), 2;
+			for(set .@i,0; .@i < $@partymembercount; set .@i,.@i+1) {
+			if (isloggedin($@partymemberaid[.@i], $@partymembercid[.@i])) {
+				attachrid $@partymemberaid[.@i];
+				if (HP > 0) {
+					getmapxy(.@map2$,.@x2,.@y2,0);
+					if ((.@map1$ == .@map2$) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30)) {
+						specialeffect2 572;
+						specialeffect2 500;
+						sc_start SC_TUNAPARTY,720000,20;
+						showscript "Tuna Party!";
+					}
+				}
+			}
+		}
+	} else {
+specialeffect2 572;
+specialeffect2 500;
+sc_start SC_TUNAPARTY,720000,20;
+showscript "Tuna Party!";	
+	}
+	end;
+} 
+
+function	script	randfood	{
+specialeffect2 18;
+setarray .@item_id, 31514,14556,14559,31512,31513,14568;
+getitem .@item_id[rand(getarraysize(.@item_id))], 1;
+sleep2 200;
+specialeffect2 18;
+setarray .@item_id, 31514,14556,14559,31512,31513,14568;
+getitem .@item_id[rand(getarraysize(.@item_id))], 1;
+sleep2 200;
+specialeffect2 18;
+setarray .@item_id, 31514,14556,14559,31512,31513,14568;
+getitem .@item_id[rand(getarraysize(.@item_id))], 1;
+end;
+} 
+
+
+
+function	script	rotaphen	{
+
+	if(rotaphen == 0){
+		specialeffect2 463;
+		showscript strcharinfo(0)+" : 1...";
+		set rotaphen, 1;
+		end;
+	}
+	if(rotaphen == 1){
+		specialeffect2 463;
+		showscript strcharinfo(0)+" : 2...";
+		set rotaphen, 2;
+		end;
+	}
+	if(rotaphen == 2){
+		specialeffect2 463;
+		showscript strcharinfo(0)+" : 3...";
+		set rotaphen, 3;
+		end;
+	}
+	if(rotaphen == 3){
+		specialeffect2 463;
+		showscript strcharinfo(0)+" : 4...";
+		set rotaphen, 4;
+		end;
+	}
+	if(rotaphen == 4){
+		specialeffect2 463;
+		showscript strcharinfo(0)+" : 5...";
+		sleep2 300;
+		specialeffect2 890;
+		specialeffect2 500;
+		sleep2 700;
+		specialeffect2 445;	
+		showscript strcharinfo(0)+" : whaaaaahh......";
+		sleep2 1000;
+		warp "celestiaj", 37, 134;		
+		sleep2 300;
+		specialeffect2 446;
+		sleep2 300;		
+		showscript strcharinfo(0)+" : Pero donde rayos quede?.";
+		emotion ET_QUESTION;
+		set rotaphen, 0;
+		end;
+	}}
+	
+	-	script	PlayBGM	-1,{
+OnInit:
+	setarray .range,1,145;
+	.default = 1;
+	bindatcmd "@bgm","PlayBGM::OnPlay";
+	end;
+	
+OnPlay:
+	input .@bgm;
+	if (.@bgm < .range[0] || .@bgm > .range[1]) {
+		dispbottom "BGM: ("+.range[0]+"-"+.range[1]+")";
+		.@bgm = .default;
+	}
+	.@c$ = .@bgm;
+	.@str$ = (getstrlen(.@c$) == 1)?insertchar(.@c$,"0",0):.@c$;
+	playBGM	.@str$;
+	end;
+}

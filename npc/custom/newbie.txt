@@ -1,0 +1,450 @@
+//------------------------------------------DARK ARGOL FLORIAN SPEED BOSTER----------------------------------------------------
+//--Darkargol DBR
+new_1-1,58,100,4	script	Dark Argol#newbies	531,10,10,{
+
+cutin "jpn_darkalgol04",2;
+mes "^660099Dark Argol^000000";
+mes "Me presento, soy DarkArgol, y aqui me encontraras hasta en la sopa, soy el alter ego de un gm que trabajo el server.";
+next;
+cutin "jpn_darkalgol01",2;
+mes "^660099Dark Argol^000000";
+mes "Mi funcion es dar consejos, ayudar con algun leve buff, y presentarme en situaciones clave! tambien la paso bien aqui ya me veras por ahi jorobando.";
+next;
+cutin "jpn_darkalgol02",2;
+emotion ET_SMILE;
+mes "^660099Dark Argol^000000";
+mes "Tambien encanto armaduras, y otros equipos, solo debes encontrarme en el lugar correcto!.";
+next;
+cutin "jpn_darkalgol01",2;
+mes "^660099Dark Argol^000000";
+mes "Adelante! espero que la pases bien, al principio es duro pero despues te sentiras como en casa.";
+sleep2 2000;
+cutin "",255; 
+end;
+
+ontouch:
+specialeffect 500;
+cutin "jpn_darkalgol08",2;
+specialeffect 273;
+specialeffect2 492;
+sleep2 200;
+cutin "jpn_darkalgol12",2;
+sleep2 200;
+npctalk "Hola, "+strcharinfo(0)+", Bienvenido al Server.";
+cutin "jpn_darkalgol11",2;
+sleep2 200;
+cutin "jpn_darkalgol10",2;
+sleep2 100;
+cutin "",255; 
+sc_start SC_SPEEDUP1,30000,25;
+end;
+}
+
+new_1-1,47,88,5	script	Guardia	105,{
+cutin "prt_soldier",2;
+mes "[Guardia]";
+mes "Hola, "+strcharinfo(0)+", Disfruta tu estadia.";
+close2;
+cutin "",255; 
+}
+
+
+
+//=======================PVP WARPER INTRODUCCION=====================================
+new_1-1,94,114,6	script	PvP Warper#Introduccion	663,{
+cutin "jpn_summer_run01",2;
+mes "^DF013APvP Warper^000000";
+mes "Hola "+strcharinfo(0)+" soy la encargada de enviarte a las Zonas PvP!.";
+next;
+emotion E_SMILE;
+mes "^DF013APvP Warper^000000";
+mes "Estare en cada ciudad, podras revisar tu Rank, y acceder a la tienda de puntos pvp.";
+next;
+mes "^DF013APvP Warper^000000";
+mes "Por cierto que alla no me veras en estas fachas... jeje!";
+close3;
+}
+
+
+//=======================WARPER INTRODUCCION=====================================
+new_1-1,86,114,4	script	Warper#Introduccion	662,{
+cutin "jpn_summer_mid01",2;
+mes "^0000FFPvP Warp^000000";
+mes "Hola "+strcharinfo(0)+" soy el warper del server!";
+mes "si tienes dudas adelante, te respondere cualquier pregunta relacionada a mis servicios.";
+next;
+menu
+
+"^0000CCComo Funciona?^000000",how,"^B40486Tip Rapido^000000",tip,"^CC0000Sacame de este mapa^000000",gopron,"Que haces sin ropa?",desnud;
+
+how:
+mes "^0000FFAgente Warp^000000";
+mes "Los destinos para dungeons y fields deberas ganartelos entregandome objetos, de esta forma desbloquearas absolutamente todos sus accesos desde mi menu, Los warps a ciudades son gratis.";
+next;
+emotion ET_SMILE;
+mes "^0000FFAgente Warp^000000";
+mes "Te dare entre 3 a 5 <ITEM>Poring Coins<INFO>7539</INFO></ITEM> por cada acceso que vayas desbloqueando, Mientras mas dificil o raro el requisito mayor sera la recompensa.";
+mes "Por supuesto que estas monedas no son tradeables, evitamos un abuso de multicuentas restringiendo el trade de monedas.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "No te asustes con este sistema, quiza te intimide, pero creeme, esto es sumamente divertido y a la misma vez productivo, los desbloqueos se aplican a todos los personajes de tu cuenta por lo que solo te bastara hacerlo una vez.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Si no puedes desbloquear no te preocupes, podre seguir enviandote pero unicamente a la entrada de los primeros nivel, salvo unas exepciones como Brasilis, Gefenia, Dewata entre otros.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Con Thanatos Tower hay 2 formas de desbloquear los 12 niveles, una de ellas es entregandome cada uno de los 4 fragmentos de los minibosses!, la otra es mediante quest, si conviertes todas las llaves en piedras y las depositas en sus respectivas estatuas, desbloquearas todos los pisos de Thanatos.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Estare en cada ciudad brindando este servicio, siempre que quieras ir a otros lugares, yo estare ahi!, suerte!.";
+close3;
+
+gopron:
+emotion ET_CRY;
+mes "^0000FFAgente Warp^000000";
+mes "Te enviare a prontera, recuerda hablar con la Kafra para guardar tu respawn, si quieres volver a este sitio basta con usar el comando @go";
+next;
+cutin "",255;
+specialeffect 543; specialeffect2 543; sleep2 250;
+warp "prontera",155,183;
+end;
+
+tip:
+emotion ET_SCRATCH;
+mes "^0000FFAgente Warp^000000";
+mes "Hmm.. que te puedo decir?";
+next;
+mes "^0000FFAgente Warp^000000";
+emotion ET_SMILE;
+mes "Guarda objetos que consideres raros de encontrar, no se de donde vendras pero aqui no existe nada que no sea util.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Ves esos lunatics de treboles? Te dire que con la Rainbow Carrot desbloqueas prontera fields, y con el 4 Leaf Clover desbloqueas Abyss Lakes.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "En tu lista de inventario tienes la pestaña favoritos y un boton de NPC Sale Lock, todo lo que deposites ahi sera omitido en las tiendas cuando vendas algo, esto evitara que vendas algun objeto que necesitabs conservar.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Estas son todas las recomendaciones que puedo darte!, buscame en la ciudad y descubriras como funciono, no tiene ciencia.";
+mes "Buena suerte.";
+close3;
+
+desnud:
+emotion ET_SMILE;
+mes "^0000FFAgente Warp^000000";
+mes "en mis dias libres vengo a nadar en esta pequeña laguna!, tambien puedes ir a la playa de Comodo si te interesa ver mi six pack! xD";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "HEY... Tambien soy humano, tengo mis necesidades hehe! cuidate ok?";
+close3;
+}
+
+//-----------------------------------------------------PACK NOVICE-----------------------------------------------------------
+new_1-1,52,64,4	script	Sailor Cato#snewb	545,{
+mes "[Sailor Cato]";
+mes "Hola, Ya llegamos a Rune Midgarts.";
+next;
+mes "[Sailor Cato]";
+mes "Me encargo de brindar a los nuevos, equipo de novice basico, algunas pociones y un garment costume a elegir.";
+next;
+if(!#Freebie) {
+		mes "[Sailor Cato]";
+		mes "Elige uno:";
+		mes "Lo resaltado es para visualizar.";
+		mes "<ITEM>Exe Backpack<INFO>20513</INFO></ITEM>.";
+		mes "<ITEM>Black Cat Backpack<INFO>20518</INFO></ITEM>.";
+		mes "<ITEM>Teddy bear Backpack<INFO>20596</INFO></ITEM>.";
+
+		next;
+		switch(select("Exe Backpack:Black Cat Backpack:TeddyBear Backpack")) {
+		case 1:
+			getitem 33517,100, Bound_Account; //sandias	
+			getitem 18730,1; //creatura hat
+			getitem 2393,1; //adventurer suit
+			getitem 13415,1; //novice falchion
+			getitem 2112,1; //novice guard
+			getitem 2414,1;
+			getitem 2510,1;
+			getitem 20513,1; //exe
+			break;
+		
+		case 2:
+			getitembound 33517,100, Bound_Account; //sandias
+			getitem 18730,1; //creatura hat
+			getitem 2393,1; //adventurer suit
+			getitem 13040,1; //novice cutter
+			getitem 2112,1; //novice guard
+			getitem 2414,1;
+			getitem 2510,1;
+			getitem 20518,1; //cat
+			break;
+
+		case 3:			
+			getitembound 33517,100, Bound_Account; //sandias
+			getitem 18730,1; //creatura hat
+			getitem 2393,1; //adventurer suit
+			getitem 1545,1; //novice mace
+			getitem 2112,1; //novice guard
+			getitem 2414,1;
+			getitem 2510,1;			
+			getitem 20596,1; //teddy
+			break;
+		}
+		set #Freebie, 1;
+		close;
+	}
+	
+	mes "[Sailor Cato]";
+	soundeffectall "wild_rose_attack.wav",0;
+	emotion ET_KIK;
+	mes "Oh.. pero si eres "+strcharinfo(0)+", ya esta cuenta reclamo sus items de bienvenida. Buena Suerte.";
+	end;
+}
+
+//==============================Healer guia y Conf========================================
+new_1-1,46,78,6	script	Healer#hnew	611,10,10,{
+specialeffect2 EF_INCAGILITY;
+sc_start SC_INCREASEAGI,480000,10;
+specialeffect2 EF_BLESSING;
+sc_start SC_BLESSING,480000,10;
+percentheal 100,100;
+identifyall;
+repairall;
+
+mes "[Healer]";
+mes "Hola "+strcharinfo(0)+", Soy la Healer";
+mes "probablemente el npc mas usado del server.";
+next;
+mes "[Healer]";
+mes "Estoy en cada ciudad, y curare tus heridas, restaurare tu sp, reparare tu equipo roto y tambien identificare tu equipo solo con clickear.";
+next;
+mes "[Healer]";
+mes "Mi reuso es de 2 segundos, y esto es para evitar que los graciosos esten dandome click reiteradamente.";
+next;
+mes "[Healer]";
+mes "Solamente aqui podras configurarme, si en tal caso deseas que te cure solo con entrar en mi area de vision 10x10.";
+next;
+menu
+"^CC0000Activar Healer Automatica^000000",activa,"^0000FFCancelar Auto Healer^000000",cancelheal;
+activa:
+specialeffect2 507;
+mes "[Healer]";
+mes "Haz activado el efecto automatico, Te sere util cada vez que entres en mi rango 10x10 sin necesidad de darme click.";
+set #autoheal, 1;
+end;
+
+cancelheal:
+specialeffect2 235;
+mes "[Healer]";
+mes "Haz desactivado el autohealer, Te sere util cada vez que me des click.";
+set #autoheal, 0;
+end;
+
+	ontouch:
+		if( #autoheal){ 
+		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,480000,10;
+		specialeffect2 EF_BLESSING;
+		sc_start SC_BLESSING,480000,10;
+		identifyall;
+		repairall;
+		percentheal 100,100;
+		end;
+		}
+		
+end;
+}
+
+//==============================Jumper========================================
+new_1-1,155,88,4	script	Jumper#Jumpnewbie	406,{
+	if (gettimetick(2) < poringdelay) {
+	end;
+	}
+	set poringdelay, gettimetick(2) + 4;	
+	sleep2 300;
+	specialeffect2 890;
+	specialeffect2 500;
+	sleep2 700;
+	specialeffect2 445;	
+	showscript strcharinfo(0)+" : whaaaaahh......";
+	sleep2 1000;
+	warp "new_1-1",173,86;	
+	sleep2 300;
+	specialeffect2 446;
+	sleep2 500;		
+	emotion ET_SMILE, playerattached();
+	end;
+	}
+
+//==============================Jumper Ret========================================
+new_1-1,170,88,6	script	Jumper#Jumpnewbieret	406,{
+	if (gettimetick(2) < poringdelay) {
+	end;
+	}
+	set poringdelay, gettimetick(2) + 4;	
+	sleep2 300;
+	specialeffect2 890;
+	specialeffect2 500;
+	sleep2 700;
+	specialeffect2 445;	
+	showscript strcharinfo(0)+" : whaaaaahh......";
+	sleep2 1000;
+	warp "new_1-1",150,84;	
+	sleep2 300;
+	specialeffect2 446;
+	sleep2 500;		
+	emotion ET_SMILE, playerattached();
+	end;
+	}
+
+//==============================Jumper2========================================
+new_1-1,163,112,4	script	Jumper2#Jump2newbiego	406,{
+	if (gettimetick(2) < poringdelay) {
+	end;
+	}
+	set poringdelay, gettimetick(2) + 4;	
+	sleep2 300;
+	specialeffect2 890;
+	specialeffect2 500;
+	sleep2 700;
+	specialeffect2 445;	
+	showscript strcharinfo(0)+" : whaaaaahh......";
+	sleep2 1000;
+	warp "new_1-1",171,112;	
+	sleep2 300;
+	specialeffect2 446;
+	sleep2 500;		
+	emotion ET_SMILE, playerattached();
+	end;
+	}
+
+//==============================Jumpertet2========================================
+new_1-1,173,116,5	script	Jumper#Jump2newbieret	406,{
+	if (gettimetick(2) < poringdelay) {
+	end;
+	}
+	set poringdelay, gettimetick(2) + 4;	
+	sleep2 300;
+	specialeffect2 890;
+	specialeffect2 500;
+	sleep2 700;
+	specialeffect2 445;	
+	showscript strcharinfo(0)+" : whaaaaahh......";
+	sleep2 1000;
+	warp "new_1-1",158,112;	
+	sleep2 300;
+	specialeffect2 446;
+	sleep2 500;		
+	emotion ET_SMILE, playerattached();
+	end;
+	}
+
+//==============================Jumper3========================================
+new_1-1,166,148,6	script	Jumper#Jump3newbiego	406,{
+	if (gettimetick(2) < poringdelay) {
+	end;
+	}
+	set poringdelay, gettimetick(2) + 4;	
+	sleep2 300;
+	specialeffect2 890;
+	specialeffect2 500;
+	sleep2 700;
+	specialeffect2 445;	
+	showscript strcharinfo(0)+" : whaaaaahh......";
+	sleep2 1000;
+	warp "new_1-1",151,139;	
+	sleep2 300;
+	specialeffect2 446;
+	sleep2 500;		
+	emotion ET_SMILE, playerattached();
+	end;
+	}
+
+//==============================Jumper3========================================
+new_1-1,155,144,4	script	Jumper#Jump4newbiego	406,{
+	if (gettimetick(2) < poringdelay) {
+	end;
+	}
+	set poringdelay, gettimetick(2) + 4;	
+	sleep2 300;
+	specialeffect2 890;
+	specialeffect2 500;
+	sleep2 700;
+	specialeffect2 445;	
+	showscript strcharinfo(0)+" : whaaaaahh......";
+	sleep2 1000;
+	warp "new_1-1",169,144;	
+	sleep2 300;
+	specialeffect2 446;
+	sleep2 500;		
+	emotion ET_SMILE, playerattached();
+	end;
+	}
+
+//=======================TUTORA DE INTERFACES=====================================
+new_1-1,46,105,6	script	Tutora de Interface	90,{
+	mes "[Sprakki]";
+	mes "Hola! Bienvenido al mundo de Ragnarok Online. Mi nombre es Sprakki y estoy encargada de darte algunos tips del basic gameplay.";
+	mes "Click en el boton [Next] o presiona [Enter] para contiunar.";
+	next;
+	mes "[Sprakki]";
+	mes "Primero necesitas aprender lo mas basico de controlar tu personaje.";
+	mes "Todo lo relacionado a lo basico ^4d4dffmovimientos, seleccion de items, y ataques^000000 se realizan con el ^4d4dffboton izquierdo del mouse^000000.";
+	next;
+	cutin "tutorial01",3;
+	mes "-! Info !-";
+	mes "Click en el piso para mover al personaje.";
+	mes "Atacar monstruos y conversar con toda la gente del mundo puede hacerse simplemente clickeando en ellos.";
+	next;
+	cutin "tutorial03",3;
+	mes "[Sprakki]";
+	mes "Para abrir la ventana de objetos simplemente usas el atajo ALT+E, desde alli podras consumir items o equiparte objetos";
+	next;
+	mes "[Sprakki]";
+	mes "Tambien Podras abrir tus objetos equipados con el atajo ALT+Q y equiparlos haciendo doble click o arrastrandalos hacia esa ventana.";
+	next;
+	cutin "tutorial05",3;
+	mes "[Sprakki]";
+	mes "Puedes colocar tus skills en la barra de funciones, para abrir las skills solo basta usar el atajo ALT+S, lo mismo puedes hacer con items consumibles y equipo, no es maravilloso?.";
+	next;
+	mes "[Sprakki]";
+	mes "Con la tecla F12 se despliega hasta 4 barras, dandote 36 espacios para colocar lo que gustes, puedes asignar una tecla para cada recuadro presionando ESC y seleccionando BM/Shortcut settings.";
+	next;
+	mes "[Sprakki]";
+	cutin "tutorial04",3;
+	mes "Para interactuar con otros personajes puedes usar el boton izquierdo derecho del mouse sobre ellos, tendras varias opciones sin mucha ciencia para explicar.";
+	next;
+	mes "[Sprakki]";
+	cutin "tutorial02",3;
+	mes "Con el Atajo ALT+U abres las ventanas de busquedas/quests, presiento que aqui no la usaran mucho, el juego ha cambiado a lo largo del tiempo y la gente solo quiere armarse lo mas facil posible.";
+	next;
+	mes "[Sprakki]";
+	mes "Esto es todo por el momento, hay una explicacion mas detallada de interfaces en el foro, tambien de comandos, de como usar el mail rodex, y otras cosas.";
+	cutin "",255;
+	next;
+	mes "[Sprakki]";
+	mes "Cuidate mucho y si quieres repetir lo que te acabo de decir, solo basta con volver a hablarme";
+	mes "nos vemos...";
+	end;
+}
+
+//---------Spawns-----------//
+new_1-1,0,0,0,0	monster	Poring	1002,10,10000,15000
+new_1-1,0,0,0,0	monster	Little Poring	2398,30,10000,15000
+new_1-1,0,0,0,0	monster	Drops	1113,20,10000,15000
+new_1-1,0,0,0,0	monster	Fabre	1007,20,10000,15000
+new_1-1,0,0,0,0	monster	Creamy	1018,15,10000,15000
+new_1-1,0,0,0,0	monster	Pupa	1008,10,10000,15000
+
+new_1-1,0,0,0,0	monster	Lunatic	1063,15,10000,15000
+new_1-1,0,0,0,0	monster	Leaf Lunatic	3496,15,10000,15000
+new_1-1,0,0,0,0	monster	Clover Lunatic	3807,15,10000,15000
+
+new_1-1,0,0,0,0	monster	Roda Frog	1012,1,10000,15000
+new_1-1,0,0,0,0	monster	Sweet Roda Frog	3499,1,10000,15000
+
+
+
+//------MAPFLAGS-------------------//
+new_1-1	mapflag	nobranch
+new_1-1	mapflag	nightenabled

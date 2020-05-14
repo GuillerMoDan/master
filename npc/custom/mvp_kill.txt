@@ -1,0 +1,361 @@
+// =================== MVP KILL ===============
+
+//===========DRAKE ON KILL ======================
+-	script	drakesillo	-1,{
+OnNPCKillEvent: 
+if (killedrid == 1112){
+if(rand(1,100) < 97){   //3% de ganar
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startbd1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbd2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbdl",2; soundeffectall "mystcase_move.wav",0; sleep2 500;
+cutin "",255;
+end;
+}else{
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startbd1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbd2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbd3",2; soundeffectall "roll.wav",0; sleep2 500; 
+soundeffectall "st_job_level_up.wav",0; 
+specialeffect2 18; cutin "startbd1",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startbd2",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startbd3",2; sleep2 500; 
+soundeffectall "tming_success.wav",0;
+getitem 15209,1;
+dispbottom " Felicidades, obtuviste el gear especial de Drake";
+cutin "",255;
+end;
+}}}
+
+//===========Phreeoni ON KILL ======================
+-	script	phreeoncito	-1,{
+OnNPCKillEvent: 
+if (killedrid == 1159){
+if(rand(1,100) < 97){   //3% de ganar
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startbp1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbp2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbpl",2; soundeffectall "mystcase_move.wav",0; sleep2 500;
+cutin "",255;
+end;
+}else{
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startbp1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbp2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbp3",2; soundeffectall "roll.wav",0; sleep2 500; 
+soundeffectall "st_job_level_up.wav",0; 
+specialeffect2 18; cutin "startbp1",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startbp2",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startbp3",2; sleep2 500; 
+soundeffectall "tming_success.wav",0;
+getitem 20859,1;
+dispbottom " Felicidades, obtuviste el gear especial de Phreeoni";
+cutin "",255;
+end;
+}}}
+
+//===========Golden Bloody Knight ON KILL ======================
+-	script	goldenbloodysillo	-1,{
+OnNPCKillEvent: 
+if (killedrid == 1569){
+if(rand(1,100) < 97){   //3% de ganar
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startbks1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbks2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbksl",2; soundeffectall "mystcase_move.wav",0; sleep2 500;
+cutin "",255;
+end;
+}else{
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startbks1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbks2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startbks1",2; soundeffectall "roll.wav",0; sleep2 500; 
+soundeffectall "st_job_level_up.wav",0; 
+specialeffect2 18; cutin "startbks1",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startbks2",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startbks3",2; sleep2 500; 
+soundeffectall "tming_success.wav",0;
+getitem 28945,1;
+dispbottom " Felicidades, obtuviste el gear especial de Golden Bloody Knight";
+cutin "",255;
+end;
+}}}
+
+
+//===========Hardrock Mammooth ON KILL ======================
+-	script	mamutsito	-1,{
+OnNPCKillEvent: 
+if (killedrid == 1990){
+if(rand(1,100) < 95){   //5% de ganar
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "starttb1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "starttb2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "starttbl",2; soundeffectall "mystcase_move.wav",0; sleep2 500;
+cutin "",255;
+end;
+}else{
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "starttb1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "starttb2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "starttb3",2; soundeffectall "roll.wav",0; sleep2 500; 
+soundeffectall "st_job_level_up.wav",0; 
+specialeffect2 18; cutin "starttb1",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "starttb2",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "starttb3",2; sleep2 500; 
+soundeffectall "tming_success.wav",0;
+getitem 40025,1;
+dispbottom " Felicidades, obtuviste el gear especial de Hardrock Mammooth";
+cutin "",255;
+end;
+}}}
+
+
+//===========EVIL SNAKE ON KILL ======================
+-	script	evilsnakesillo	-1,{
+OnNPCKillEvent: 
+if (killedrid == 1418){
+if(rand(1,100) < 97){   //3% de ganar
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startevs1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startevs2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startevsl",2; soundeffectall "mystcase_move.wav",0; sleep2 500;
+cutin "",255;
+end;
+}else{
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startevs1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startevs2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startevs3",2; soundeffectall "roll.wav",0; sleep2 500; 
+soundeffectall "st_job_level_up.wav",0; 
+specialeffect2 18; cutin "startevs1",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startevs2",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startevs3",2; sleep2 500; 
+soundeffectall "tming_success.wav",0;
+getitem 31611,1;
+dispbottom " Felicidades, obtuviste el gear especial de Evil Lord Snake";
+cutin "",255;
+end;
+}}}
+
+
+//===========BOITATA ON KILL ======================
+-	script	boitatasilla	-1,{
+OnNPCKillEvent: 
+if (killedrid == 2068){
+if(rand(1,100) < 97){   //3% de ganar
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startboit1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startboit2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startboitl",2; soundeffectall "mystcase_move.wav",0; sleep2 500;
+cutin "",255;
+end;
+}else{
+specialeffect2 18; cutin "startb",2; sleep2 500; 
+cutin "startboit1",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startboit2",2; soundeffectall "roll.wav",0; sleep2 500; 
+cutin "startboit3",2; soundeffectall "roll.wav",0; sleep2 500; 
+soundeffectall "st_job_level_up.wav",0; 
+specialeffect2 18; cutin "startboit1",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startboit2",2; soundeffectall "roll.wav",0; sleep2 250; 
+specialeffect2 18; cutin "startboit3",2; sleep2 500; 
+soundeffectall "tming_success.wav",0;
+getitem 18659,1;
+dispbottom " Felicidades, obtuviste el gear especial de Boitata";
+cutin "",255;
+end;
+}}}
+
+// ============================================
+-	script	#mvp_kill	-1,{
+
+OnInit:
+	setarray .p_rwd, 7539,3;	// Party reward <item>,<amount>
+	setarray .s_rwd, 7539,3;	// Solo reward <item>,<amount>
+	.chance = 100;	// Drop rate chances %
+	//.gm = 10;  // Prevents gm level and above to trigger the event
+	// MVP Map list
+	setarray .t_maps$[0],"moc_pryd06","lhz_dun03","gld2_prt","cmd_fild02","abbey02","ayo_dun02","2@nyd","lhz_dun04","ra_fild02","xmas_fild01","dic_dun02","beach_dun","iz_dun05","tur_dun04","lhz_dun02","jupe_core","moc_fild22","anthell02","odin_tem03","gon_dun03","gef_fild02","thana_boss","gef_fild10","ein_dun02","gef_fild14","moc_pryd04","dew_dun01","in_sphinx5","niflheim","moc_fild17","xmas_dun02","1@cash","ice_dun03","kh_dun02","treasure02","moc_prydn2","pay_dun04","ra_san05","mosk_dun03","ama_dun03","thor_v03","gef_dun01","mjolnir_04","abyss_03","abyss_04","dic_dun03","prt_sewb4","pay_fild11","gef_dun02","gl_chyard","ra_fild03","ra_fild04","ve_fild01","ve_fild02","lou_dun03","prt_maze03","bra_dun02";
+	end;
+	
+OnNPCKillEvent:
+//if (getgmlevel() >= .gm ) end; // If gm = event wont happen
+if ( getmonsterinfo( killedrid, MOB_MVPEXP )) {
+	for (.@a = 0; .@a < getarraysize(.t_maps$); .@a++) {
+	if ( strcharinfo(3) == instance_mapname("06guild_01") ) end; 
+	if ( strcharinfo(3) == instance_mapname("force_1-1") ) end;
+	if ( strcharinfo(3) == .t_maps$[.@a]) { 
+			if ( getcharid(1) ) {
+				getpartymember getcharid(1), 1;
+				getpartymember getcharid(1), 2;
+				for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+					if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) { 
+						.@partymemberaid[.@c] = $@partymemberaid[.@i];
+						.@c++;
+					}
+				}
+				if (rand(100) < .chance) getitem .p_rwd[0], .p_rwd[1], .@partymemberaid[ rand( .@c ) ];
+				//announce "[ System ] : Player ["+ strcharinfo(0) +"] of party ["+ strcharinfo(1) +"] has killed "+ getmonsterinfo( killedrid, MOB_NAME ) +" at "+ strcharinfo(3), bc_all;
+			}
+			else {
+				if (rand(100) < .chance) getitem .s_rwd[0], .s_rwd[1];
+				//announce "[ System ] : Player ["+ strcharinfo(0) +"] has killed "+ getmonsterinfo( killedrid, MOB_NAME ) +" alone at "+ strcharinfo(3), bc_all;
+			}
+		MVPKills = MVPKills+1;
+		dispbottom "---------------------------------------------------";
+		dispbottom "Haz matado un total de "+MVPKills+" MVP"+((MVPKills == 1)?"":"s")+".";
+		dispbottom "---------------------------------------------------";
+		set #CASHPOINTS,#CASHPOINTS+30;
+		set #MVP_Points,#MVP_Points+1;
+		dispbottom "Haz ganado 30 Cash Points, Cash Total: " +#CASHPOINTS+ " Cash Points";
+		dispbottom "Haz ganado 1  Punto MvP, Puntos MvP Totales: " +#MVP_Points+ " MvP Points";
+		dispbottom "---------------------------------------------------";		
+		end;
+		}
+	}
+	if ( getcharid(1) ) {
+		//announce "[ System ] : Player ["+ strcharinfo(0) +"] of party ["+ strcharinfo(1) +"] has killed "+ getmonsterinfo( killedrid, MOB_NAME ) +" at "+ strcharinfo(3), bc_all;
+		} 
+		else {
+		//announce "[ System ] : Player ["+ strcharinfo(0) +"] has killed "+ getmonsterinfo( killedrid, MOB_NAME ) +" alone at "+ strcharinfo(3), bc_all;
+		}
+	end;
+	}
+}
+
+
+prontera,171,155,4	script	Rank de MVP's#Euphy	940,{
+	cutin "3rd_gc_daora01",2;
+	mes "^DF013A[Rank MVP]^000000";
+	mes "Hola "+strcharinfo(0)+", en que te puedo ayudar?:";
+	next;
+	switch(select("~ Revisar Top Ranking.",	"~ Mis Stats.",( getgmlevel() >= 99 ) ? "RESET":"","~ ^B43104Canjear Puntos^000000.","~ Salir.")) {
+		case 1:
+			cutin "",255;
+			mes "^DF013A[Rank MVP]^000000";
+			query_sql("SELECT char_id, CAST(`value` AS SIGNED) FROM `char_reg_num` WHERE `key` = 'MVPKills' ORDER BY CAST(`value` AS SIGNED) DESC LIMIT 20",.@cid,.@value);
+			for(set .@i,0; .@i<getarraysize(.@cid); set .@i,.@i+1) {
+				query_sql("SELECT `name` FROM `char` WHERE char_id = "+.@cid[.@i]+";",.@j$);
+				set .@name$[.@i], .@j$;
+			}
+			if (!getarraysize(.@cid))
+				mes "The rankings are empty.";
+			else for(set .@i,0; .@i<getarraysize(.@cid); set .@i,.@i+1)
+			mes "["+(.@i+1)+"] "+.@name$[.@i]+" ~ "+.@value[.@i]+" kills";
+			close;
+			
+		case 2:
+			cutin "",255;
+			mes "^DF013A[Rank MVP]^000000";	
+			mes "Segun mis registros, me indica que actualmente:";
+			mes "Haz Matado "+((MVPKills)?"^0055FF"+MVPKills:"Ningun!")+"^000000 MVP"+((MVPKills == 1)?".":"s.");
+			close;
+			
+			
+		case 3:
+			cutin "",255;
+			if ( select( "Confirm","Cancel" ) == 1 ) {
+				query_sql("UPDATE `char_reg_num` SET `value` = '0' WHERE `key` ='MVPKills'");
+				addrid(0);
+				MVPKills = 0;
+			}
+			close;
+			
+			
+		case 4:
+			mes "^DF013A[Rank MVP]^000000";	
+			mes "Bienvenido a la tienda de Puntos MvP!, Aqui podras canjear los puntos que ganas matando MvP's en su respectivo mapa.";
+			mes "-----------------------------------";
+			mes "^0431B4Pulsa next para abrir la tienda^000000.";
+			next;
+			specialeffect 377;
+			mes "^0B610B[Tienda de Puntos MvP]^000000";	
+			mes "-----------------------------------";
+			mes "^DF7401PUNTOS DISPONIBLES^000000: ^0055FF" + #MVP_Points + "^000000 Puntos.";
+			mes "---------------------------------";
+			mes "^cc3333Nota^000000: Los descuentos no se aplican aunque se muestren.";
+			mes "-----------------------------------";
+			callshop "mvp_shop",1;
+			playBGM "shoptheme";
+			soundeffectall "se_crow2.wav",0;
+			npcshopattach "mvp_shop";
+			end;	
+			
+		default:
+			mes "^DF013A[Rank MVP]^000000";	
+			emotion ET_BEST;
+			cutin "",255;
+			mes "Buena suerte.";
+			close;
+	}
+
+OnBuyItem:
+	.@size = getarraysize(@bought_nameid);
+	for (.@i = 0; .@i < .@size; .@i++) {
+		.@j = inarray(.Shop, @bought_nameid[.@i]);
+		.@cost += (.Shop[.@j+1] * @bought_quantity[.@i]);
+	}
+	mes "^DF013A[Rank MVP Shop]^000000";
+	if (.@cost > #MVP_Points)
+		mes "No tienes Suficientes MvP Points. Lo siento.";
+	else {
+		for (.@i = 0; .@i < .@size; .@i++) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "Purchased " + @bought_quantity[.@i] + "x " + getitemname(@bought_nameid[.@i]) + ".";
+		}
+		#MVP_Points -= .@cost;	
+		mes "Gracias por tu compra!.";
+		mes "-----------------------------------";
+		mes "^DF7401PUNTOS DISPONIBLES^000000: ^0055FF" + #MVP_Points + "^000000 Puntos.";
+		mes "-----------------------------------";
+		emotion ET_MONEY;
+		soundeffectall "se_cash_provider.wav",0;
+	}
+	deletearray @bought_nameid[0], .@size;
+	deletearray @bought_quantity[0], .@size;
+	close;
+	
+OnInit:
+	setarray .Shop[0],      // Reward items: <ID>,<point cost> (1 MvP Point per MvP Kill).
+		31729,10,19824,10,20290,10,20511,20,20533,20,20527,20,20528,20,31093,25,40054,40,20586,45,20571,50,31842,50,19024,200,18987,2000;
+	npcshopdelitem "mvp_shop",512;
+	for (.@i = 0; .@i < getarraysize(.Shop); .@i += 2)
+		npcshopadditem "mvp_shop", .Shop[.@i], .Shop[.@i+1];
+	end;
+}
+-	shop	mvp_shop	-1,512:-1
+
+
+//----------------REWARD MINI BOSSESS----------------
+-	script	pcMOB	-1,{
+
+OnInit:
+	//Configuracion
+	setarray $mobs[0],1093,1092,1088,1096,1307,1090,1089,1091,1839,1283,1204,1203,1205,1299,1296,1289,1720,1259;
+	setarray $mobs2[0],1120,1990,1991,1388,1582,1569,1813;
+end;
+
+
+
+OnNPCKillEvent:	
+	for ( set .@i, 0; .@i < getarraysize( $mobs ); set .@i, .@i + 1) {
+		if( killedrid == $mobs[.@i] ) { 
+			set #CASHPOINTS , #CASHPOINTS + 10; 
+			soundeffectall "tming_success.wav",0;
+			getitem 7539,1;
+			getitem 6987,2;
+			dispbottom " Has obtenido 10 CP por matar a : " + getmonsterinfo( $mobs[.@i] , MOB_NAME );
+			end;
+		}
+	}
+	for ( set .@i, 0; .@i < getarraysize( $mobs2 ); set .@i, .@i + 1) {
+		if(killedrid == $mobs2[.@i] ) { 
+			set #CASHPOINTS , #CASHPOINTS + 30; 
+			soundeffectall "tming_success.wav",0;
+			getitem 7539,3;
+			getitem 6987,3;
+			dispbottom " Has obtenido 30 CP por matar a : " + getmonsterinfo( $mobs2[.@i] , MOB_NAME );
+			end;
+		}
+	}
+end;
+}

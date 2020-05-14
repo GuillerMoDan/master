@@ -1,0 +1,158 @@
+//===== rAthena Script =======================================
+//= Card Trader
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1 
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Exchange cards for points.
+//============================================================
+
+//-----Portal de Itemmall-----
+itemmall,180,49,0	warp	im2pron	3,3,prontera,156,178
+
+
+
+
+
+itemmall,165,68,6	script	Reciclador de Cartas	863,{
+	mes "[Card Trader]";
+	mes "Hola, "+strcharinfo(0)+"!";
+	mes "Que puedo hacer por ti?";
+	next;
+	switch(select(" > Informacion: > Reciclar Cartas: > Tienda de Puntos (^0055FF"+getd(.Points$)+"^000000): > Salir")) {
+	case 1:
+		mes "[Card Trader]";
+		mes "Te parece que tienes cartas inutiles por ahi?";
+		mes "Estare encantada de tomarlas de tus manos!";
+		next;
+		mes "[Card Trader]";
+		mes "Te recompensare con ^0055FF"+.Points[0]+" Point"+((.Points[0] == 1)?"":"s")+"^000000 por cada card que entregues,"; 
+		mes "y ^0055FF"+.Points[1]+" Points^000000 por carda MVP card.";
+		mes "Podras cambiar estos puntos por objetos mas tarde.";
+		mes "Que te parece?";
+		emotion ET_MONEY;
+		close;
+	case 2:
+		mes "[Card Trader]";
+		mes "Selecciona las cartas que";
+		mes "deseas cambiar.";
+		if (.Level) {
+			mes " ";
+			mes "They must be dropped";
+			mes "by monsters of level";
+			mes .Level+" and above.";
+		}
+		deletearray @sold_nameid[0],getarraysize(@sold_nameid);
+		callshop "card_shop",2;
+		npcshopattach "card_shop";
+		end;
+	case 3:
+		specialeffect 377;
+		soundeffectall "se_crow2.wav",0;
+		playBGM "shoptheme";		
+		mes "[Card Trader]";
+		mes "Actualmente tienes ^0055FF"+getd(.Points$)+"^000000 Point"+((getd(.Points$) == 1)?".":"s.");
+		callshop "card_shop",1;
+		npcshopattach "card_shop";
+		end;
+	case 4:
+		mes "[Card Trader]";
+		mes "*bostezo*";
+		mes "Nos vemos mas tarde!";
+		emotion ET_SLEEPY;
+		close;		
+	}
+
+OnSellItem:
+	mes "Cards to sell:";
+	mes "-----------------------------------";
+	for(set .@i,0; .@i<getarraysize(@sold_nameid); set .@i,.@i+1)
+if ((@sold_nameid[.@i] > 4000 && @sold_nameid[.@i] < 4700) || (@sold_nameid[.@i] >= 27157 && @sold_nameid[.@i] <= 27162) ||(@sold_nameid[.@i] >= 27120 && @sold_nameid[.@i] <= 27126)) {
+			if (.Level) {
+				query_sql("SELECT `LV` FROM `mob_db` WHERE `DropCardid` = "+@sold_nameid[.@i],.@lv);
+				if (.@lv < .Level) {
+					dispbottom getitemname(@sold_nameid[.@i])+" is under the minimum level.";
+					continue;
+				}
+			}
+			set .@card_id[getarraysize(.@card_id)], @sold_nameid[.@i];
+			set .@card_amt[getarraysize(.@card_amt)], @sold_quantity[.@i];
+			set .@mvp, compare(.MVP$,""+@sold_nameid[.@i]);
+			mes ((.@mvp)?"  ^FF0000":"  ^777777")+@sold_quantity[.@i]+"x "+getitemname(@sold_nameid[.@i])+"^000000";
+			set .@card_total, .@card_total+(@sold_quantity[.@i]*((.@mvp)?.Points[1]:.Points[0]));
+		}
+	deletearray @sold_nameid[0], getarraysize(@sold_nameid);
+	deletearray @sold_quantity[0], getarraysize(@sold_quantity);
+	if (!.@card_id) {
+		mes "  ^777777(none)^000000";
+		emotion ET_SWEAT;
+		close;
+	}
+	mes " ";
+	mes "---------- Total: ^0055FF"+.@card_total+" pt.^000000 -------";
+	next;
+	if(select(" > ^0055FFCompletar Negocio...^000000: > ^777777Cancelar^000000") == 2) {
+		mes "[Card Trader]";
+		mes "Oh, okay...";
+		emotion ET_SCRATCH;
+		close;
+	}
+	for(set .@i,0; .@i<getarraysize(.@card_id); set .@i,.@i+1)
+		delitem .@card_id[.@i],.@card_amt[.@i];
+	setd .Points$, getd(.Points$)+.@card_total;
+	mes "[Card Trader]";
+	mes "Todo Listo!";
+	emotion ET_DELIGHT;
+	close;
+
+OnBuyItem:
+	for(set .@i,0; .@i<getarraysize(@bought_nameid); set .@i,.@i+1)
+		for(set .@j,0; .@j<getarraysize(.Shop); set .@j,.@j+2)
+			if (@bought_nameid[.@i] == .Shop[.@j]) {
+				set .@cost, .@cost+(.Shop[.@j+1]*@bought_quantity[.@i]);
+				break;
+			}
+	if (.@cost > getd(.Points$)) {
+		mes "[Card Trader]";
+		mes "No tienes suficientes Points.";
+		emotion ET_HUK;
+	}
+	else {
+		mes "Objetos Adquiridos:";
+		mes "-----------------------------------";
+		for(set .@i,0; .@i<getarraysize(@bought_nameid); set .@i,.@i+1) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			mes "  ^777777"+@bought_quantity[.@i]+"x "+getitemname(@bought_nameid[.@i])+"^000000";
+		}
+		mes " ";
+		mes "---------- Total: ^0055FF"+.@cost+" pt.^000000 -------";
+		setd .Points$, getd(.Points$)-.@cost;
+		emotion ET_MONEY;
+	}
+	deletearray @bought_nameid[0], getarraysize(@bought_nameid);
+	deletearray @bought_quantity[0], getarraysize(@bought_quantity);
+	close;
+
+OnInit:
+	set .Level,0;   		// Minimum monster level to trade corresponding cards.
+	set .Points$,"#Card_Points";	// Variable to store points.
+	
+	setarray .Shop[0],		// Card Shop items: <ID>,<point cost>
+	  616,10,20507,10,20500,15,19764,20,40031,25,20573,30,5675,50,40030,50,20570,75,20588,100,18750,250;
+	  
+	  
+	  
+	setarray .Points[0],1,1;	// Points per <normal card>,<MVP card>
+	set .MVP$,			// List of MVP cards.
+	  "4121,4123,4128,4131,4132,4134,4135,4137,4142,4143,4144,4145,4146,4147,4148,4168,4236,"+
+	  "4241,4263,4276,4302,4305,4318,4324,4330,4342,4357,4359,4361,4363,4365,4399,4403,4407";
+	
+	npcshopdelitem "card_shop",909;
+	for(set .@i,0; .@i<getarraysize(.Shop); set .@i,.@i+2)
+		npcshopadditem "card_shop",.Shop[.@i],.Shop[.@i+1];
+	end;
+}
+-	shop	card_shop	-1,909:-1

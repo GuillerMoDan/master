@@ -1,0 +1,683 @@
+malangdo,208,165,6	script	Dark Argol#malangdo	531,{
+cutin "jpn_darkalgol04",2;
+mes "^660099Dark Argol^000000";
+mes "Los enchants de Mayomayo no superan los +3 de stats.";
+mes "esto fue cambiado asi para balancear las cosas en este servidor ok!?";
+next;
+cutin "jpn_darkalgol02",2;
+mes "^660099Dark Argol^000000";
+mes "Gemas especiales de ataque fueron removidas, como figthing, expert archer, entre otras!";
+mes "quedan disponibles solo MATK 1-2, ATK 2-3, y ASPD 1.";
+next;
+cutin "jpn_darkalgol01",2;
+mes "^660099Dark Argol^000000";
+mes "Mientras mas cara la moneda, sera mas alta la posibilidad de un buen Stat.";
+next;
+cutin "",255;
+mes "^660099Dark Argol^000000";
+mes "Es todo por el momento, espero que tengas buena suerte.";
+end;
+}
+
+yuno_in05,139,75,6	script	Dark Argol#rebirth	531,{
+cutin "jpn_darkalgol05",2;
+mes "^660099Dark Argol^000000";
+mes "Felicidades por llegar hasta aqui..";
+mes "entra en el portal de abajo y habla con el corazon de Ymir";
+mes "si te da problemas mueve el angulo de la camaras";
+next;
+cutin "jpn_darkalgol04",2;
+emotion ET_SMILE;
+mes "^660099Dark Argol^000000";
+mes "Guarda tus objetos y deposita tu zeny en el banco";
+mes "Valkyria te regresara si no cumples esta condicion";
+next;
+openstorage;
+cutin "",255;
+end;
+}
+
+
+valkyrie,46,62,6	script	Dark Argol#rebirth2	531,5,5,{
+mes "^660099Dark Argol^000000";
+mes "Buena suerte";
+end;
+
+ontouch:
+cutin "jpn_darkalgol04",2;
+mes "^660099Dark Argol^000000";
+mes "Esta es tu ultima oportunidad, no quiero que Valkyrie te regrese por un error";
+mes "guarda tus objetos en el storage y deposita todo tu zeny en el banco.";
+next;
+mes "puedes acceder al banco con las teclas ALT+V";
+openstorage;
+cutin "",255;
+end;
+}
+
+//--Darkargol Lagoon
+mal_dun01,62,231,4	script	Dark Argol#lagon	531,3,3,{
+cutin "jpn_darkalgol04",2;
+emotion ET_SMILE;
+mes "^660099Dark Argol^000000";
+mes "Zona de coral esrellado,";
+mes "no puedo creer que estes por aqui, viniste a pie o te trajo Salior Cato?";
+next;
+cutin "jpn_darkalgol03",2;
+mes "^660099Dark Argol^000000";
+mes "Aqui todos los monstruos son propiedad agua, y como me siento de animos..";
+mes "te dare propiedad viento cuando te acerques a mi.."; 
+next;
+cutin "jpn_darkalgol06",2;
+mes "^660099Dark Argol^000000";
+mes "Solamente por 1 minuto tendras este efecto, espero que lo aproveches.";
+close2;
+cutin "",255;
+end;
+
+ontouch:
+cutin "jpn_darkalgol02",2;
+specialeffect 502;
+sleep2 200;
+emotion ET_HUK, getnpcid(0, "Sailor Cato#catmal");
+cutin "jpn_darkalgol12",2;
+sleep2 200;
+cutin "jpn_darkalgol11",2;
+sleep2 200;
+cutin "jpn_darkalgol10",2;
+sleep2 100;
+specialeffect2 400; sleep2 500; cutin "",255; specialeffect2 402;  
+sc_start SC_WINDWEAPON,60000,1;
+end;
+}
+
+//--Darkargol Thanatos
+tha_t03,221,161,4	script	Dark Argol#that	531,3,3,{
+cutin "jpn_darkalgol04",2;
+emotion ET_SMILE;
+mes "^660099Dark Argol^000000";
+mes "Te gusto mi portal alla afuera?,";
+mes "o acaso creiste que el Guia te iba a dejar pasar asi por asi?";
+next;
+cutin "jpn_darkalgol03",2;
+mes "^660099Dark Argol^000000";
+mes "Te dare un pequeÃ±o bono de vida, ya que estas en busca de los frangmentos";
+next;
+cutin "jpn_darkalgol06",2;
+mes "^660099Dark Argol^000000";
+mes "Anda con cuidado, que aqui las cosas se iran poniendo cada vez peor.";
+close2;
+cutin "",255;
+end;
+
+ontouch:
+cutin "jpn_darkalgol02",2;
+specialeffect 502;
+sleep2 200;
+cutin "jpn_darkalgol12",2;
+sleep2 200;
+cutin "jpn_darkalgol11",2;
+sleep2 200;
+cutin "jpn_darkalgol10",2;
+sleep2 100;
+specialeffect2 400; sleep2 500; cutin "",255; specialeffect2 402;  
+sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,3; percentheal 5,0; 
+end;
+}
+
+//--Darkargol Moc Field01
+moc_fild01,249,377,4	script	Dark Argol#mocfil	531,6,6,{
+cutin "jpn_darkalgol06",2;
+emotion ET_SMILE;
+mes "^660099Dark Argol^000000";
+mes "El recorrido por el desierto apenas compienza.";
+sleep2 800;
+cutin "jpn_darkalgol07",2;
+mes "Desert wolves, Pecos Pecos, Mukas, hay de todo..";
+sleep2 800;
+cutin "",255;
+mes "Acercate a mi y te dare un bono de velocidad.";
+end;
+
+ontouch:
+cutin "jpn_darkalgol02",2;
+specialeffect 502;
+sleep2 200;
+emotion ET_KIK;
+cutin "jpn_darkalgol12",2;
+sleep2 200;
+cutin "jpn_darkalgol11",2;
+sleep2 200;
+cutin "jpn_darkalgol10",2;
+sleep2 100;
+specialeffect2 400; sleep2 500; cutin "",255; specialeffect2 402;  sc_start SC_SPEEDUP1,35000,50;
+end;
+}
+
+
+//DARKARGOL DOPA LOU
+lou_fild01,226,355,6	script	Dark Argol#dopalou	531,5,5,{
+cutin "jpn_darkalgol06",2;
+emotion ET_ANGER;
+mes "^660099Dark Argol^000000";
+mes "no ves que estoy ligando?";
+sleep2 800;
+cutin "jpn_darkalgol07",2;
+mes "pasa disimuladamente sin hablarme y te dare elemento fuego breve";
+sleep2 800;
+emotion ET_THROB, getnpcid(0, "Lady#delivery");
+cutin "",255;
+mes "pero por favor no me interrumpas.";
+end;
+
+ontouch:
+cutin "jpn_darkalgol02",2;
+specialeffect 502;
+sleep2 200;
+emotion ET_KIK;
+cutin "jpn_darkalgol12",2;
+sleep2 200;
+cutin "jpn_darkalgol11",2;
+sleep2 200;
+cutin "jpn_darkalgol10",2;
+sleep2 100;
+emotion ET_HUK, getnpcid(0, "Lady#delivery");
+cutin "jpn_darkalgol14",255; specialeffect2 583; sc_start SC_FIREWEAPON,60000,1;
+end;
+}
+
+//DARKARGOL DOPA NAMELESS
+nameless_n,247,218,6	script	Dark Argol#dopaname	531,5,5,{
+cutin "jpn_darkalgol06",2;
+emotion ET_SMILE;
+mes "^660099Dark Argol^000000";
+mes "He pecado mucho por mi ambicion de zeny.";
+sleep2 800;
+cutin "jpn_darkalgol07",2;
+mes "El GM me vigila, pasa disimuladamente sin hablarme y te dare elemento holy.";
+sleep2 800;
+cutin "",255;
+mes "Este sitio es muy peligroso para conversar, hay que enfocarse en los monstruos.";
+end;
+
+ontouch:
+cutin "jpn_darkalgol02",2;
+specialeffect 502;
+sleep2 200;
+emotion ET_KIK;
+cutin "jpn_darkalgol12",2;
+sleep2 200;
+cutin "jpn_darkalgol11",2;
+sleep2 200;
+cutin "jpn_darkalgol10",2;
+sleep2 100;
+cutin "jpn_darkalgol14",255; specialeffect2 86; sc_start SC_ASPERSIO,60000,5;
+end;
+}
+
+
+//DARKARGOL COMODO BEACH
+cmd_fild02,249,170,6	script	Dark Argol#beachhelp	531,4,4,{
+emotion ET_SCRATCH;
+npctalk "Pasala bien en la playa, pocos tiene esa dicha!.";
+cutin "jpn_darkalgol01",2;
+sleep2 1000;
+cutin "",255;
+end;
+
+ontouch:
+if (gettimetick(2) < variabletiempobeach) {
+npctalk "Dark Argol: Mis poderes tiene delay de 1 Minuto!.";
+end;
+}
+
+if( BaseLevel > 90 )
+{
+emotion ET_SMILE;
+npctalk "Dark Argol: Eres superior a nivel 90, ya no te hacen falta mis poderes!.";
+end;
+}
+		
+
+emotion ET_HUK; cutin "jpn_darkalgol07",2; 
+npctalk "ACASO NO PUEDO DISFRUTAR DE LA PLAYA?!"; 
+sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Stone; sc_end SC_Freezing; sc_end SC_Hallucination;
+sc_end SC_BLEEDING; sc_end SC_CRITICALWOUND; sc_end SC_POISON; sc_end SC_ORCISH; sc_end SC_CHANGEUNDEAD; repairall;
+sc_start SC_SpeedUp1,15000,10;
+sleep2 200;
+specialeffect2 583;
+specialeffect2 589; 
+specialeffect2 721;
+specialeffect 399;
+specialeffect 441;
+cutin "jpn_darkalgol14",2;
+sleep2 200;
+specialeffect2 76;
+atcommand "@raisemap";
+cutin "jpn_darkalgol14",255;
+sc_start SC_INCALLSTATUS,19000,100;
+sc_start SC_SPEEDUP1,20000,50;
+sc_start SC_MDEF_RATE,19000,100;
+sc_start SC_DEF_RATE,19000,100;
+set variabletiempobeach, gettimetick(2) + 60;
+soundeffectall "starman.wav",0;
+specialeffect2 572;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500; 
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 572;	specialeffect2 417;
+end;
+}
+
+
+//--------DARKRGOL ANT HELL-----------------------------------
+cmd_fild08,327,358,4	script	Dark Argol#anthelp	531,4,4,{
+emotion ET_OMG;
+npctalk "Lindo dia para No Morir!.";	
+end;
+
+ontouch:
+if (gettimetick(2) < variabletiempobeach) {
+npctalk "Tengo que recargar mis poderes!.";
+end;
+}
+
+if( BaseLevel > 20 )
+{
+emotion ET_SMILE;
+npctalk "Dark Argol: Eres superior a nivel 20, ya no te hacen falta mis poderes!.";
+end;
+}
+			
+emotion ET_OMG; cutin "jpn_darkalgol07",2; 
+npctalk "Mucho tiempo sin ver alguien por aqui!"; 
+sleep2 200;
+sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Stone; sc_end SC_Freezing; sc_end SC_Hallucination;
+sc_end SC_BLEEDING; sc_end SC_CRITICALWOUND; sc_end SC_POISON; sc_end SC_ORCISH; sc_end SC_CHANGEUNDEAD; repairall;
+sc_start SC_SpeedUp1,15000,10;
+atcommand "@raisemap";
+specialeffect2 583;
+specialeffect2 589; 
+specialeffect2 721;
+specialeffect 399;
+specialeffect 441;
+cutin "jpn_darkalgol14",2;
+sleep2 200;
+specialeffect2 76;
+atcommand "@raisemap";
+cutin "jpn_darkalgol14",255;
+sc_start SC_INCALLSTATUS,19000,100;
+sc_start SC_SPEEDUP1,20000,50;
+sc_start SC_MDEF_RATE,19000,100;
+sc_start SC_DEF_RATE,19000,100;
+set variabletiempobeach, gettimetick(2) + 60;
+soundeffectall "starman.wav",0;
+specialeffect2 572;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500; 
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 417;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 543; sleep2 500; specialeffect2 543; sleep2 500;
+specialeffect2 572;	specialeffect2 417;
+end;
+}
+
+
+//DARK ARGOL WARPER SPLENDIDE
+//Special Spl Warps
+splendide,190,153,6	script	Dark Argol#argolspl	531,{
+mes "^660099Dark Argol^000000";
+cutin "jpn_darkalgol03",2;
+emotion ET_CONGRATULATION;
+mes "Felicidades por llegar a splendide!.";
+mes "pocos logran venir hasta aca, especialmente si abundan los noobs!.";
+next;
+specialeffect 618;
+cutin "jpn_darkalgol04",2;
+mes "^660099Dark Argol^000000";
+mes "Me caes bien, solo por eso te dare acceso a las areas de splendide, tu solo elige donde quieres que te transporte.";
+cutin "jpn_darkalgol04",255;
+specialeffect2 521;
+sc_start SC_ASPDPOTION0,1800000,0;
+next;
+menu 
+"Hazy Forest ~ ^ff8215Entrada^000000",hazy,"Nidhoggr's Nest ~ ^ff8215Entrada^000000",nyds,"^cb0000Manuk^000000",manuk,"Cancelar",L_sal;
+
+hazy:
+cutin "jpn_darkalgol07",2;
+mes "^660099Dark Argol^000000";
+mes "Esto es un lugar serio! no respondere por lo que te suceda!";
+next;
+specialeffect2 501;
+specialeffect2 502;
+sleep2 1000;
+warp "bif_fild01",161,342;
+end;
+
+nyds:
+mes "^660099Dark Argol^000000";
+cutin "jpn_darkalgol03",2;
+mes "Te dejare en la entrada, recuerda que para pasar tienes que tener iniciada la quest Two Tribes!";
+next;
+specialeffect2 501;
+specialeffect2 502;
+sleep2 1000;
+warp "spl_fild01",371,110;
+end;
+
+manuk:
+emotion ET_SMILE;
+cutin "jpn_darkalgol03",2;
+mes "^660099Dark Argol^000000";
+mes "Lo que te ahorras caminar 4 mapas conmigo!";
+mes "no me lo agradezcas";
+next;
+specialeffect2 501;
+specialeffect2 502;
+sleep2 1000;
+warp "manuk",114,350;
+end;
+
+L_sal:
+mes "^660099Dark Argol^000000";
+mes "Bueno.. Tu te lo pierdes.";
+close;
+}
+
+//-----------------Monoliths de Morroc Field--------------------------------------
+
+moc_fild17,69,273,0	script	Jumper	406,{
+
+	specialeffect 500;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect 273;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect2 500;
+	sleep2 550;
+	specialeffect 500;
+	warp "moc_fild17",213,343;
+	end;
+}
+
+moc_fild17,212,348,0	script	Jumper#Jumpret	406,{
+
+	specialeffect 500;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect 273;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect2 500;
+	sleep2 550;
+	specialeffect 500;
+	warp "moc_fild17",69,269;
+	end;
+}
+
+moc_fild22b,46,199,0	script	Jumper#Jumpmoc	406,{
+
+	specialeffect 500;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect 273;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect2 500;
+	sleep2 550;
+	specialeffect 500;
+	warp "moc_fild22b",243,197;
+	end;
+}
+
+lighthalzen,142,97,0	script	Jumper#Jumplai	406,{
+	specialeffect 500;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect 273;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect2 500;
+	sleep2 550;
+	specialeffect 500;
+	warp "lighthalzen",103,240;
+	end;
+}
+
+gon_fild01,260,86,0	script	Jumper#Jumpkun	406,{
+	specialeffect 500;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect 273;
+	sleep2 250;
+	specialeffect 500;
+	specialeffect2 500;
+	sleep2 550;
+	specialeffect 500;
+	warp "gon_fild01",189,262;
+	end;
+}
+
+
+//-----DARKARGOL ABYSS 4-----
+abyss_04,160,177,4	script	Dark Argol#abyss4	531,{
+EMOTION ET_HUK;
+cutin "jpn_darkalgol05",2;
+mes "^660099Dark Argol^000000";
+mes "Tenia que ser "+strcharinfo(0)+".. No puede ser que hayas llegado hasta aca!";
+next;
+cutin "jpn_darkalgol04",2;
+mes "^660099Dark Argol^000000";
+mes "Este mapa fue descubierto hace poco!.. Aqui es bastante util el set dragon, te mostrare los objetos que hacen el combo:";
+next;
+cutin "jpn_darkalgol02",2;
+mes "^660099Dark Argol^000000";
+mes "<ITEM>Helm of Dragon<INFO>5467</INFO></ITEM>";
+mes "<ITEM>Dragon Breath<INFO>2527</INFO></ITEM>";
+mes "Cualquier:";
+mes "<ITEM>Dragon Killer<INFO>13001</INFO></ITEM>";
+mes "<ITEM>Dragon Slayer<INFO>1166</INFO></ITEM>";
+mes "<ITEM>Dragon Wing<INFO>1724</INFO></ITEM>";
+mes "<ITEM>Gae Bolg<INFO>1474</INFO></ITEM>";
+
+next;
+EMOTION ET_SMILE;
+mes "^660099Dark Argol^000000";
+mes "Equipar las 3 piezas supone una gran ventaja contra los dragones. Te sorprenderas del daño que puedes hacer con esto!";
+close3;
+}
+
+
+//-----NYDDOGGUR LVL 1 PARTY RECALL------
+1@nyd,29,43,6	script	Dark Argol#nyd	531,{
+cutin "jpn_darkalgol05",2;
+mes "^660099Dark Argol^000000";
+mes "Tenia que ser "+strcharinfo(0)+".. No puede ser que hayas llegado hasta aca!";
+next; 
+mes "^660099Dark Argol^000000";
+mes "Te ayudare con esto.";
+mes "Traere aqui a todos los miembros de tu party.";
+next;
+cutin "jpn_darkalgol02",2;
+sleep2 300;
+cutin "jpn_darkalgol12",2;
+sleep2 300;
+cutin "jpn_darkalgol11",2;
+sleep2 300;
+cutin "jpn_darkalgol10",2;
+sleep2 300;
+cutin "jpn_darkalgol14",255; specialeffect2 583;
+specialeffect2 400; sleep2 500; cutin "",255; specialeffect2 402;  sc_start SC_SPEEDUP1,35000,50;
+next;
+.@origin = getcharid(3); // <-- save the original RID
+//getmapxy .@map$, .@x, .@y, 0;
+getpartymember getcharid(1), 1;
+getpartymember getcharid(1), 2;
+for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) {
+attachrid $@partymemberaid[.@i];
+if ( Hp > 0 && getcharid(3) != .@origin && !getmapflag( strcharinfo(3), mf_nowarp ) ) // need another check to prevent players warp outside from events
+warp "1@nyd",32,41;
+} }
+attachrid .@origin; // attach back to original RID
+mes "^660099Dark Argol^000000";
+mes "Los miembros de tu party se reuniran alrededor tuyo!";
+end;
+}
+
+//-----BAKONAWA LAKE PARTY RECALL------
+1@ma_b,65,44,4	script	Dark Argol#ma	531,{
+cutin "jpn_darkalgol05",2;
+mes "^660099Dark Argol^000000";
+mes "Tenia que ser "+strcharinfo(0)+".. No puede ser que hayas llegado hasta aca!";
+next; 
+mes "^660099Dark Argol^000000";
+mes "Te ayudare con esto.";
+
+next;
+mes "^660099Dark Argol^000000";
+mes "Te ayudare con esto.";
+mes "Traere aqui a todos los miembros de tu party.";
+next;
+cutin "jpn_darkalgol02",2;
+sleep2 300;
+cutin "jpn_darkalgol12",2;
+sleep2 300;
+cutin "jpn_darkalgol11",2;
+sleep2 300;
+cutin "jpn_darkalgol10",2;
+sleep2 300;
+cutin "jpn_darkalgol14",255; specialeffect2 583;
+specialeffect2 400; sleep2 500; cutin "",255; specialeffect2 402;  sc_start SC_SPEEDUP1,35000,50;
+next;
+.@origin = getcharid(3); // <-- save the original RID
+//getmapxy .@map$, .@x, .@y, 0;
+getpartymember getcharid(1), 1;
+getpartymember getcharid(1), 2;
+for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) {
+attachrid $@partymemberaid[.@i];
+if ( Hp > 0 && getcharid(3) != .@origin && !getmapflag( strcharinfo(3), mf_nowarp ) ) // need another check to prevent players warp outside from events
+warp "1@ma_b",63,48;
+} }
+attachrid .@origin; // attach back to original RID
+mes "^660099Dark Argol^000000";
+mes "Los miembros de tu party se reuniran alrededor tuyo!";
+end;
+}
+
+//-----BANGUNGOT HOSPITAL PARTY RECALL------
+1@ma_h,96,160,6	script	Dark Argol#hospital	531,{
+cutin "jpn_darkalgol05",2;
+mes "^660099Dark Argol^000000";
+mes "Tenia que ser "+strcharinfo(0)+".. No puede ser que hayas llegado hasta aca!";
+next; 
+mes "^660099Dark Argol^000000";
+mes "Te ayudare con esto.";
+mes "Traere aqui a todos los miembros de tu party.";
+next;
+cutin "jpn_darkalgol02",2;
+sleep2 300;
+cutin "jpn_darkalgol12",2;
+sleep2 300;
+cutin "jpn_darkalgol11",2;
+sleep2 300;
+cutin "jpn_darkalgol10",2;
+sleep2 300;
+cutin "jpn_darkalgol14",255; specialeffect2 583;
+specialeffect2 400; sleep2 500; cutin "",255; specialeffect2 402;  sc_start SC_SPEEDUP1,35000,50;
+next;
+.@origin = getcharid(3); // <-- save the original RID
+//getmapxy .@map$, .@x, .@y, 0;
+getpartymember getcharid(1), 1;
+getpartymember getcharid(1), 2;
+for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) {
+attachrid $@partymemberaid[.@i];
+if ( Hp > 0 && getcharid(3) != .@origin && !getmapflag( strcharinfo(3), mf_nowarp ) ) // need another check to prevent players warp outside from events
+warp "1@ma_h",96,158;
+} }
+attachrid .@origin; // attach back to original RID
+mes "^660099Dark Argol^000000";
+mes "Los miembros de tu party se reuniran alrededor tuyo!";
+end;
+}
+
+//-----BUWAYA CAVE PARTY RECALL------
+1@ma_c,38,116,4	script	Dark Argol#argobuwa	531,{
+cutin "jpn_darkalgol05",2;
+mes "^660099Dark Argol^000000";
+mes "Hey.. "+strcharinfo(0)+".. Me puedes explicar que haces dentro de la caja de Buwaya? Nisiquiera voy a preguntar hehe.!";
+next; 
+mes "^660099Dark Argol^000000";
+mes "Habla con la anciana, te indicara donde golpear en ciertas partes de la caja, Buwaya sentirá dolor y te escupirá de ahí.";
+next; 
+mes "^660099Dark Argol^000000";
+mes "Te ayudare con esto.";
+mes "Traere aqui a todos los miembros de tu party.";
+next;
+cutin "jpn_darkalgol02",2;
+sleep2 300;
+cutin "jpn_darkalgol12",2;
+sleep2 300;
+cutin "jpn_darkalgol11",2;
+sleep2 300;
+cutin "jpn_darkalgol10",2;
+sleep2 300;
+cutin "jpn_darkalgol14",255; specialeffect2 583;
+specialeffect2 400; sleep2 500; cutin "",255; specialeffect2 402;  sc_start SC_SPEEDUP1,35000,50;
+next;
+.@origin = getcharid(3); // <-- save the original RID
+//getmapxy .@map$, .@x, .@y, 0;
+getpartymember getcharid(1), 1;
+getpartymember getcharid(1), 2;
+for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) {
+attachrid $@partymemberaid[.@i];
+if ( Hp > 0 && getcharid(3) != .@origin && !getmapflag( strcharinfo(3), mf_nowarp ) ) // need another check to prevent players warp outside from events
+warp "1@ma_c",33,112;
+} }
+attachrid .@origin; // attach back to original RID
+mes "^660099Dark Argol^000000";
+mes "Los miembros de tu party se reuniran alrededor tuyo!";
+end;
+}

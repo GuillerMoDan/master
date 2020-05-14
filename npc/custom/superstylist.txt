@@ -1,0 +1,127 @@
+//============================================================
+prontera,169,179,6	script	Cambio de Look	10209,{
+
+cutin "prm_1",2;
+mes "^FF0000[ Super Stylist]^000000";
+mes "Hola "+strcharinfo(0)+", Soy la super estilista.";
+mes "Puedo cambiar tu apariencia, solo pon 1 en la caja de dialogo.";
+next;
+	
+menu "^8A2908Open Dress Room^000000",vestidor,"^cc00fcPaso^000000",paso;
+
+vestidor:
+if(Class==Job_Archer_High) goto ilegal;
+if(Class==Job_Merchant_High) goto ilegal;
+if(Class==Job_Swordman_High) goto ilegal;
+if(Class==Job_Thief_High) goto ilegal;
+if(Class==Job_Mage_High) goto ilegal;
+if(Class==Job_Acolyte_High) goto ilegal;
+if(Class==Job_Gunslinger) goto ilegal;
+if(Class==Job_Ninja) goto ilegal;
+//if(Class==Job_Taekwon) goto ilegal;
+if(Class==Job_Star_Gladiator) goto ilegal;
+if(Class==Job_Soul_Linker) goto ilegal;
+if(Class==Job_Novice) goto ilegal;
+if(Class==Job_Super_Novice) goto ilegal;
+if(Class==Job_Novice_High) goto ilegal;
+if(Class==Job_Mage) goto ilegal;
+if(Class==Job_Baby_Mage) goto ilegal;
+if(Class==Job_Wizard) goto ilegal;
+if(Class==Job_Baby_Wizard) goto ilegal;
+if(Class==Job_Sage) goto ilegal;
+if(Class==Job_Baby_Sage) goto ilegal;
+//if(Class==Job_Professor) goto ilegal;
+if(Class==Job_Merchant) goto ilegal;
+if(Class==Job_Baby_Merchant) goto ilegal;
+if(Class==Job_Blacksmith) goto ilegal;
+if(Class==Job_Baby_Blacksmith) goto ilegal;
+if(Class==Job_Alchemist) goto ilegal;
+if(Class==Job_Baby_Alchemist) goto ilegal;
+if(Class==Job_Acolyte) goto ilegal;
+if(Class==Job_Baby_Acolyte) goto ilegal;
+if(Class==Job_Monk) goto ilegal;
+if(Class==Job_Baby_Monk) goto ilegal;
+if(Class==Job_Priest) goto priestsex;
+if(Class==Job_Baby_Priest) goto ilegal;
+//if(Class==Job_Champion) goto ilegal;
+if(Class==Job_Archer) goto ilegal;
+if(Class==Job_Baby_Archer) goto ilegal;
+if(Class==Job_Bard) goto ilegal;
+if(Class==Job_Baby_Bard) goto ilegal;
+//if(Class==Job_Clown) goto ilegal;
+if(Class==Job_Dancer) goto ilegal;
+if(Class==Job_Baby_Dancer) goto ilegal;
+if(Class==Job_Hunter) goto ilegal;	
+if(Class==Job_Baby_Hunter) goto ilegal;
+if(Class==Job_Thief) goto ilegal;	
+if(Class==Job_Baby_Thief) goto ilegal;
+if(Class==Job_Rogue) goto ilegal;
+if(Class==Job_Baby_Rogue) goto ilegal;	
+if(Class==Job_Assassin) goto priestsex;	
+if(Class==Job_Baby_Assassin) goto ilegal;	
+if(Class==Job_Swordman) goto ilegal;
+if(Class==Job_Baby_Swordman) goto ilegal;
+if(Class==Job_Knight) goto ilegal;
+if(Class==Job_Baby_Knight) goto ilegal;
+//if(Class==Job_Lord_Knight) goto ilegal;
+if(Class==Job_Crusader) goto ilegal;	
+if(Class==Job_Baby_Crusader) goto ilegal;	
+if(Class==Job_Summoner) goto ilegal;
+
+
+mes "^FF0000[ Super Stylist - Bodystyle ]^000000";
+mes "Insert a bodystyle number";
+mes "Bodystyles: 0 to 1";
+input .@bodystyle;
+if (.@bodystyle < 0 || .@bodystyle > 1) {
+set .@bodystyle,0;
+}
+setlook LOOK_BODY2,.@bodystyle;
+next;
+mes "^FF0000[ Super Stylist]^000000";
+mes "tu apariencia ha sido cambiada";
+close2;
+cutin "",255;
+end;
+
+priestsex:
+if (Sex == SEX_MALE) {
+mes "^FF0000[ Super Stylist - Bodystyle ]^000000";
+mes "Insert a bodystyle number";
+mes "Bodystyles: 0 to 1";
+input .@bodystyle;
+if (.@bodystyle < 0 || .@bodystyle > 1) {
+set .@bodystyle,0;
+}
+setlook LOOK_BODY2,.@bodystyle;
+next;
+mes "^FF0000[ Super Stylist]^000000";
+mes "tu apariencia ha sido cambiada";
+close2;
+cutin "",255;
+end;
+}
+else {
+mes "^FF0000[ Super Stylist - Bodystyle ]^000000";
+mes "Solo puedo cambiar al este job de sexo Femenino";
+close2;
+cutin "",255;
+end;
+
+
+
+
+ilegal:
+mes "^FF0000Estilista^000000";
+mes "Este servicio es solo para clases:";
+mes "Stalker, Sniper, Gipsy, Paladin, Champion, Clown, Creator, High Wizard, Whitesmith, Assassin Cross y High Priest";
+cutin "",255;
+end;	
+
+paso:
+mes "^FF0000[ Super Stylist]^000000";
+mes "nos vemos.";
+cutin "",255;
+end;	
+
+}}

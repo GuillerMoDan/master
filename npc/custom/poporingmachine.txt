@@ -1,0 +1,192 @@
+poring_w01,127,78,4	script	PoPoring Machine	10180,{
+
+if (gettimetick(2) < poringdelay) {
+end;
+}
+
+if(countitem(6987) < 1) goto Falta;
+delitem 6987,1;
+
+
+switch( rand(9) ) {
+case 0: goto agifood; break;
+case 1: goto strfood; break;
+case 2: goto intfood; break;
+case 3: goto dexfood; break;
+case 4: goto lukfood; break;
+case 5: goto vitfood; break;
+case 6: goto speedpot; break;
+case 7: goto roses; break;
+case 8: goto royal; break;
+
+end; }
+
+
+
+//-----Agi Food 10-----
+agifood:
+set poringdelay, gettimetick(2) + 1;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 50; 
+cutin "popostart1",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "agif",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "agif2",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "agif3",2; sleep2 100;
+cutin "powin",2;
+sleep2 100; 
+cutin "powin2",2; sleep2 100;
+cutin "powin3",2; sleep2 100;
+cutin "powin4",2; sleep2 100;
+cutin "powin",2; sleep2 100;
+cutin "agif3",2;  sleep2 100;
+getitem 12203,1; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+strfood:
+set poringdelay, gettimetick(2) + 1;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 50; 
+cutin "popostart1",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "strf",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "strf2",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "strf3",2; sleep2 100;
+cutin "powin",2;
+sleep2 100; 
+cutin "powin2",2; sleep2 100;
+cutin "powin3",2; sleep2 100;
+cutin "powin4",2; sleep2 100;
+cutin "powin",2; sleep2 100;
+cutin "strf3",2;  sleep2 100;
+getitem 12202,1; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+intfood:
+set poringdelay, gettimetick(2) + 1;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 50; 
+cutin "popostart1",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "intf",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "intf2",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "intf3",2; sleep2 100;
+cutin "powin",2;
+sleep2 100; 
+cutin "powin2",2; sleep2 100;
+cutin "powin3",2; sleep2 100;
+cutin "powin4",2; sleep2 100;
+cutin "powin",2; sleep2 100;
+cutin "intf3",2;  sleep2 100;
+getitem 12204,1; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+dexfood:
+set poringdelay, gettimetick(2) + 1;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 50; 
+cutin "popostart1",2; sleep2 50;
+soundeffectall "roll.wav",0; cutin "dexf",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "dexf2",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "dexf3",2; sleep2 100;
+cutin "powin",2;
+sleep2 100;
+cutin "dexf3-2",2;  sleep2 100; 
+cutin "powin2",2; sleep2 100;
+cutin "powin3",2; sleep2 100;
+cutin "powin4",2; sleep2 100;
+cutin "powin",2; sleep2 100;
+cutin "dexf3-2",2;  sleep2 100;
+getitem 12205,1; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+lukfood:
+set poringdelay, gettimetick(2) +1;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 50; 
+cutin "popostart1",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "lukf",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "lukf2",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "lukf3",2; sleep2 100;
+cutin "powin",2;
+sleep2 100; 
+cutin "powin2",2; sleep2 100;
+cutin "powin3",2; sleep2 100;
+cutin "powin4",2; sleep2 100;
+cutin "powin",2; sleep2 100;
+cutin "lukf3",2;  sleep2 100;
+getitem 12206,1; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+vitfood:
+set poringdelay, gettimetick(2) + 1;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 100; 
+cutin "popostart1",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "vitf",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "vitf2",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "vitf3",2; sleep2 100;
+cutin "powin",2;
+sleep2 100; 
+cutin "powin2",2; sleep2 100;
+cutin "powin3",2; sleep2 100;
+cutin "powin4",2; sleep2 100;
+cutin "powin",2; sleep2 100;
+cutin "vitf3",2;  sleep2 100;
+getitem 12207,1; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+
+speedpot:
+set poringdelay, gettimetick(2) + 2;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 250; 
+cutin "speed1",2; sleep2 250;
+cutin "speed2",2; sleep2 125; soundeffectall "fast.wav",0; soundeffectall "stainer_move.wav",0; sleep2 125;
+cutin "speed3",2; soundeffectall "arclouse_attack.wav",0; sleep2 250;
+cutin "speed4",2; soundeffectall "poring_damage.wav",0; sleep2 125; soundeffectall "stainer_die.wav",0;  sleep2 125; soundeffectall "arclouse_attack.wav",0; 
+cutin "speed4",2; soundeffectall "poring_die.wav",0; sleep2 250;
+cutin "speed5",2; sleep2 250;
+cutin "speed6",2; sleep2 250;
+getitem 12016,50; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+roses:
+set poringdelay, gettimetick(2) + 2;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 100; 
+cutin "popostart1",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "rose1",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "rose2",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "rose3",2; sleep2 100;
+soundeffectall "wicked_nymph_die.wav",0;
+cutin "powin",2;
+sleep2 100; 
+cutin "powin2",2; sleep2 100;
+cutin "powin3",2; sleep2 100;
+cutin "powin4",2; sleep2 100;
+cutin "powin",2; sleep2 100;
+cutin "rose3",2;  sleep2 100;
+getitem 748,25; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+//-----Royal Jelly-----
+royal:
+set poringdelay, gettimetick(2) + 3;
+specialeffect 540; specialeffect 18; cutin "popostart",2; sleep2 50; 
+cutin "popostart1",2; sleep2 100;
+soundeffectall "roll.wav",0; cutin "royal1",2; sleep2 250;
+soundeffectall "roll.wav",0; cutin "royal2",2; soundeffectall "vitata_attack.wav",0; sleep2 250;
+soundeffectall "roll.wav",0; cutin "royal3",2; sleep2 250;
+cutin "powin",2;
+sleep2 250; 
+cutin "powin2",2; sleep2 250;
+cutin "powin3",2; sleep2 250;
+cutin "powin4",2; sleep2 250;
+cutin "powin",2; sleep2 250;
+cutin "royal3",2;  sleep2 250;
+getitem 12436,5; getitem 526,50; soundeffectall "se_equip_item_02.wav",0; cutin "",255; 
+end;
+
+Falta:
+mes "^088A08PoPoring Machine^000000";
+mes "No tienes Po-Poring Coin Para Jugar.";
+close;
+}
+
+
+
+
+
+
+
+

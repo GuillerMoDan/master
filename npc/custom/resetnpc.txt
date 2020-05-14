@@ -1,0 +1,128 @@
+prontera,164,195,4	script	Build y Reset	408,{
+function ManageBuild;
+
+mes "^DF013AChica Reset^000000";
+cutin "jpn_anni01",2;
+mes "Hola "+strcharinfo(0)+", elige el servicio que desees:";
+next;
+switch( select( ( .BMMode & 1 )?"^FF0000Guardar & Cambiar Builds^000000":"",
+				( .BMMode & 2 )?"^0000FFReset de Status^000000		^CC0000250,000z^000000":"",	
+				( .BMMode & 4 )?"^0000FFReset de Skills^000000	  	^CC0000250,000z^000000":"")){
+	Case 1:
+		for( set .@i,1; .@i <= .MaxSlots; set .@i,.@i + 1 )
+			set .@Menu$,.@Menu$ + (( getd( "Slot_"+.@i+"$" ) == "" )?"^FF0000Empty Slot^000000":getd( "Slot_"+.@i+"$" ) )+":";
+		set .@Slot,select( .@Menu$ );
+		do{
+			next;
+			mes "Build : ^FF0000"+(( getd( "Slot_"+.@Slot+"$" ) == "" )?"Slot "+.@Slot:getd( "Slot_"+.@Slot+"$" ) )+"^000000";
+			mes "STR - ^0000FF"+getd( "STR_"+.@Slot )+"^000000      INT - ^0000FF"+getd( "INT_"+.@Slot )+"^000000";
+			mes "AGI - ^0000FF"+getd( "AGI_"+.@Slot )+"^000000      DEX - ^0000FF"+getd( "DEX_"+.@Slot )+"^000000";
+			mes "VIT - ^0000FF"+getd( "VIT_"+.@Slot )+"^000000      LUK - ^0000FF"+getd( "LUK_"+.@Slot )+"^000000";
+			mes " ";
+			mes "Puntos Restantes : ^0000FF"+getd( "STATS_"+.@Slot )+"^000000";
+			set .@Option,select(( getd( "Slot_"+.@Slot+"$" ) == "" )?"":"^0000FFCambiar",
+								( getd( "Slot_"+.@Slot+"$" ) == "" )?"Guardar":"",
+								( getd( "Slot_"+.@Slot+"$" ) == "" )?"":"^FF0000Borrar" );
+			ManageBuild( .@Slot,.@Option);
+		}while( .@Option != 1 );
+		break;
+	Case 2:
+		if(  Zeny < 250000 ) goto Faltazen;
+		set Zeny,Zeny-250000;
+		emotion ET_MONEY;
+		ResetStatus;
+		specialeffect2 235;
+		mes "^DF013AChica Reset^000000";
+		mes "Se han reestablecido tus stats points.";
+		cutin "",255;
+		break;
+	Case 3:
+		if(  Zeny < 250000 ) goto Faltazen;
+		set Zeny,Zeny-250000;
+		emotion ET_MONEY;
+		ResetSkill;
+		specialeffect2 235;
+		mes "^DF013AChica Reset^000000";		
+		mes "Tus Skills points han sido reestablecidos.";
+		cutin "",255;
+		break;
+}
+close;
+
+
+Faltazen:
+mes "^DF013AChica Reset^000000";
+mes "No tienes zeny suficiente";
+next;
+mes "^DF013AChica Reset^000000";
+mes "La tarifa de cada reset es de 250,000 ^CC0000zeny^000000.";
+cutin "",255;
+end;
+
+
+function	ManageBuild	{
+switch( getarg(1) ){
+	Case 1:	//	Switch Build
+			specialeffect2 549;
+		message strcharinfo(0),"Build ha sido Cambiada.";
+			cutin "",255;
+			ResetStatus;
+			set StatusPoint,getd( "STATS_"+getarg(0) );
+			statusup2 bStr,getd( "STR_"+getarg(0) ) - 1;
+			statusup2 bAgi,getd( "AGI_"+getarg(0) ) - 1;
+			statusup2 bVit,getd( "VIT_"+getarg(0) ) - 1;
+			statusup2 bInt,getd( "INT_"+getarg(0) ) - 1;
+			statusup2 bDex,getd( "DEX_"+getarg(0) ) - 1;
+			statusup2 bLuk,getd( "LUK_"+getarg(0) ) - 1;
+		break;
+	Case 2:	//	Save Build
+			setd( "STR_"+getarg(0) ),readparam(bStr);
+			setd( "AGI_"+getarg(0) ),readparam(bAgi);
+			setd( "VIT_"+getarg(0) ),readparam(bVIT);
+			setd( "INT_"+getarg(0) ),readparam(bInt);
+			setd( "DEX_"+getarg(0) ),readparam(bDex);
+			setd( "LUK_"+getarg(0) ),readparam(bLuk);
+			setd( "STATS_"+getarg(0) ),StatusPoint;
+		if( .Length[0] < .Length[1] && .Length[0] ){
+			mes "Introduce un ^FF0000Nombre^000000 para esta casilla.";
+			mes "Largo del Nombre : "+.Length[0]+" ~ "+.Length[1]+" Letras";
+			do{
+				input getd( "Slot_"+getarg(0)+"$" );
+			}while( getstrlen( getd( "Slot_"+getarg(0)+"$" ) ) < .Length[0] || getstrlen( getd( "Slot_"+getarg(0)+"$" ) ) > .Length[1] );
+		}else{
+			setd( "Slot_"+getarg(0)+"$" ),"Build "+getarg(0);
+		}
+		cutin "",255;
+		message strcharinfo(0),"Tu build a sido guardada.";
+		break;
+	Case 3:	//	Remove Build
+			cutin "",255;
+			specialeffect2 548;
+		message strcharinfo(0),"Tu build a sido reseteada.";
+			setd( "STR_"+getarg(0) ),0;
+			setd( "AGI_"+getarg(0) ),0;
+			setd( "VIT_"+getarg(0) ),0;
+			setd( "INT_"+getarg(0) ),0;
+			setd( "DEX_"+getarg(0) ),0;
+			setd( "LUK_"+getarg(0) ),0;
+			setd( "STATS_"+getarg(0) ),0;
+			setd( "Slot_"+getarg(0)+"$" ),"";
+		break;
+}
+return;
+}	
+	
+OnInit:
+// Mode of NPC
+// 1 = Save & Switch 
+// 2 = Reset Status
+// 4 = Reset Skills
+// 7 = All of Above [ 1+2+4 = 7 ]
+set .BMMode,7;
+// How Many Slots available to Save Status Builds.
+set .MaxSlots,3;
+// Enable Stats Slot Rename + Max Name Length ( 0 = Disable )
+setarray .Length,4,26; // Min. ~ Max. Words.
+end;
+
+}

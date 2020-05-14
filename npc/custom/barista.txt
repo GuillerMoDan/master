@@ -1,0 +1,226 @@
+//-------Creador de Jugos y consumibles
+prontera,96,182,5	script	Bar Tender	61,{
+mes "^660099Barista^000000";
+mes "Quieres unas delicias exoticas?";
+mes "soy capaz de preparar una variedad de bebidas.";
+next;
+
+menu
+"- Sweet Bananas",banan,"- Energizing Potion",ener,"- Melon Juice",melon,"- Sakura Mist",saku,"Cancelar",L_sal;
+
+banan:
+mes "^660099Barista^000000";
+mes "<ITEM>Sweet Bananas<INFO>7749</INFO></ITEM>:";
+mes "- 3,000 Zeny";
+mes "- 5 Bananas";
+mes "- 1 Royal Jelly";
+mes "- 1 Alcohol";
+mes "- 1 Empty Bottle";
+next;
+menu
+"- 1 Sweet Bananas",banan1,"- 5 Sweet Bananas",banan5,"- 10 Sweet Bananas",banan10,"- 25 Sweet Bananas",banan25;
+
+//---------------------------SWEET BANANAS----------------------------------
+banan1:
+if(Zeny < 3000 ) goto Faltaz;
+if( countitem(513) < 5 || countitem(526) < 1 || countitem(970) < 1 || countitem(713) < 1) goto Falta;
+delitem 513,5;
+delitem 526,1;
+delitem 970,1;
+delitem 713,1;
+set Zeny,Zeny-3000;
+specialeffect 98;
+specialeffect 305;
+getitem 7749,1;
+end;
+
+banan5:
+if(Zeny < 15000 ) goto Faltaz;
+if( countitem(513) < 25 || countitem(526) < 5 || countitem(970) < 5 || countitem(713) < 5) goto Falta;
+delitem 513,25;
+delitem 526,5;
+delitem 970,5;
+delitem 713,5;
+set Zeny,Zeny-15000;
+specialeffect 98;
+specialeffect 305;
+getitem 7749,5;
+end;
+
+banan10:
+if(Zeny < 30000 ) goto Faltaz;
+if( countitem(513) < 50 || countitem(526) < 10 || countitem(970) < 10 || countitem(713) < 10) goto Falta;
+delitem 513,50;
+delitem 526,10;
+delitem 970,10;
+delitem 713,10;
+set Zeny,Zeny-30000;
+specialeffect 98;
+specialeffect 305;
+getitem 7749,10;
+end;
+
+banan25:
+if(Zeny < 75000 ) goto Faltaz;
+if( countitem(513) < 125 || countitem(526) < 25 || countitem(970) < 25 || countitem(713) < 25) goto Falta;
+delitem 513,125;
+delitem 526,25;
+delitem 970,25;
+delitem 713,25;
+set Zeny,Zeny-75000;
+specialeffect 98;
+specialeffect 305;
+getitem 7749,25;
+end;
+
+//---------------------------SAKURA MYST----------------------------------
+saku:
+mes "^660099Barista^000000";
+mes "<ITEM>Sakura Myst<INFO>11710</INFO></ITEM>:";
+mes "- 5,000 Zeny";
+mes "- 10 Strawberry";
+mes "- 10 Green Herb";
+mes "- 10 Red Herb";
+mes "- 10 Blue Herb";
+mes "- 10 White Herb";
+mes "- 10 Yellow Herb";
+mes "- 1 Alcohol";
+mes "- 1 Empty Bottle";
+next;
+menu
+"- 1 Sakura Myst",saku1,"- 5 Sakura Myst",saku5;
+
+saku1:
+if(Zeny < 5000 ) goto Faltaz;
+if( countitem(578) < 10 || countitem(507) < 10 || countitem(713) < 1 || countitem(970) < 1 || countitem(508) < 10 || countitem(509) < 10 || countitem(510) < 10 || countitem(511) < 10) goto Falta;
+delitem 578,10;
+delitem 507,10;
+delitem 508,10;
+delitem 509,10;
+delitem 510,10;
+delitem 511,10;
+delitem 970,1;
+delitem 713,1;
+set Zeny,Zeny-5000;
+specialeffect 98;
+specialeffect 305;
+getitem 11710,1;
+end;
+
+saku5:
+if(Zeny < 25000 ) goto Faltaz;
+if( countitem(578) < 50 || countitem(507) < 50 || countitem(713) < 5 || countitem(970) < 5 || countitem(508) < 50 || countitem(509) < 50 || countitem(510) < 50 || countitem(511) < 50) goto Falta;
+delitem 578,50;
+delitem 507,50;
+delitem 508,50;
+delitem 509,50;
+delitem 510,50;
+delitem 511,50;
+delitem 970,1;
+delitem 713,1;
+set Zeny,Zeny-25000;
+specialeffect 98;
+specialeffect 305;
+getitem 11710,5;
+end;
+
+//--------------------------ENERGIZING POTION-------------------------
+ener:
+mes "^660099Barista^000000";
+mes "<ITEM>Energizing Potion<INFO>12404</INFO></ITEM>:";
+mes "- 5,000 Zeny";
+mes "- 1 Berserk Potion";
+mes "- 5 Delicious Jelly";
+mes "- 1 Cold Medicine";
+mes "- 1 Anodyne";
+next;
+menu
+"- 1 Energizing Potion",ener1,"- 5 Energizing Potion",ener5;
+
+ener1:
+if(Zeny < 5000 ) goto Faltaz;
+if( countitem(657) < 1 || countitem(12624) < 5 || countitem(12257) < 1 || countitem(605) < 1) goto Falta;
+delitem 657,1;
+delitem 12624,5;
+delitem 12257,1;
+delitem 605,1;
+set Zeny,Zeny-5000;
+specialeffect 98;
+specialeffect 305;
+getitem 12404,1;
+end;
+
+ener5:
+if(Zeny < 25000 ) goto Faltaz;
+if( countitem(657) < 5 || countitem(12624) < 25 || countitem(12257) < 5 || countitem(605) < 5) goto Falta;
+delitem 657,5;
+delitem 12624,25;
+delitem 12257,5;
+delitem 605,5;
+set Zeny,Zeny-25000;
+specialeffect 98;
+specialeffect 305;
+getitem 12404,5;
+end;
+
+
+//--------------------------MELON JUICE-----------------------------
+melon:
+mes "^660099Barista^000000";
+mes "<ITEM>Melon Juice<INFO>23320</INFO></ITEM>:";
+mes "- 10,000 Zeny";
+mes "- 5 Melon";
+mes "- 5 Ice Cubic";
+mes "- 1 Candy Cane";
+mes "- 1 Empty Bottle";
+next;
+menu
+"- 1 Melon Juice",melon1,"- 5 Melon Juice",melon5;
+
+melon1:
+if(Zeny < 10000 ) goto Faltaz;
+if( countitem(6264) < 5 || countitem(7066) < 5 || countitem(530) < 1 || countitem(713) < 1) goto Falta;
+delitem 6264,5;
+delitem 7066,5;
+delitem 530,1;
+delitem 713,1;
+set Zeny,Zeny-10000;
+specialeffect 98;
+specialeffect 305;
+getitem 23320,1;
+end;
+
+melon5:
+if(Zeny < 50000 ) goto Faltaz;
+if( countitem(6264) < 25 || countitem(7066) < 25 || countitem(530) < 5 || countitem(713) < 5) goto Falta;
+delitem 6264,25;
+delitem 7066,25;
+delitem 530,5;
+delitem 713,5;
+set Zeny,Zeny-50000;
+specialeffect 98;
+specialeffect 305;
+getitem 23320,5;
+end;
+
+
+
+Falta:
+mes "^660099Barista^000000";
+mes "te falta algo, revisa tus objetos";
+end;
+
+Faltaz:
+mes "^660099Barista^000000";
+mes "te falta zeny.";
+end;
+
+L_sal:
+mes "^660099Barista^000000";
+mes "Adios";
+end;
+
+
+end;
+}
+

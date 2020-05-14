@@ -1,0 +1,124 @@
+//=======================================================//
+//-----------SPECIAL PORING SPAWN MAP--------------------//
+//-Un clon del mapa new_3-1 aqui los poring tienen mayor-//
+//---posibilidad de dropear monedas, solo dura una hora--//
+//=======================================================//
+
+//--MAPFLAGS--
+pozone	mapflag	nobranch
+pozone	mapflag	noteleport
+pozone	mapflag	nomemo
+pozone	mapflag	nosave	SavePoint
+pozone	mapflag	nobranch
+pozone	mapflag	nightenabled
+pozone	mapflag	noicewall
+pozone	mapflag	nosave	SavePoint
+pozone	mapflag	noskill
+
+
+
+
+//--SPAWNS--
+pozone,0,0	monster	Poring	1725,20,5000,10000
+pozone,0,0	monster	Marin	1857,20,5000,10000
+pozone,0,0	monster	Poporing	2062,20,5000,10000
+pozone,0,0	monster	Drops	1572,20,5000,10000
+pozone,0,0	monster	Dalcom	3817,15,10000,150000
+pozone,0,0	monster	Sweet Drops	3790,15,10000,150000
+pozone,0,0	monster	Gold Poring	2248,15,10000,150000
+pozone,0,0	monster	Nekoring	3620,10,20000,350000
+pozone,0,0	monster	Clover Poporing	3808,10,20000,350000
+pozone,0,0	monster	Jinn Poring	3204,10,20000,350000
+pozone,0,0	monster	Jinn Marin	3205,10,20000,350000
+pozone,0,0	monster	Angeling	1568,1,1200000,1000
+
+
+
+
+
+//------------------------------------------DARK ARGOL PORING ZONE SPEED BOSTER----------------------------------------------------
+//--Darkargol DBR
+pozone,100,171,4	script	Dark Argol#pozone	531,7,7,{
+
+cutin "jpn_darkalgol02",2;
+mes "^660099Dark Argol^000000";
+mes "Tu por aqui?";
+mes "Aqui no se pueden usar skills, te recomiendo un gunslinger de ataque en area, y algun efecto de item drop para que se reunan los poring looter.";
+
+
+next;
+mes "^660099Dark Argol^000000";
+mes "Podria ayudarte, si asi lo quisieras, te configurare el autoloot para que solo puedas autorecoger todas las monedas posibles de este campo y dejar caer todo lo demas.";
+next;
+mes "^660099Dark Argol^000000";
+mes "Esto sirve para los que usan item-granted cards o equips, estrategicamente para mobbear y matar de un escopetazo aprovechando la conducta looter de los poring.";
+next;
+mes "^660099Dark Argol^000000";
+mes "Quieres que configure tu loot para este proposito?:";
+next;
+menu
+"Cambia mi Loot para solo Monedas",lootmoneda,
+"Asi estoy bien gracias",benne;
+
+lootmoneda:
+specialeffect 500;
+cutin "jpn_darkalgol08",2;
+specialeffect 273;
+specialeffect2 492;
+sleep2 200;
+cutin "jpn_darkalgol12",2;
+sleep2 200;
+cutin "jpn_darkalgol11",2;
+sleep2 200;
+cutin "jpn_darkalgol10",2;
+sleep2 100;
+cutin "",255;
+atcommand "@autoloot 0";
+atcommand "@alootid +7539";
+atcommand "@alootid +25290";
+atcommand "@alootid +25655";
+atcommand "@alootid +6987";
+end;
+
+benne:
+mes "^660099Dark Argol^000000";
+mes "Bien.";
+cutin "",255;
+end;
+
+
+
+ontouch:
+specialeffect 500;
+cutin "jpn_darkalgol08",2;
+specialeffect 273;
+specialeffect2 492;
+sleep2 200;
+cutin "jpn_darkalgol12",2;
+sleep2 200;
+cutin "jpn_darkalgol11",2;
+sleep2 200;
+cutin "jpn_darkalgol10",2;
+sleep2 100;
+cutin "jpn_darkalgol14",255;
+sc_start SC_SPEEDUP1,35000,50;
+end;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

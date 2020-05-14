@@ -1,0 +1,88 @@
+//===== rAthena Script =======================================
+//= Healer
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Basic healer script.
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
+//= 1.1 Aligned coordinates with @go.
+//============================================================
+
+-	script	Healermid	-1,{
+if (gettimetick(2) < poringdelay) {
+end;
+}
+
+set poringdelay, gettimetick(2) + 1;
+specialeffect2 EF_INCAGILITY;
+sc_start SC_INCREASEAGI,480000,10;
+specialeffect2 EF_BLESSING;
+sc_start SC_BLESSING,480000,10;
+percentheal 100,100;
+identifyall;
+repairall;
+end;
+
+ontouch:
+	if( #autoheal){
+	set poringdelay, gettimetick(2) + 1;
+	specialeffect2 EF_INCAGILITY;
+	sc_start SC_INCREASEAGI,480000,10;
+	specialeffect2 EF_BLESSING;
+	sc_start SC_BLESSING,480000,10;
+	identifyall;
+	repairall;
+	percentheal 100,100;
+	end;
+	}
+		
+end;
+}
+
+
+
+// Duplicates
+//============================================================
+alberta,27,240,6	duplicate(Healermid)	Healer#alb	485,18,18,
+aldebaran,134,118,6	duplicate(Healermid)	Healer#alde	435,18,18,
+amatsu,107,153,6	duplicate(Healermid)	Healer#ama	758,18,18,
+ayothaya,203,169,6	duplicate(Healermid)	Healer#ayo	435,18,18,
+brasilis,191,222,6	duplicate(Healermid)	Healer#bra	485,18,18,
+comodo,185,163,6	duplicate(Healermid)	Healer#com	485,18,18,
+dewata,192,182,6	duplicate(Healermid)	Healer#dew	435,18,18,
+einbech,131,246,6	duplicate(Healermid)	Healer#einbe	435,18,18,
+einbroch,61,202,6	duplicate(Healermid)	Healer#einbr	485,18,18,
+dicastes01,201,191,4	duplicate(Healermid)	Healer#dic	485,18,18,
+geffen,116,72,6	duplicate(Healermid)	Healer#gef	435,18,18,
+gonryun,156,122,6	duplicate(Healermid)	Healer#gon	485,18,18,
+hugel,90,158,6	duplicate(Healermid)	Healer#hug	978,18,18,
+izlude,122,150,6	duplicate(Healermid)	Healer#izl	485,18,18,
+lighthalzen,152,96,6	duplicate(Healermid)	Healer#li	435,18,18,
+louyang,214,100,6	duplicate(Healermid)	Healer#lou	485,18,18,
+xmas,153,134,4	duplicate(Healermid)	Healer#xmas	435,18,18,
+malangdo,177,134,4	duplicate(Healermid)	Healer#mal	611,18,18,
+new_4-2,93,110,6	duplicate(Healermid)	Healer#new	485,18,18,
+glast_01,360,306,6	duplicate(Healermid)	Healer#glast	435
+malaya,207,210,6	duplicate(Healermid)	Healer#malay	485,18,18,
+mid_camp,216,233,6	duplicate(Healermid)	Healer#mid	469,18,18,
+morocc,154,103,6	duplicate(Healermid)	Healer#mor	435,18,18,
+lasagna,221,188,4	duplicate(Healermid)	Healer#lasa	485,18,18,
+moscovia,166,83,6	duplicate(Healermid)	Healer#mos	435,18,18,
+payon,168,106,6	duplicate(Healermid)	Healer#pay	611,18,18,
+pay_arche,50,136,4	duplicate(Healermid)	Healer#payd	485,18,18,
+prontera,152,192,6	duplicate(Healermid)	Healer#pront	611,18,18,
+rachel,124,114,6	duplicate(Healermid)	Healer#rac	485,18,18,
+splendide,201,153,4	duplicate(Healermid)	Healer#spl	435,18,18,
+//tur_dun01,150,238,6	duplicate(Healermid)	Healer#turdun	811,18,18,
+umbala,98,158,6	duplicate(Healermid)	Healer#umb	435,18,18,
+veins,212,134,6	duplicate(Healermid)	Healer#ve	811,18,18,
+yuno,151,176,6	duplicate(Healermid)	Healer#yuno	811,18,18,
+new_4-2,104,16,4	duplicate(Healermid)	Camealone#new	81,18,18,
+bat_room,148,154,6	duplicate(Healermid)	Healer#bat	811,5,5,
+eclage,105,35,4	duplicate(Healermid)	Healer#ecl	811,18,18,
+mora,55,152,4	duplicate(Healermid)	Healer#mora	909,18,18,

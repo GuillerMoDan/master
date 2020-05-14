@@ -1,0 +1,3001 @@
+poring_w01,120,78,4	script	Poring Machine	563,{
+
+if (gettimetick(2) < poringchain) {
+end;
+}
+
+if (gettimetick(2) < poringdamage) {
+end;
+}
+if (gettimetick(2) < poringdelay) {
+end;
+}
+
+if(countitem(7539) < 1) goto Falta;
+delitem 7539,1;
+
+switch( rand(2) ) {
+case 0: goto miscus;
+case 1: goto costums;
+end; }
+
+//-----------------------CONSUMIBLES-------------------------//
+miscus:
+switch( rand(12) ) {
+
+case 0: goto ocard; break;
+case 1: goto convex; break;
+case 2: goto gympa; break;
+case 3: goto bloobra; break;
+case 4: goto popori; break;
+case 5: goto arenc; break;
+case 6: goto batlem1; break;
+case 7: goto tosd; break;
+case 8: goto enor; break;
+case 9: goto enel; break;
+case 10: goto silverv; break;
+case 11: goto gldore; break;
+end; }
+
+//-----------------------COSTUME GEARS-------------------------//
+costums:
+switch( rand(36) ) {
+case 0: goto copormuf; break;
+case 1: goto doggies; break;
+case 2: goto catties; break;
+case 3: goto acuaris; break;
+case 4: goto batsies; break;
+case 5: goto rabbies; break;
+case 6: goto tiries; break;
+case 7: goto gosties; break;
+case 8: goto gokies; break;
+case 9: goto poball; break;
+case 10: goto lumuff; break;
+case 11: goto catomas; break;
+case 12: goto eclips; break;
+case 13: goto angelis; break;
+case 14: goto ceremes; break;
+case 15: goto auras1; break;
+case 16: goto hairb1; break;
+case 17: goto pets1; break;
+case 18: goto proclo; break;
+case 19: goto hairb2; break;
+case 20: goto cutie; break;
+case 21: goto taiw; break;
+case 22: goto astro; break;
+case 23: goto pball; break;
+case 24: goto cgarm; break;
+case 25: goto alas; break;
+case 26: goto cgarm2; break;
+case 27: goto cmas2; break;
+case 28: goto hairs; break;
+case 29: goto yangs; break;
+case 30: goto stoles; break;
+case 31: goto ladyh; break;
+case 32: goto hood; break;
+case 33: goto masque; break;
+case 34: goto rimuf; break;
+case 35: goto critt; break;
+
+
+end;
+}
+
+//---Old Card Album 15%---
+ocard:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 85){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "StartOCA1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "StartOCA2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "StartOCAL",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdamage, gettimetick(2) + 4;	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "StartOCA1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "StartOCA2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "StartOCA3",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "ewin1",2; sleep2 150; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; cutin "ewin1",2; sleep2 150;  cutin "ewin2",2; sleep2 150;
+specialeffect 18; cutin "ewin3",2; sleep2 150; cutin "StartOCA3",2; sleep2 150; 
+cutin "ewin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "StartOCA3",2; 
+getitem 616,1; cutin "",255;
+goto chain;
+end;
+
+
+//---Convex Mirror 5%---
+convex:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 75){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startcvm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startcvm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startcvml",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)		
+set poringdelay, gettimetick(2) + 4;
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startcvm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startcvm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startcvmw",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "ewin1",2; sleep2 150; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; cutin "ewin1",2; sleep2 150;  cutin "ewin2",2; sleep2 150;
+specialeffect 18; cutin "ewin3",2; sleep2 150; cutin "Startcvmw",2; sleep2 150; 
+cutin "ewin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "Startcvmw",2; 
+getitem 12214,1; cutin "",255;
+goto chain; 
+end; }
+
+
+//---Gym Pass 2%---
+gympa:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 98){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startgym",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startgym2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startgyml",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startgym",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startgym2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startgymw",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "ewin1",2; sleep2 150; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; cutin "ewin1",2; sleep2 150;  cutin "ewin2",2; sleep2 150;
+specialeffect 18; cutin "ewin3",2; sleep2 150; cutin "Startgymw",2; sleep2 150; 
+cutin "ewin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "Startgymw",2; 
+getitem 7776,1; cutin "",255; 
+goto chain; 
+end; }
+
+//-----Bloody Branch 3%--------------------
+bloobra:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 97){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startbb",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startbb2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startbbl",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startbb",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startbb2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startbbw",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "ewin1",2; sleep2 150; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; cutin "ewin1",2; sleep2 150;  cutin "ewin2",2; sleep2 150;
+specialeffect 18; cutin "ewin3",2; sleep2 150; cutin "Startbbw",2; sleep2 150; 
+cutin "ewin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "Startbbw",2; 
+getitem 12103,1; cutin "",255; 
+goto chain;
+end; }
+
+//-----Poporing Coin 100%--------------------
+popori:
+set poringdelay, gettimetick(2) + 2;	
+specialeffect 540; specialeffect 18; sleep2 100; cutin "StartP0",2; sleep2 100; 
+cutin "popo1",2; soundeffectall "roll.wav",0; sleep2 100; cutin "popo2",2; soundeffectall "roll.wav",0; 
+sleep2 100; cutin "popo3",2; soundeffectall "roll.wav",0;  sleep2 100;
+cutin "Pwin",2; sleep2 75; 
+specialeffect 18;
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 75;
+cutin "Pwin2",2; sleep2 75; 
+cutin "Pwin3",2; sleep2 75;  
+cutin "popo3",2; sleep2 75; 
+specialeffect 18;
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 75;
+cutin "Pwin2",2; sleep2 75; 
+cutin "Pwin3",2; sleep2 75;  
+cutin "popo3",2; sleep2 75; 
+specialeffect 18;
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 75;
+cutin "Pwin2",2; sleep2 75; 
+cutin "Pwin3",2; sleep2 75; 
+cutin "popo3",2; sleep2 75;
+sleep2 75; 
+getitem 6987,3; cutin "",255; 
+end; }
+
+//---Armor Enchant Ticket 20%---
+arenc:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 75){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startaet",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startaet2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startaetl",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdamage, gettimetick(2) + 4;	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startaet",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startaet2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startaetw",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "Pwin",2; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+specialeffect 18; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Startaetw",2; sleep2 150; 
+cutin "Pwin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "Startaetw",2; 
+getitem 40004,1; cutin "",255;
+goto chain; 
+end;
+
+//-----Battle field manual 20%--------------------
+batlem1:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 80){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "bfm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "bfm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "bfml",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//25% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "bfm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "bfm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "bfm3",2; 
+soundeffectall "roll.wav",0;  sleep2 250;
+cutin "Pwin",2; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+specialeffect 18; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "bfm3",2; sleep2 150; 
+cutin "Pwin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "bfm3",2; 
+getitem 12208,1; cutin "",255;
+goto chain; 
+end;
+}
+
+//-----Token of Siegfried 5%--------------------
+tosd:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "startos",2; soundeffectall "roll.wav",0; sleep2 250; cutin "startos2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "startosl",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "startos",2; soundeffectall "roll.wav",0; sleep2 250; cutin "startos2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "startosw",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "Pwin",2; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+specialeffect 18; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "startosw",2; sleep2 150; 
+cutin "Pwin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "startosw",2; 
+getitem 13600,1; cutin "",255;
+goto chain; 
+end; 
+}
+
+//-----Enriched  Oridecon 25%--------------------
+enor:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 75){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Starteno",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Starteno2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startenol",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Starteno",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Starteno2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startenow",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "Pwin",2; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+specialeffect 18; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Startenow",2; sleep2 150; 
+cutin "Pwin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "Startenow",2; 
+getitem 7620,1; cutin "",255;
+goto chain; 
+end; 
+}
+
+//-----Enriched  ELunium 2%--------------------
+enel:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 98){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startenel",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startenel2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startenell",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startenel",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startenel2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startenel3",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "Pwin",2; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+specialeffect 18; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Startenel3",2; sleep2 150; 
+cutin "Pwin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "Startenel3",2; 
+getitem 7619,1; cutin "",255;
+goto chain; 
+end; 
+}
+
+//-----Silvervine Fruit 25%--------------------
+silverv:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 75){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startsvf",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startsvf2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startsvfl",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startsvf",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startsvf2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startsvfw",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "Pwin",2; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+specialeffect 18; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Startsvfw",2; sleep2 150; 
+cutin "Pwin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "Startsvfw",2; 
+getitem 6417,3; cutin "",255;
+goto chain; 
+end; 
+}
+
+
+
+//-----Gold Ore 50%--------------------
+gldore:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 50){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "sgore",2; soundeffectall "roll.wav",0; sleep2 250; cutin "sgore2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "sgorel",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "sgore",2; soundeffectall "roll.wav",0; sleep2 250; cutin "sgore2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "sgore3",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "Pwin",2; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+specialeffect 18; sleep2 150; 
+cutin "Pwin1",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin2",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "Pwin3",2; soundeffectall "poring_damage.wav",0; sleep2 150;
+cutin "sgore3",2; sleep2 150; 
+cutin "Pwin3",2; specialeffect 18;
+soundeffectall "st_job_level_up.wav",0; 
+sleep2 250; cutin "sgore3",2; 
+getitem 7231,1; cutin "",255;
+goto chain; 
+end; 
+}
+
+
+
+
+//-----Costume Poring Mufflers 10%--------------------
+copormuf:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 90){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "pmuf1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "pmuf2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "pmufl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "pmuf1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "pmuf2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "pmuf3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "pmuf3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "pmuf3",2; 
+goto pomufsprice;
+end;
+
+
+//-----Costume Mascotillas 5%--------------------
+doggies:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 5 and 95)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "anim1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "anim2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "animl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "anim1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "anim2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "anim3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "anim3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "anim3",2; 
+goto animprizze;
+end;
+
+
+//-----Costume Warm Cat Mufflers 5%--------------------
+catties:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 5 and 95)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startwcm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startwcm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startwcml",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startwcm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startwcm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startwcm3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startwcm3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "Startwcm3",2; 
+goto wacamufs;
+end;
+
+
+//-----Costume Little Aquarium Mid o Lower 5%--------------------
+acuaris:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 5 and 95)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startlaq",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startlaq2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startlaql",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startlaq",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startlaq2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startlaq3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startlaq3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "Startlaq3",2; 
+goto lacuas;
+end;
+
+
+//-----Costume Jack Casttle Bat 5%--------------------
+batsies:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 5 and 95)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "Starthallo",2; sleep2 250; 
+cutin "Startjcb",2; soundeffectall "farmiliar_stand1.wav",0; sleep2 250; cutin "Startjcb2",2; soundeffectall "farmiliar_stand1.wav",0; 
+sleep2 250; cutin "Startjcbl",2; soundeffectall "farmiliar_die.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+set poringdelay, gettimetick(2) + 3;
+//5% chance (the result is else)	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "Starthallo",2; sleep2 250; 
+cutin "Startjcb",2; soundeffectall "farmiliar_stand2.wav",0; sleep2 250; cutin "Startjcb2",2; soundeffectall "farmiliar_stand2.wav",0; 
+sleep2 250; cutin "Startjcbw",2; soundeffectall "farmiliar_attack.wav",0;  sleep2 250; 
+specialeffect 377;
+cutin "Hwin",2; sleep2 150; specialeffect 377; cutin "Hwin1",2; sleep2 150;
+cutin "Hwin2",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "Hwin3",2; sleep2 150; 
+cutin "Hwin1",2; sleep2 150; specialeffect 377; 
+cutin "Hwin2",2; specialeffect 18; sleep2 150; cutin "Hwin3",2; specialeffect 18; sleep2 150;
+cutin "Startjcbw",2; sleep2 150; cutin "Hwin3",2; specialeffect 10;
+sleep2 150; cutin "Startjcbw",2;
+goto batsiesw;
+ end;
+
+
+//-----Costume Conejos Mascotas 5%--------------------
+rabbies:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "cone1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "cone2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "conel",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "cone1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "cone2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "cone3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "cone3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "cone3",2; 
+goto coneprize;
+end; }
+
+
+//-----Costume Tirayas 5%--------------------
+tiries:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "bonn",2; soundeffectall "roll.wav",0; sleep2 250; cutin "bonn2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "bonnl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "bonn",2; soundeffectall "roll.wav",0; sleep2 250; cutin "bonn2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "bonn3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "bonn3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "bonn3",2; 
+goto tiraprize;
+end; }
+
+
+//-----Costume Ghostring Tall Hats 5%--------------------
+gosties:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startgoh",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startgoh2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startgohl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startgoh",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startgoh2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startgoh3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startgoh3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "Startgoh3",2; 
+goto gosprize;
+end; }
+
+
+//-----Costume Pelo Saiyayin 95%--------------------
+gokies:
+if(rand(1,100) < 95){
+set poringdelay, gettimetick(2) + 2;
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "goku",2; soundeffectall "roll.wav",0; sleep2 250; cutin "goku2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "gokul",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "goku",2; soundeffectall "roll.wav",0; sleep2 250; cutin "goku2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "goku3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "goku3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "goku3",2; 
+goto gokus;
+end; }
+
+
+//-----Costume Poring Balloon 10%--------------------
+poball:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Starthb",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Starthb2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Starthbl",2; soundeffectall "hun_anklesnare.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Starthb",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Starthb2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Starthbw",2; soundeffectall "roll.wav",0;  sleep2 250;
+cutin "ewin1",2; sleep2 150; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; cutin "ewin1",2; sleep2 150;  cutin "ewin2",2; sleep2 150;
+specialeffect 18; cutin "ewin3",2; sleep2 150; cutin "Starthbw",2; sleep2 150; 
+cutin "ewin3",2; specialeffect 18;
+sleep2 250; cutin "Starthbw",2; 
+getitem 20344,1; cutin "",255;
+goto chain; 
+end; }
+
+
+//-----Costume Lunatic Muffler 5%--------------------
+lumuff:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//75% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "clf1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "clf2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "clfl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;	
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "clf1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "clf2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "clf3",2; soundeffectall "roll.wav",0;  sleep2 250;
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; cutin "ewin1",2; sleep2 150;  cutin "ewin2",2; sleep2 150;
+specialeffect 18; cutin "ewin3",2; sleep2 150; cutin "clf3",2; sleep2 150; 
+cutin "ewin3",2; specialeffect 18;
+sleep2 250; cutin "clf3",2; 
+goto lumufprize;
+end; }
+
+
+//-----Costume Gatos Mascotas 5%--------------------
+catomas:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "gato1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "gato2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "gatol",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "gato1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "gato2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "gato3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "gato3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "gato3",2; 
+goto gatosprice;
+end; }
+
+//-----Costume Eclipses 5%--------------------
+eclips:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "eclip1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "eclip2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "eclipl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "eclip1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "eclip2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "eclip3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "eclip3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "eclip3",2; 
+goto ecliprice;
+end; }
+
+//-----Costume Angelis 5%--------------------
+angelis:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "ange1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "ange2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "angel",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "ange1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "ange2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "ange3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "ange3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "ange3",2; 
+goto angepriz;
+end; 
+
+//-----Costume Eremes Scarves 5%--------------------
+ceremes:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startgoe",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startgoe2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startgoel",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startgoe",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startgoe2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startgoew",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startgoew",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "Startgoew",2; 
+goto erepriz;
+end; 
+
+//-----Costume AURAS 4 %--------------------
+auras1:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 96){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "aura1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "aura2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "aural",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "aura1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "aura2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "aura3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "aura3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "aura4",2; 
+goto aura1win;
+end; 
+}
+
+//-----Costume HAIRBANDS 5%--------------------
+hairb1:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "hairb1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "hairb2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "hairbl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "hairb1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "hairb2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "hairb3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "hairb3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "hairb3",2; 
+goto hairb1win;
+end; 
+}
+
+//-----PETS 5%--------------------
+pets1:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "pet1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "pet2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "petl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "pet1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "pet2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "pet3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "pet3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "pet3",2; 
+goto pet1win;
+end; 
+}
+
+//-----PROTECT CLOTH COLORES 3%--------------------
+proclo:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 97){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startclo",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startclo2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startclol",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startclo",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startclo2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startclo3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startclo3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "Startclo3",2; 
+goto clotwin;
+end; 
+}
+
+//-----Costume HAIRBANDS2 5%--------------------
+hairb2:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "efb1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "efb2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "efbl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "efb1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "efb2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "efb3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "efb3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "efb3",2; 
+goto hairb2win;
+end; 
+}
+
+//-----Costume CUTIES 3%--------------------
+cutie:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 97){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "cut1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "cut2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "cutl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "cut1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "cut2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "cut3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "cut3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "cut3",2; 
+goto cutiewin;
+end; 
+}
+
+//----banderas de taiwan 10%-----------
+taiw:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 90){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "twf1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "twf2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "twfl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "twf1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "twf2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "twf3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "twf3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "twf3",2; 
+goto twfwin;
+end; 
+}
+
+//----Astros 5%-----------
+astro:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startfm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startfm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startfml",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startfm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startfm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startfm3.bmp",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startfm3.bmp",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "Startfm3.bmp",2; 
+goto astrowin;
+end; 
+}
+
+//-----Costume Ballons 10 %--------------------
+pball:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 90){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "pbal",2; soundeffectall "roll.wav",0; sleep2 250; cutin "pbal2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "pball",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "pbal",2; soundeffectall "roll.wav",0; sleep2 250; cutin "pbal2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "pbal3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "pbal3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "pbal4",2; 
+goto pbalwin;
+end; 
+}
+
+//-----Costume Garments 5 %--------------------
+cgarm:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "cgar1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "cgar2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "cgarl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "cgar1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "cgar2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "cgar3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "cgar3",2; sleep2 150;
+goto cgarmw;
+end; 
+}
+
+//-----Garment de Alas de Angel 10%--------------------
+alas:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 5){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startacw",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startacw2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startacwl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startacw",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startacw2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startacww",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startacww",2; sleep2 150;
+goto alaswin;
+end; 
+}
+
+
+//-----Costume Garments Pro 2%--------------------
+cgarm2:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 98){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startcap",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startcap2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startcapl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startcap",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startcap2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startcap3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startcap3",2; sleep2 150;
+goto cgarmw2;
+end; 
+}
+
+//-----Costume Mascotillas2 5%--------------------
+
+cmas2:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the result is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "Startfox",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startfox2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startfoxl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "Startfox",2; soundeffectall "roll.wav",0; sleep2 250; cutin "Startfox2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "Startfox3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "Startfox3",2; sleep2 150;
+goto cmas2w;
+end; 
+}
+
+//-----Costume HAIRS DE DAMAS 10%--------------------
+hairs:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 90){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "lhair1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "lhair2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "lhairl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "lhair1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "lhair2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "lhair3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph"; specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "lhair3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "lhair3",2; 
+goto hairprice;
+end; 
+}
+
+//-----Costume Yangs 95%--------------------
+yangs:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "low1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "low2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "lowl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "low1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "low2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "low3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "low3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "low3",2; 
+goto yangwin;
+end; 
+}
+
+
+//-----Costume Stoles 95%--------------------
+stoles:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "stall1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "stall2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "stalll",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "stall1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "stall2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "stall3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "stall3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "stall3",2; 
+goto stolewin;
+end; 
+}
+
+//-----Costume Lady hats 5%--------------------
+ladyh:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "ladh1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "ladh2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "ladhl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "ladh1",2; soundeffectall "roll.wav",0; sleep2 250; cutin "ladh2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "ladh3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "ladh3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "ladh3",2; 
+goto ladywin;
+end; 
+}
+
+
+//-----Costume Hoods 5%--------------------
+hood:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "coshood",2; soundeffectall "roll.wav",0; sleep2 250; cutin "coshood2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "coshoodl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "coshood",2; soundeffectall "roll.wav",0; sleep2 250; cutin "coshood2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "coshood3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "coshood3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "coshood3",2; 
+goto hoodw;
+end; 
+}
+
+//-----Costume Masquerades 5%--------------------
+masque:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "masque",2; soundeffectall "roll.wav",0; sleep2 250; cutin "masque2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "masquel",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "masque",2; soundeffectall "roll.wav",0; sleep2 250; cutin "masque2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "masque3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "masque3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "masque3",2; 
+goto masquewin;
+end; 
+}
+
+//-----Costume Ribbon Mufflers 5%--------------------
+rimuf:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "ribmm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "ribmm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "ribmml",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "ribmm",2; soundeffectall "roll.wav",0; sleep2 250; cutin "ribmm2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "ribmm3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";  specialeffect 377;
+soundeffectall "se_crow2.wav",0;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "ribmm3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "ribmm3",2; 
+goto rimufwin;
+end; 
+}
+
+critt:
+set poringdelay, gettimetick(2) + 2;
+if(rand(1,100) < 95){
+//95% chance (the resu7 is between 25 and 75)
+specialeffect 18; sleep2 100; specialeffect 540;  sleep2 50; cutin "StartP0",2; sleep2 250; 
+cutin "sign",2; soundeffectall "roll.wav",0; sleep2 250; cutin "sign2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "signl",2; soundeffectall "mystcase_move.wav",0; sleep2 250;
+goto pierdecostume;
+}else{
+//5% chance (the result is else)
+set poringdelay, gettimetick(2) + 4;		
+specialeffect 540; specialeffect 18; sleep2 250; cutin "StartP0",2; sleep2 250; 
+cutin "sign",2; soundeffectall "roll.wav",0; sleep2 250; cutin "sign2",2; soundeffectall "roll.wav",0; 
+sleep2 250; cutin "sign3",2; soundeffectall "roll.wav",0;  sleep2 250; 
+playBGM "triumph";
+soundeffectall "se_crow2.wav",0;
+specialeffect 377;
+cutin "ewin1",2; sleep2 150; specialeffect 377; cutin "ewin2",2; sleep2 150;
+cutin "ewin3",2; specialeffect 18; sleep2 150; specialeffect 377; cutin "ewin1",2; sleep2 150; 
+cutin "ewin2",2; sleep2 150; specialeffect 377; 
+cutin "ewin3",2; specialeffect 18; sleep2 150;
+cutin "sign3",2; sleep2 150; cutin "ewin3",2; specialeffect 10;
+sleep2 150; cutin "sign3",2; 
+goto crittwin;
+end; 
+}
+
+
+//----CHANCES EXTRAORDINARIOS---------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pierde:
+//perder tiene 5% chance fusilarte mas y comerse tu coin.
+if(rand(1,100) < 99	){
+set poringdamage, gettimetick(2) + 1;
+if(readparam(bInt)>=75) goto soporta;
+if(readparam(bStr)>=75) goto soporta;
+if(readparam(bAgi)>=75) goto eskiva;
+cutin "Startshot3",2;
+specialeffect 584;
+sleep2 150;
+specialeffect2 1; heal -2000,0;
+sleep2 50;
+pushpc 2,3;
+sleep2 150;
+specialeffect2 426;
+sleep2 150;
+specialeffect2 426;
+makeitem 7539,1,"prontera",159,168; 
+cutin "",255;	
+end;
+}else{
+//matona
+set poringdamage, gettimetick(2) + 3;
+soundeffectall "obeaune_die.wav",0; sleep2 200;
+npctalk "De esta no te salvara tus stats.";
+cutin "Startshot1",2; soundeffectall "rafflesia_attack.wav",0; sleep2 200;
+cutin "Startshot2",2; soundeffectall "rafflesia_attack.wav",0; sleep2 200;
+soundeffectall "obeaune_die.wav",0; 
+cutin "Startshot3",2; soundeffectall "rafflesia_attack.wav",0; specialeffect 584; specialeffect2 1; specialeffect2 426; heal -9000,0; sleep2 200;
+cutin "Startshot4",2; soundeffectall "rafflesia_attack.wav",0; specialeffect 584; specialeffect2 1; specialeffect2 426; heal -9000,0; sleep2 200;
+cutin "Startshot5",2; soundeffectall "rafflesia_attack.wav",0; specialeffect 584; specialeffect2 1; specialeffect2 426; heal -9000,0; sleep2 200;
+cutin "Startshot6",2; soundeffectall "rafflesia_attack.wav",0; sleep2 200;
+specialeffect 543; soundeffectall "thanatos_die.wav",0; specialeffect 426; sleep2 200; 
+cutin "",255;
+end;
+
+eskiva:
+specialeffect2 191; sleep2 250; 
+cutin "Startshot3",2;
+specialeffect2 462; sleep2 200; pushpc 1,1; 
+makeitem 7539,1,"prontera",159,168; 
+cutin "",255;
+end;
+
+soporta:
+specialeffect2 191; sleep2 125; 
+cutin "Startshot3",2; sleep2 125; specialeffect 584;  
+specialeffect2 675; sleep2 200;
+makeitem 7539,1,"prontera",159,168; 
+cutin "",255;
+end;
+
+chain:
+if(rand(1,100) < 50){
+set poringchain, gettimetick(2) + 1;
+specialeffect 521;
+end;
+}else{
+set poringchain, gettimetick(2) + 3;
+npctalk "CHAIN.!";
+specialeffect 599;
+specialeffect 273;
+soundeffectall "disguise_stand.wav",0;
+cutin "chain",2; 
+sleep2 250;
+soundeffectall "se_chain_1.wav",0; 
+cutin "chain2",2; 
+sleep2 250; 
+cutin "chaincash1",2; soundeffectall "disguise_stand.wav",0;
+sleep2 250; 
+cutin "chaincash2",2; soundeffectall "disguise_stand.wav",0;
+sleep2 250; 
+cutin "chaincash3",2; soundeffectall "disguise_stand.wav",0;
+sleep2 250; 
+specialeffect 18; 
+cutin "chain",2; 
+sleep2 250; 
+specialeffect 18; 
+cutin "chaincash3",2; sleep2 250; specialeffect2 10;
+set #CASHPOINTS,#CASHPOINTS+30;
+dispbottom "Haz ganado 30 Cash Points, Cash Total: " +#CASHPOINTS+ " Cash Points";
+specialeffect 18; soundeffectall "disguise_die01.wav",0;
+cutin "Pwin3",2; 
+cutin "",255;
+end;
+}
+pierdecostume:
+if(rand(1,100) < 20){
+set poringdamage, gettimetick(2) + 1;
+set poringdelay, gettimetick(2) + 1;
+cutin "coslose",2;
+soundeffectall "swordman_provoke.wav",0;
+getitem 7539,1;
+sleep2 250;
+npctalk "Obtienes otra oportunidad!";
+cutin "",255;
+end;
+}else{
+set poringdelay, gettimetick(2) + 1;
+set poringdamage, gettimetick(2) + 1;
+sleep2 100; cutin "rompe",2; sleep2 100; specialeffect 543; 
+cutin "rompe1",2; soundeffectall "thanatos_die.wav",0; specialeffect 426; sleep2 100; 
+cutin "rompe2",2; soundeffectall "thanatos_die.wav",0; sleep2 100;
+cutin "rompe3",2; soundeffectall "thanatos_die.wav",0; sleep2 100; 
+cutin "",255;
+set #CASHPOINTS,#CASHPOINTS+3;
+dispbottom "Haz obtenido 3 CP!, Cash Total: " +#CASHPOINTS+ " Cash Points";
+end;
+}
+
+//-------------------------------------------------------------SCRIPT DE PREMIOS, ABREN MENUS CUANDO SE GANA ALGO ELEGIBLE----------------------------------------------------------
+
+//--------------Gatos Ordinarios------------------------
+gatosprice:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz ganado un gato costume y puedes elegir la raza que quieras.";
+next;
+menu
+"^DF7401Orange Tabby Cat^000000",oracat,
+"Black Cat",blacat,
+"^0489B1Blue Eyes White Cat^000000",waitcat;
+
+oracat:
+specialeffect2 18;
+getitem 31491,1;
+cutin "",255; 
+end;
+
+blacat:
+specialeffect2 18;
+getitem 31186,1;
+cutin "",255; 
+end;
+
+waitcat:
+specialeffect2 18;
+getitem 31452,1;
+cutin "",255; 
+end;
+}
+
+//----------------Bufandas Poring----------------------------------
+pomufsprice:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz ganado unas preciosas bufandas poring.";
+next;
+menu
+"^FE2EC8Poring Muffler^000000",pormuf,
+"^088A08Poporing Muffler^000000",popomuf,
+"^DF7401Drops Muffler^000000",dropmuf,
+"^0080FFMarin Muffler^000000",marimuf;
+
+pormuf:
+specialeffect2 18;
+getitem 31490,1;
+cutin "",255; 
+end;
+
+popomuf:
+specialeffect2 18;
+getitem 31586,1;
+cutin "",255; 
+end;
+
+dropmuf:
+specialeffect2 18;
+getitem 40000,1;
+cutin "",255; 
+end;
+
+marimuf:
+specialeffect2 18;
+getitem 40001,1;
+cutin "",255; 
+end;
+}
+
+//---------------Mascotas Mix 1----------------------
+animprizze:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz ganado una hermosa mascota, adelante elije tu especie..";
+next;
+menu
+"^1C1C1CBaby Penguin^000000",babyping,
+"^FF8000Shiba Inu^000000",shibain,
+"^3B240BBaby Desert Wolf^000000",babydw;
+
+babyping:
+specialeffect2 18;
+getitem 31437,1;
+cutin "",255; 
+end;
+
+shibain:
+specialeffect2 18;
+getitem 19291,1;
+cutin "",255; 
+end;
+
+babydw:
+specialeffect2 18;
+getitem 31686,1;
+cutin "",255; 
+end;
+}
+
+//------Gatos Bufandas-----------------------------
+wacamufs:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz ganado un gato bufanda, adelante elije el color..";
+next;
+menu
+"Warm Cat Muffler",wwacamu,
+"Black Warm Cat Muffler",bwacamu;
+
+wwacamu:
+specialeffect2 18;
+getitem 31300,1;
+cutin "",255; 
+end;
+
+bwacamu:
+specialeffect2 18;
+getitem 31533,1;
+cutin "",255; 
+end;
+
+//-------------AQUARIUM--------------------------------
+lacuas:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz ganado un Little Aquarium, elije el tipo..";
+next;
+menu
+"Little Aquarium (Mid)",midacu,
+"Little Aquarium (Lower)",lowacu;
+
+midacu:
+specialeffect2 18;
+getitem 20325,1;
+cutin "",255; 
+end;
+
+lowacu:
+specialeffect2 18;
+getitem 31549,1;
+cutin "",255; 
+end;
+}
+
+//-------------Conejos Mascotas--------------------------------
+coneprize:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz ganado un lindo conejito y puedes elegir el color que mas te guste.";
+next;
+menu
+"^DF7401Orange Rabbit^000000",orab,
+"White Rabbit",wrab,
+"Panda Rabbit",prab;
+
+orab:
+specialeffect2 18;
+getitem 31715,1;
+cutin "",255; 
+end;
+
+wrab:
+specialeffect2 18;
+getitem 31299,1;
+cutin "",255; 
+end;
+
+prab:
+specialeffect2 18;
+getitem 31512,1;
+cutin "",255; 
+end;
+}
+
+//----------------Costume Tirayas------------------------
+tiraprize:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz ganado un lindo Tiraya Bonnet y puedes elegir el color/sabor que mas te guste.";
+next;
+menu
+"^D7DF01Honey Sweet Bonnet^000000",sbon,
+"^3B170BChoco^000000 ^0B610BMint^000000 Bonnet",chobn,
+"Costume Tiraya Bonnet",ctir,
+"Tiraya Bonnet (Gear No costume)",tirayia;
+
+sbon:
+specialeffect2 18;
+getitem 19661,1;
+cutin "",255; 
+end;
+
+chobn:
+specialeffect2 18;
+getitem 20243,1;
+cutin "",255; 
+end;
+
+ctir:
+specialeffect2 18;
+getitem 19655,1;
+cutin "",255; 
+end;
+
+tirayia:
+specialeffect2 18;
+getitem 5395,1;
+cutin "",255; 
+end;
+}
+
+//-------------Gorros de Ghostrings------------------
+gosprize:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz ganado un lindo Ghost Tall Hat y puedes elegir el que mas te guste.";
+next;
+menu
+"^04B4AEGhostring Tall Hat^000000",gostal,
+"Whisper Tall Hat",wistal,
+"Golden Whisper Tall Hat",gotall,
+"^FF0000Ghostring Card^000000 u.u ",gcard;
+
+gostal:
+specialeffect2 18;
+getitem 31123,1;
+cutin "",255; 
+end;
+
+wistal:
+specialeffect2 18;
+getitem 20130,1;
+cutin "",255; 
+end;
+
+gotall:
+specialeffect2 18;
+getitem 40002,1;
+cutin "",255; 
+end;
+
+gcard:
+cutin "coslose",2;
+soundeffectall "swordman_provoke.wav",0;
+sleep2 250;	
+cutin "",255;
+specialeffect2 622;
+specialeffect2 1; heal -25000,0;
+getitem 14598,1;
+npctalk "Poring Machine: Pobre iluso, aunque tenga el poder de crear lo que solicitaste, te dare solo un hueso para que te conformes.";
+cutin "",255; 
+end;
+}
+
+//------------Pelos Sayayin--------------------------
+gokus:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ahora puedes volverte un Saiyayin, elige el tono de cabello.";
+next;
+menu
+"Black Strongman Hair",bsay,
+"^FFFF00Yellow Strongman Hair^000000",ysay,
+"^FF0000Red Strongman Hair^000000",rsay,
+"White Strongman Hair",wsay,
+"^0000FFBlue Strongman Hair^000000",blusay;
+
+bsay:
+specialeffect2 18;
+getitem 20248,1;
+cutin "",255; 
+end;
+
+ysay:
+specialeffect2 18;
+getitem 18740,1;
+cutin "",255; 
+end;
+
+rsay:
+specialeffect2 18;
+getitem 20249,1;
+cutin "",255; 
+end;
+
+wsay:
+specialeffect2 18;
+getitem 20250,1;
+cutin "",255; 
+end;
+
+blusay:
+specialeffect2 18;
+getitem 40003,1;
+cutin "",255; 
+end;
+
+//------------Mobhat de lunatics------------------------
+ecliprice:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ahora puede descansar un miembro de la familia lunatic en tu cabeza, elige tu hat.";
+next;
+mes "^B40486Premios Poring^000000";
+mes "Izquiera se ve la info, derecha seleccionas premio.";
+mes "<ITEM>Costume Lunatic Balloon Family<INFO>31814</INFO></ITEM>.";
+mes "<ITEM>Costume Lunatic On Shoulder<INFO>31813</INFO></ITEM>.";
+mes "<ITEM>Costume Eclipse Winter Knit Hat<INFO>19990</INFO></ITEM>.";
+mes "<ITEM>Costume Sleeping Eclipse Family<INFO>20268</INFO></ITEM>.";
+mes "<ITEM>Costume Eclipse Solo<INFO>20241</INFO></ITEM>.";
+mes "<ITEM>Costume Lunatic Solo<INFO>19986</INFO></ITEM>.";
+
+menu
+"^01A9DBCostume Lunatic Balloon Family^000000",clbf,
+"^088A4BCostume Lunatic on Shoulder^000000",clonsh,
+"^01A9DBCostume Eclipse Winter Knit Hat^000000",ekh,
+"^01A9DBCostume Sleeping Eclipse Family^000000",efam,
+"Costume Eclipse Solo",esolo,
+"Costume Lunatic Solo^000000",lusolo;
+
+clbf:
+specialeffect2 18;
+getitem 31814,1;
+cutin "",255; 
+end;
+
+clonsh:
+specialeffect2 18;
+getitem 31813,1;
+cutin "",255; 
+end;
+
+ekh:
+specialeffect2 18;
+getitem 19990,1;
+cutin "",255; 
+end;
+
+efam:
+specialeffect2 18;
+getitem 20268,1;
+cutin "",255; 
+end;
+
+esolo:
+specialeffect2 18;
+getitem 20241,1;
+cutin "",255; 
+end;
+
+lusolo:
+specialeffect2 18;
+getitem 19986,1;
+cutin "",255; 
+end;
+
+
+//----------Lowers de Lunatic---------------
+lumufprize:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ahora puedes vestir con una pieza del lunatic.";
+next;
+menu
+"Costume Lunatic Muffler",lmuf,
+"White Happy Lunatic Hanging Ear",lhe,
+"Black Happy Lunatic Hanging Ear",lheb;
+
+lmuf:
+specialeffect2 18;
+getitem 31693,1;
+cutin "",255; 
+end;
+
+lhe:
+specialeffect2 18;
+getitem 20298,1;
+cutin "",255; 
+end;
+
+lheb:
+specialeffect2 18;
+getitem 31167,1;
+cutin "",255; 
+end;
+
+//-------------Globos Abgelings---------------------
+angepriz:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, puedes elegir gorros Angeling.";
+next;
+menu
+"Angeling Bubble -Lower -No Costume",anbu,
+"Costume Flapping Angeling Hat",flapan,
+"Costume Angeling Hat -No Flappin",coangn,
+"Costume Angeling Fur Hat",angfur,
+"^01A9DBCostume Hello Mother Hat (ArchAngeling)^000000",archa,
+"Costume Angeling Hair Pin",apin,
+"^FF0000Angeling Card^000000 u.u ",angcar;
+
+anbu:
+specialeffect2 18;
+getitem 18858,1;
+cutin "",255; 
+end;
+
+flapan:
+specialeffect2 18;
+getitem 31090,1;
+cutin "",255; 
+end;
+
+angfur:
+specialeffect2 18;
+getitem 20436,1;
+cutin "",255; 
+end;
+
+coangn:
+specialeffect2 18;
+getitem 19848,1;
+cutin "",255; 
+end;
+
+archa:
+specialeffect2 18;
+getitem 20236,1;
+cutin "",255; 
+end;
+
+apin:
+specialeffect2 18;
+getitem 19773,1;
+cutin "",255; 
+end;
+
+angcar:
+cutin "coslose",2;
+soundeffectall "swordman_provoke.wav",0;
+sleep2 250;	
+cutin "",255;
+specialeffect2 622;
+specialeffect2 1; heal -25000,0;
+getitem 14540,1;
+npctalk "Poring Machine: Pobre iluso, aunque tenga el poder de crear lo que solicitaste, te dare solo un hueso para que te conformes.";
+cutin "",255; 
+end;
+}
+
+//---scarves de eremes----
+erepriz:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, haz conseguido algo increible, selecciona tu color!";
+next;
+menu
+"^B40404Red Eremes Scarf^000000",rederemes,
+"^3B170BBrown Eremes Scarf^000000",browneremes,
+"^D7DF01Golden Eremes Scarf^000000",golderemes,
+"^0000FFBlue Eremes Scarf^000000",blueremes,
+"^088A08Green Eremes Scarf^000000",greeneremes,
+"^FE2EF7Pink Eremes Scarf^000000",pinkeremes,
+"^04B45FFoil Eremes Scarf^000000",foileremes,
+"^2EFEF7Cyan Eremes Scarf^000000",cyaneremes,
+"^8904B1Purple Eremes Scarf^000000",purperemes,
+"^8D8D8DWhite Eremes Scarf^000000",whiteremes,
+"Black Eremes Scarf^000000",blackeremes;
+
+rederemes:
+specialeffect2 18;
+getitem 20405,1;
+cutin "",255; 
+end;
+
+browneremes:
+specialeffect2 18;
+getitem 31057,1;
+cutin "",255; 
+end;
+
+golderemes:
+specialeffect2 18;
+getitem 40005,1;
+cutin "",255; 
+end;
+
+blueremes:
+specialeffect2 18;
+getitem 40006,1;
+cutin "",255; 
+end;
+
+greeneremes:
+specialeffect2 18;
+getitem 40007,1;
+cutin "",255; 
+end;
+
+pinkeremes:
+specialeffect2 18;
+getitem 40008,1;
+cutin "",255; 
+end;
+
+foileremes:
+specialeffect2 18;
+getitem 40009,1;
+cutin "",255; 
+end;
+
+cyaneremes:
+specialeffect2 18;
+getitem 40010,1;
+cutin "",255; 
+end;
+
+purperemes:
+specialeffect2 18;
+getitem 40011,1;
+cutin "",255; 
+end;
+
+whiteremes:
+specialeffect2 18;
+getitem 40012,1;
+cutin "",255; 
+end;
+
+blackeremes:
+specialeffect2 18;
+getitem 40013,1;
+cutin "",255; 
+end;
+}
+
+//--auras---
+aura1win:
+cutin "aura3",2; 
+sleep2 250; specialeffect 18;
+cutin "aura4",2; 
+sleep2 250; specialeffect 18;
+cutin "aura3",2; 
+sleep2 250; specialeffect 18;
+cutin "aura4",2; 
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, tienes 6 opciones, puedes revisar los item dandole click al nombre";
+next;
+cutin "aura3",2; 
+sleep2 250; specialeffect 18;
+cutin "aura4",2; 
+sleep2 250; specialeffect 18;
+cutin "aura3",2; 
+sleep2 250; specialeffect 18;
+mes "^B40486Premios Poring^000000";
+mes "Pulsa Next para que puedas elegir el que mas te gusta de esta lista.";
+mes "<ITEM>Blessing of Angels<INFO>20404</INFO></ITEM>.";
+mes "<ITEM>Floral Waltz<INFO>20487</INFO></ITEM>.";
+mes "<ITEM>Moonstar Ring<INFO>18742</INFO></ITEM>.";
+mes "<ITEM>New Year Shine<INFO>20439</INFO></ITEM>.";
+mes "<ITEM>Valhalla Idol<INFO>20459</INFO></ITEM>.";
+mes "<ITEM>Will O Wisp<INFO>18741</INFO></ITEM>.";
+next;
+cutin "aura3",2; 
+sleep2 250; specialeffect 18;
+cutin "aura4",2; 
+sleep2 250; specialeffect 18;
+cutin "aura3",2; 
+sleep2 250; specialeffect 18;
+cutin "aura4",2; 
+mes "^B40486Premios Poring^000000";
+mes "Excelente, Selecciona cuidadosamente y pulsa Ok!.";
+menu
+"^0000FFBlessing of Angels^000000",blesan,
+"^088A08Floral Waltz^000000",floralw,
+"^D7DF01Moonstar Ring^000000",moonstar,
+"^FF8000New Year Shine^000000",nysh,
+"^FE2EF7Valhalla Idol^000000",vaidol,
+"^04B45FWill O Wisp^000000",willo;
+
+blesan:
+specialeffect2 18;
+getitem 20404,1;
+cutin "",255; 
+end;
+
+floralw:
+specialeffect2 18;
+getitem 20487,1;
+cutin "",255; 
+end;
+
+moonstar:
+specialeffect2 18;
+getitem 18742,1;
+cutin "",255; 
+end;
+
+nysh:
+specialeffect2 18;
+getitem 20439,1;
+cutin "",255; 
+end;
+
+vaidol:
+specialeffect2 18;
+getitem 20459,1;
+cutin "",255; 
+end;
+
+willo:
+specialeffect2 18;
+getitem 18741,1;
+cutin "",255; 
+end;
+
+//-----3 PETS---
+pet1win:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste 1 cute pet, elige tu favorito:";
+menu
+"^0000FFFantastic Blue Unicorn^000000",blunicorn,
+"^FE9A2EHard Rice Cake^000000",ricecake,
+"^FF0000Xmass Rabbit^000000",xmasrab;
+
+blunicorn:
+specialeffect2 18;
+getitem 643,1;
+getitem 9068,1;
+cutin "",255; 
+end;
+
+ricecake:
+specialeffect2 18;
+getitem 643,1;
+
+getitem 9028,1;
+cutin "",255; 
+end;
+
+xmasrab:
+specialeffect2 18;
+getitem 643,1;
+getitem 9058,1;
+cutin "",255; 
+end;
+
+//-----COLOR PROTECT CLOTHS---
+clotwin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste 1 protect cloth ordinario, escoge tu color:";
+menu
+"Black Protect Cloth",blaclot,
+"^0000FFBlue Protect Cloth^000000",bluclot,
+"^8904B1Purple Protect Cloth^000000",purclot,
+"^FF0000Red Protect Cloth^000000",redcloth;
+
+
+blaclot:
+specialeffect2 18;
+getitem 40014,1;
+cutin "",255; 
+end;
+
+bluclot:
+specialeffect2 18;
+getitem 40015,1;
+cutin "",255; 
+end;
+
+purclot:
+specialeffect2 18;
+getitem 40016,1;
+cutin "",255; 
+end;
+
+redcloth:
+specialeffect2 18;
+getitem 40017,1;
+cutin "",255; 
+end;
+
+//-----HAIRBANDS 1---
+hairb1win:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste 1 costume hairband, escoge tu favorito:";
+next;
+menu
+"^01DFD7Costume Mechanical Feather Hairband^000000",mechfa,
+"^61210BCostume Gryphon Wing Hairband^000000",gryf,
+"^2E64FECostume Lightning Speed^000000",csol;
+
+mechfa:
+specialeffect2 18;
+getitem 20380,1;
+cutin "",255; 
+end;
+
+gryf:
+specialeffect2 18;
+getitem 20069,1;
+cutin "",255; 
+end;
+
+csol:
+specialeffect2 18;
+getitem 20011,1;
+cutin "",255; 
+end;
+
+//-----HAIRBANDS 2---
+hairb2win:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste 1 costume hairband, escoge tu favorito:";
+next;
+menu
+"^FF0080Costume Magical Feather^000000",cmaf,
+"^FF8000Costume Flying Ljosalfar^000000",ljosa,
+"^2E64FECostume Snow Flower Tiara^000000",snowt;
+
+cmaf:
+specialeffect2 18;
+getitem 31040,1;
+cutin "",255; 
+end;
+
+ljosa:
+specialeffect2 18;
+getitem 20099,1;
+cutin "",255; 
+end;
+
+snowt:
+specialeffect2 18;
+getitem 31588,1;
+cutin "",255; 
+end;
+
+//---------Cuties 1---
+cutiewin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste 1 costume Special, escoge tu favorito:";
+next;
+menu
+"^0174DFCostume Elephangel^000000",eleph,
+"^B40486Poring Soap Pipe^000000",popip,
+"^B40431Floating Stone of Sage^000000",flot;
+
+eleph:
+specialeffect2 18;
+getitem 40052,1;
+cutin "",255; 
+end;
+
+popip:
+specialeffect2 18;
+getitem 31055,1;
+cutin "",255; 
+end;
+
+flot:
+specialeffect2 18;
+getitem 31391,1;
+cutin "",255; 
+end;
+
+//-----TAIWAN FLAGS---
+twfwin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste 1 costume flag garment, escoge tu color:";
+next;
+menu
+"Costume White Flag",whitef,
+"^FF0000Costume Red Flags^000000",redf,
+"^0000FFCostume Red Flags^000000",bluf,
+"^FF8000Costume Yellow Flags^000000",yellf;
+
+whitef:
+specialeffect2 18;
+getitem 40027,1;
+cutin "",255; 
+end;
+
+redf:
+specialeffect2 18;
+getitem 40029,1;
+cutin "",255; 
+end;
+
+bluf:
+specialeffect2 18;
+getitem 40028,1;
+cutin "",255; 
+end;
+
+yellf:
+specialeffect2 18;
+getitem 40026,1;
+cutin "",255; 
+end;
+
+//-----ASTRALES---
+astrowin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste 1 Astral, elige muy bien:";
+next;
+menu
+"^0000FFCostume Full Moon^000000",fmon,
+"^FF8000Costume Group of Stars^000000",many,
+"Astro Circle",acirc;
+
+
+fmon:
+specialeffect2 18;
+getitem 19538,1;
+cutin "",255; 
+end;
+
+many:
+specialeffect2 18;
+getitem 31479,1;
+cutin "",255; 
+end;
+
+acirc:
+specialeffect2 18;
+getitem 18938,1;
+cutin "",255; 
+end;
+
+
+//--poring ballons---
+pbalwin:
+cutin "pbal3",2; 
+sleep2 250; specialeffect 18;
+cutin "pbal4",2; 
+sleep2 250; specialeffect 18;
+cutin "pbal3",2; 
+sleep2 250; specialeffect 18;
+cutin "pbal4",2; 
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, tienes 13 opciones, los globos son costume sin efectos, no tiene ciencia..";
+next;
+cutin "pbal3",2; 
+sleep2 250; specialeffect 18;
+cutin "pbal4",2; 
+sleep2 250; specialeffect 18;
+cutin "pbal3",2; 
+sleep2 250; specialeffect 18;
+cutin "pbal4",2; 
+mes "^B40486Premios Poring^000000";
+mes "Selecciona cuidadosamente y pulsa Ok!.";
+menu
+"^FA58F4Poring Balloon^000000",porinb,
+"^FAAC58Drops Balloon^000000",dropsb,
+"^FE2E2ESanta Poring Balloon^000000",santab,
+"^04B431Poporing Balloon^000000",popob,
+"^819FF7Marin Balloon^000000",marib,
+"^848484Heavy Metaling Balloon^000000",heavb,
+"^00BFFFPouring Balloon^000000",pourb,
+"^FF8000Golden Poring Balloon^000000",golpob,
+"^380B61Deviling Balloon^000000",devib,
+"^FF0040Angeling Balloon^000000",angeb,
+"^819FF7Ghostring Balloon^000000",gostb,
+"^9F81F7Archangeling Balloon^000000",archab,
+"^B43104NeKoRinG Balloon^000000",nekob;
+
+porinb:
+specialeffect2 18;
+getitem 20416,1;
+cutin "",255; 
+end;
+
+dropsb:
+specialeffect2 18;
+getitem 20417,1;
+cutin "",255; 
+end;
+
+santab:
+specialeffect2 18;
+getitem 20418,1;
+cutin "",255; 
+end;
+
+popob:
+specialeffect2 18;
+getitem 20419,1;
+cutin "",255; 
+end;
+
+marib:
+specialeffect2 18;
+getitem 20420,1;
+cutin "",255; 
+end;
+
+heavb:
+specialeffect2 18;
+getitem 20421,1;
+cutin "",255; 
+end;
+
+pourb:
+specialeffect2 18;
+getitem 20422,1;
+cutin "",255; 
+end;
+
+golpob:
+specialeffect2 18;
+getitem 20423,1;
+cutin "",255; 
+end;
+
+devib:
+specialeffect2 18;
+getitem 20424,1;
+cutin "",255; 
+end;
+
+angeb:
+specialeffect2 18;
+getitem 20425,1;
+cutin "",255; 
+end;
+
+gostb:
+specialeffect2 18;
+getitem 20426,1;
+cutin "",255; 
+end;
+
+archab:
+specialeffect2 18;
+getitem 20427,1;
+cutin "",255; 
+end;
+
+nekob:
+specialeffect2 18;
+getitem 20428,1;
+cutin "",255; 
+end;
+
+
+//--costume garments 3---
+cgarmw:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Costume Garment, tienes 3 Opciones a elegir.";
+next;
+mes "^B40486Premios Poring^000000";
+mes "Clickear para ver info, Pulsa Next para elegir.";
+mes "<ITEM>Hallowwen Poring Bag<INFO>20543</INFO></ITEM>.";
+mes "<ITEM>Chrismas Tree<INFO>20955</INFO></ITEM>.";
+mes "<ITEM>Giant Ribbon Bell<INFO>20546</INFO></ITEM>.";
+next;
+menu
+"^FF4000Hallowwen Poring Bag^000000",hallow,
+"^088A08Chrismas Tree^000000",xmasst,
+"^FF0040Giant Ribbon Bell^000000",girb;
+
+hallow:
+specialeffect2 18;
+getitem 20543,1;
+cutin "",255; 
+end;
+
+xmasst:
+specialeffect2 18;
+getitem 20955,1;
+cutin "",255; 
+end;
+
+girb:
+specialeffect2 18;
+getitem 20546,1;
+cutin "",255; 
+end;
+
+//--costume garments PRO---
+cgarmw2:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Costume Garment, tienes 3 Opciones a elegir.";
+next;
+mes "^B40486Premios Poring^000000";
+mes "Clickear para ver info, Pulsa Next para elegir.";
+mes "<ITEM>Costume Sword Wings<INFO>20510</INFO></ITEM>.";
+mes "<ITEM>Costume Great Devil Wings<INFO>20762</INFO></ITEM>.";
+mes "<ITEM>Costume Kirin Wings<INFO>20737</INFO></ITEM>.";
+next;
+menu
+"^0000FFCostume Sword Wings^000000",cswordw,
+"^088A08Costume Great Demon Wings^000000",grtwin,
+"^FF0040Costume Kirin Wings^000000",kirin;
+
+cswordw:
+specialeffect2 18;
+getitem 20510,1;
+cutin "",255; 
+end;
+
+grtwin:
+specialeffect2 18;
+getitem 20762,1;
+cutin "",255; 
+end;
+
+kirin:
+specialeffect2 18;
+getitem 20737,1;
+cutin "",255; 
+end;
+
+
+//--costume garments alas de angel---
+alaswin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste unas Alas Costume, tienes 9 Opciones a elegir.";
+next;
+
+mes "^B40486Premios Poring^000000";
+mes "Clickear para ver info, Pulsa Next para elegir.";
+mes "<ITEM>Archangel Wings<INFO>2573</INFO></ITEM>.";
+mes "<ITEM>Costume Archangel Wings<INFO>20500</INFO></ITEM>.";
+mes "<ITEM>Costume Brilliant Angel Wings<INFO>20727</INFO></ITEM>.";
+mes "<ITEM>Costume Bloody Wings<INFO>20525</INFO></ITEM>.";
+mes "<ITEM>Costume Blue Archangel Wings<INFO>20526</INFO></ITEM>.";
+mes "<ITEM>Costume Fallen Angel Wings<INFO>20764</INFO></ITEM>.";
+mes "<ITEM>Costume Light & Darkness Wings<INFO>20839</INFO></ITEM>.";
+mes "<ITEM>Costume Rudra Angel Wings<INFO>20746</INFO></ITEM>.";
+mes "<ITEM>Costume Wings of Happines<INFO>20761</INFO></ITEM>.";
+
+
+next;
+menu
+"Archangel Wings (No Custom)",archangw,
+"Costume Archangel Wings",archacus,
+"^FFBF00Costume Brilliant Angel Wings^000000",cbrilliant,
+"^FF0000Costume Bloody Wings^000000",cbowi,
+"^0000FFCostume Blue Archangel Wings^000000",cbluwing,
+"^151515Costume Fallen Angel Wings^000000",cfalw,
+"^6A0888Costume Light & Darkness Wings^000000",cladw,
+"^FA5858Costume Rudra Angel Wings^000000",crudra,
+"^DF7401Costume^000000 ^0000FFWings^000000 ^088A08Of^000000 ^B40404Happines^000000",cwoh;
+
+
+archangw:
+specialeffect2 18;
+getitem 2573,1;
+cutin "",255; 
+end;
+
+archacus:
+specialeffect2 18;
+getitem 20500,1;
+cutin "",255; 
+end;
+
+cbrilliant:
+specialeffect2 18;
+getitem 20727,1;
+cutin "",255; 
+end;
+
+cbowi:
+specialeffect2 18;
+getitem 20525,1;
+cutin "",255; 
+end;
+
+cbluwing:
+specialeffect2 18;
+getitem 20526,1;
+cutin "",255; 
+end;
+
+cfalw:
+specialeffect2 18;
+getitem 20764,1;
+cutin "",255; 
+end;
+
+cladw:
+specialeffect2 18;
+getitem 20839,1;
+cutin "",255; 
+end;
+
+crudra:
+specialeffect2 18;
+getitem 20746,1;
+cutin "",255; 
+end;
+
+cwoh:
+specialeffect2 18;
+getitem 20761,1;
+cutin "",255; 
+end;
+
+
+//----------Costume Mascotas 2--------------
+cmas2w:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste una Mascota Costume tienes 3 Opciones a elegir.";
+next;
+menu
+"^0000FFCostume Snow Fox^000000",snowfox,
+"^FF8000Costume Fox^000000",cfox,
+"Costume Kishu Dog",ckdog;
+
+snowfox:
+specialeffect2 18;
+getitem 30240,1;
+cutin "",255; 
+end;
+
+cfox:
+specialeffect2 18;
+getitem 31614,1;
+cutin "",255; 
+end;
+
+ckdog:
+specialeffect2 18;
+getitem 31600,1;
+cutin "",255; 
+end;
+
+
+//----------Hairs de damicela--------------
+hairprice:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste una Costume Hairslyle de mujer.";
+next;
+mes "^B40486Premios Poring^000000";
+mes "Izquiera se ve la info, derecha seleccionas premio.";
+mes "<ITEM>Costume Mermaid Wig<INFO>31672</INFO></ITEM>.";
+mes "<ITEM>Costume Cat Ear Long<INFO>40045</INFO></ITEM>.";
+mes "<ITEM>Costume Hallowen Cat Ear Long<INFO>31834</INFO></ITEM>.";
+mes "<ITEM>Costume Lovely Ribbon Hair<INFO>40046</INFO></ITEM>.";
+mes "<ITEM>Costume Ninetail Fox Hair<INFO>31707</INFO></ITEM>.";
+mes "<ITEM>Costume Miyabi Long Hair<INFO>31670</INFO></ITEM>.";
+mes "<ITEM>Costume Nydhoggur White<INFO>31406</INFO></ITEM>.";
+mes "<ITEM>Costume Nydhoggur Black<INFO>31149</INFO></ITEM>.";
+mes "<ITEM>Costume Alice Wig<INFO>31329</INFO></ITEM>.";
+mes "<ITEM>Costume Alice Wig Peach<INFO>31407</INFO></ITEM>.";
+menu
+"^01DF74Costume Mermaid Wig^000000",cmerm,
+"^FF8000Costume Cat Ear Long^000000",cearl,
+"^DF01A5Costume Hallowen Cat Ear Long^000000",halcearl,
+"^FF8000Costume Lovely Ribbon Hair^000000",clrh,
+"^FA5858Costume Ninetail Fox Hair^000000",cnyfh,
+"^151515Costume Miyabi Long Hair^000000",cmlh,
+"Costume Nydhoggur Black^000000",cnbl,
+"^61210BCostume Nydhoggur White^000000",cnwh,
+"^3A01DFCostume Alice Wig Blue^000000",cadwb,
+"^F79F8CCostume Alice Wig Peach^000000",cadwp;
+
+cmerm:
+specialeffect2 18;
+getitem 31672,1;
+cutin "",255; 
+end;
+
+cearl:
+specialeffect2 18;
+getitem 40045,1;
+cutin "",255; 
+end;
+
+halcearl:
+specialeffect2 18;
+getitem 31834,1;
+cutin "",255; 
+end;
+
+
+clrh:
+specialeffect2 18;
+getitem 40046,1;
+cutin "",255; 
+end;
+
+cnyfh:
+specialeffect2 18;
+getitem 31707,1;
+cutin "",255; 
+end;
+
+cmlh:
+specialeffect2 18;
+getitem 31670,1;
+cutin "",255; 
+end;
+
+cnbl:
+specialeffect2 18;
+getitem 31149,1;
+cutin "",255; 
+end;
+
+cnwh:
+specialeffect2 18;
+getitem 31406,1;
+cutin "",255; 
+end;
+
+cadwb:
+specialeffect2 18;
+getitem 31329,1;
+cutin "",255; 
+end;
+
+cadwp:
+specialeffect2 18;
+getitem 31407,1;
+cutin "",255; 
+end;
+
+//----------Yangs-------------
+yangwin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Costume Lower.";
+next;
+menu
+"^8A4B08Costume Resonating Drums^000000",drums,
+"^045FB4Floating Ying Yang^000000",floy,
+"^FFBF00Blessing Sky Lantern^000000",skylan;
+
+floy:
+specialeffect2 18;
+getitem 19380,1;
+cutin "",255; 
+end;
+
+drums:
+specialeffect2 18;
+getitem 31721,1;
+cutin "",255; 
+end;
+
+skylan:
+specialeffect2 18;
+getitem 31460,1;
+cutin "",255; 
+end;
+
+
+//----------Stoles-------------
+stolewin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Costume Lower.";
+next;
+menu
+"White Stall",stafa,
+"Gold Stall",stafag,
+"Stall of Bat",stafabat;
+
+stafa:
+specialeffect2 18;
+getitem 31315,1;
+cutin "",255; 
+end;
+
+stafag:
+specialeffect2 18;
+getitem 31566,1;
+cutin "",255; 
+end;
+
+stafabat:
+specialeffect2 18;
+getitem 31121,1;
+cutin "",255; 
+end;
+
+
+
+//----------Batsiesw-------------
+batsiesw:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Costume Vampirico.";
+next;
+menu
+"^3104B4Costume Jack Casttle Bat^000000",jbat,
+"^045FB4Costume Vampire Ears^000000",vampe,
+"^FFBF00Costume Vapire Hairband^000000",vamph;
+
+jbat:
+specialeffect2 18;
+getitem 20034,1;
+cutin "",255; 
+end;
+
+vampe:
+specialeffect2 18;
+getitem 31120,1;
+cutin "",255; 
+end;
+
+vamph:
+specialeffect2 18;
+getitem 20098,1;
+cutin "",255; 
+end;
+
+
+//----------LadyHats-------------
+ladywin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Costume Hat de Mujer.";
+next;
+menu
+"^3104B4Costume Feather Fedora^000000",cffh,
+"^045FB4Costume Lady's Feather Hat^000000",clfh,
+"^FFBF00Costume Spider Seduction Hat^000000",cssh;
+
+cffh:
+specialeffect2 18;
+getitem 31445,1;
+cutin "",255; 
+end;
+
+clfh:
+specialeffect2 18;
+getitem 20155,1;
+cutin "",255; 
+end;
+
+cssh:
+specialeffect2 18;
+getitem 31596,1;
+cutin "",255; 
+end;
+
+//----------HOODS----------
+hoodw:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Costume Hood, elige el que mas te guste:";
+next;
+mes "^B40486Premios Poring^000000";
+mes "Izquiera se ve la info, derecha seleccionas premio.";
+mes "<ITEM>Costume Black Cat Hood<INFO>31028</INFO></ITEM>.";
+mes "<ITEM>Costume White Cat Hood<INFO>19823</INFO></ITEM>.";
+mes "<ITEM>Costume Sorcerer Hood<INFO>31396</INFO></ITEM>.";
+mes "<ITEM>Costume Skull Hood<INFO>20168</INFO></ITEM>.";
+mes "<ITEM>Teddy Bear Hood<INFO>31166</INFO></ITEM>.";
+mes "<ITEM>Costume Snow Bear Hood<INFO>31440</INFO></ITEM>.";
+mes "<ITEM>Costume Lude Hood<INFO>20173</INFO></ITEM>.";
+
+menu
+"Costume Black Cat Hood",cbch,
+"^F5D0A9Costume White Cat Hood^000000",whitecathood,
+"^04B4AECostume Sorcerer Hood^04B4AE",cossorc,
+"^0431B4Costume Skull Hood^04B4AE",coskulh,
+"^8A4B08Costume Teddy Bear Hood^04B4AE",ctdbh,
+"^04B4AECostume Snow Bear Hood^04B4AE",csnowbh,
+"^DF7401Costume Lude Hood^04B4AE",cludeh;
+
+cbch:
+specialeffect2 18;
+getitem 31028,1;
+cutin "",255; 
+end;
+
+whitecathood:
+specialeffect2 18;
+getitem 19823,1;
+cutin "",255; 
+end;
+
+cossorc:
+specialeffect2 18;
+getitem 31396,1;
+cutin "",255; 
+end;
+
+coskulh:
+specialeffect2 18;
+getitem 20168,1;
+cutin "",255; 
+end;
+
+ctdbh:
+specialeffect2 18;
+getitem 31166,1;
+cutin "",255; 
+end;
+
+csnowbh:
+specialeffect2 18;
+getitem 31440,1;
+cutin "",255; 
+end;
+
+cludeh:
+specialeffect2 18;
+getitem 20173,1;
+cutin "",255; 
+end;
+
+//----------Masquerades----------
+masquewin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Hermoso Hat con cascara, elige el que mas te guste:";
+next;
+menu
+"^FF8000Costume Wolf Masquerade^000000",wolfma,
+"^B40404Costume Phantom Masquerade^000000",phanmas,
+"^29088ACostume Gothic Skull Ribbon^000000",gorib;
+
+
+wolfma:
+specialeffect2 18;
+getitem 31179,1;
+cutin "",255; 
+end;
+
+phanmas:
+specialeffect2 18;
+getitem 31733,1;
+cutin "",255; 
+end;
+
+gorib:
+specialeffect2 18;
+getitem 31708,1;
+cutin "",255; 
+end;
+
+//----------Ribbon Mufflers----------
+
+rimufwin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Ribbon Muffler, tienes 3 colores para elegir:";
+next;
+menu
+"Costume Black Ribbon Muffler",brimuf,
+"^FF8000Costume Yellow Ribbon Muffler^000000",yrimuf,
+"^FF0000Costume Red Ribbon Muffler^000000",rrimuff;
+
+brimuf:
+specialeffect2 18;
+getitem 31453,1;
+cutin "",255; 
+end;
+
+yrimuf:
+specialeffect2 18;
+getitem 20239,1;
+cutin "",255; 
+end;
+
+rrimuff:
+specialeffect2 18;
+getitem 20441,1;
+cutin "",255; 
+end;
+
+//----------3 Bichos Raros----------
+
+crittwin:
+mes "^B40486Premios Poring^000000";
+mes "Felicidades, ganaste un Costume Extraordinario, tienes 3 opciones para elegir:";
+next;
+menu
+
+"^0489B1Costume Sleep Sheep^000000",oveja,
+"^FF9000Golden Musical Jinglebell^000000",cascabel,
+"^61380BClay^000000 ^F0546CPoring^000000 ^0174DFJar^000000",claypor;
+
+oveja:
+specialeffect2 18;
+getitem 31616,1;
+cutin "",255; 
+end;
+
+cascabel:
+specialeffect2 18;
+getitem 20440,1;
+cutin "",255; 
+end;
+
+claypor:
+specialeffect2 18;
+getitem 31257,1;
+cutin "",255; 
+end;
+
+//--------------------------NO COLOCAR NADA DEBAJO DE ESTA LINEA----------------------------------------
+Falta:
+mes "^B40486Premios Poring^000000";
+mes "No tienes Poring Coin Para Jugar.";
+close;
+}

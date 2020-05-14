@@ -1,0 +1,196 @@
+itemmall,175,66,6	script	Expert Craftsman	531,5,5,{
+	mes .npc$;
+	cutin "jpn_darkalgol01",2;
+	mes "Hola y bienvenido, tambien estoy encargado de encantar armaduras.";
+	next;
+	cutin "jpn_darkalgol03",2;
+	mes .npc$;
+	mes "Puedo encantar para ti, cualquier armadura sin romperla, con ^32cd32+1 Stat^000000 hasta ^32cd32+3 Stat^000000 al azar.";	
+	next;
+	cutin "jpn_darkalgol04",2;
+	mes .npc$;
+	mes "Solo te pedire 1 <ITEM>Armor Enchant Ticket<INFO>40004</INFO></ITEM>., esos que da la maquina poring.";
+	cutin "jpn_darkalgol01",2;
+	next;
+	mes .npc$;
+	mes "La Armadura que intentare encantar es la que tengas equipada, y perdera 1 nivel de Refine por intento.";
+	next;	
+	if(!countitem(.item)){ 
+	mes .npc$; 
+	cutin "jpn_darkalgol05",2;
+	mes "Parece que..., Nisiquiera tienes 1 ^cc00cc"+getitemname(.item)+"s^000000 contigo.";
+	next;
+	cutin "",255;
+	mes .npc$;
+	mes "vuelve a buscarme cuando lo tengas.";
+	close;
+	}
+	
+	if(select("^FF9900ENCANTAR ARMADURA^000000:^FF0000DESPUES^000000")&2){ 
+	mes .npc$; 
+	cutin "jpn_darkalgol07",2;
+	mes "Que perdida de tiempo";
+	next;
+	cutin "",255;
+	mes .npc$; 
+	mes "Venir con el ticket y no usarlo...";	
+	close;
+	}
+
+	if(countitem(.item)<.price) { 
+	mes .npc$; 
+	mes "Lo lamento, pero no tienes en tu inventario el ^cc00cc"+getitemname(.item)+"s^000000.";
+	mes "crees que guardandolo luego de hablarme me vas a engañar? soy mas inteligente que eso...";
+	close;
+	}
+	
+	mes .npc$;
+	cutin "jpn_darkalgol01",2;
+	mes "Comenzamos.";
+	next;
+	specialeffect 96;
+	cutin "jpn_darkalgol02",2;
+	progressbar "ffff00",1;
+	if(getequipid(7)+1) {
+		delitem .item,.price;
+		set .@id, getequipid(7);
+		set .@ref, getequiprefinerycnt(7);
+		set .@card1, getequipcardid(7,0);
+		set .@card2, getequipcardid(7,1);
+		set .@card3, getequipcardid(7,2);
+		set .@card4, getequipcardid(7,3);
+		delitem2 .@id, 1, 1, .@ref, 0, .@card1, .@card2, .@card3, .@card4;
+		getitem2 .@id, 1, 1, .@ref, 0, .@card1, .@card2, .@card3,
+		callfunc("F_Rand", 4700, 4701, 4702, 4710, 4711, 4712, 4720, 4721, 4722, 4730, 4731, 4732, 4740, 4741, 4742, 4750, 4751, 4752);
+		equip .@id;
+		downrefitem 7,1; 
+		cutin "jpn_darkalgol11",2;
+		sleep2 200;
+		cutin "",255;
+		mes .npc$;
+		mes "Enchant exitoso, viste que no fallo ni rompo como el animal de alla abajo?!.";
+		close;
+	}
+	
+	mes .npc$;
+	cutin "jpn_darkalgol07",2;
+	mes "eh eh ehhh! Espera";
+	next;
+	mes .npc$;
+	mes "ponte tu cochina armadura y dejate de jugar.";
+	cutin "",255;
+	close;
+
+	ontouch:
+	specialeffect 106;
+	end;
+	
+	
+	// Item required and amount
+    OnInit:
+        set .npc$, "^660066Expert Craftsman^000000";
+        set .price, 1;
+        set .item, 40004;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+beach_dun,270,70,4	script	Darkargol#darkalost	531,{
+	emotion ET_SCRATCH;
+	mes "^5F04B4Dark Argol^000000";
+	cutin "jpn_darkalgol01",2;
+	mes "Vaya vaya, mira a aquien tenemos por aqui..";
+	mes "te puedo ayudar, pero solo si me traes un objeto unico..";
+	next;
+	cutin "jpn_darkalgol03",2;
+	mes "Dark Argol";
+	mes "Se trata de la cabeza de medusa, lamentablemente no es dropeable por ninguna de las que estan aqui!..";	
+	next;
+	cutin "jpn_darkalgol04",2;
+	mes "^5F04B4Dark Argol^000000";
+	mes "Si me consigues lo siguiente:";
+	mes "1 <ITEM>Dead Medusa<INFO>1047</INFO></ITEM>.";
+	mes "1000 <ITEM>Horrendous Hair<INFO>1048</INFO></ITEM>.";
+	mes "le dare un poder nuevo al escudo que lleves equipado!.";
+	next;
+	cutin "jpn_darkalgol01",2;
+	mes "^5F04B4Dark Argol^000000";
+	mes "Permiteme revisar si tienes los items ok?";
+	next;
+	progressbar "ffff00",1;
+	if( countitem(1047) < 1 || countitem(1048) < 1000) goto Faltaitems;
+	cutin "jpn_darkalgol05",2;
+	mes "^5F04B4Dark Argol^000000";
+	mes "Parece que tienes todos los items, deseas encantar tu escuodo equipado ya mismo?!.";	
+	next;
+	menu
+	"^0000FFEncantar Escudo^000000",shield,
+	"Cancelar",wait;
+	
+	wait:
+	emotion ET_SMILE;
+	cutin "jpn_darkalgol02",2;
+	mes "^5F04B4Dark Argol^000000";
+	mes "Ok Ok lo comprendo.";
+	mes "Volveras con la mejor alternativa, pillin!.";	
+	close2;
+	cutin "",255;
+	end;
+	
+	shield:
+	if (getequipid(EQI_HAND_L) && getiteminfo(getequipid(EQI_HAND_L), 5) == 32){
+		mes "^5F04B4Dark Argol^000000";
+		mes "Comenzamos.";
+		cutin "jpn_darkalgol01",2;
+		next;
+		specialeffect 96;
+		cutin "jpn_darkalgol02",2;
+		progressbar "ffff00",1;
+		specialeffect 101;
+		delitem 1048,1000;
+		delitem 1047,1;	
+		set .@id, getequipid(8);
+		set .@ref, getequiprefinerycnt(8);
+		set .@card1, getequipcardid(8,0);
+		set .@card2, getequipcardid(8,1);
+		set .@card3, getequipcardid(8,2);
+		set .@card4, getequipcardid(8,3);
+		delitem2 .@id, 1, 1, .@ref, 0, .@card1, .@card2, .@card3, .@card4;
+		getitem2 .@id, 1, 1, .@ref, 0, .@card1, .@card2, .@card3, 31498;
+		equip .@id;
+		cutin "jpn_darkalgol11",2;
+		sleep2 200;
+		cutin "",255;
+		mes "Dark Argol";
+		mes "Enchant exitoso!.";
+		end;
+		}
+	
+	emotion ET_HUT;	
+	mes "^5F04B4Dark Argol^000000";
+	cutin "jpn_darkalgol07",2;
+	mes "eh eh ehhh! ^FF0000Wait^000000";
+	mes "No llevas ningun escudo equipado.";
+	close2;
+	cutin "",255;
+	end;			
+	
+	Faltaitems:
+	emotion ET_CRY;
+	cutin "jpn_darkalgol04",2;
+	mes "^5F04B4Dark Argol^000000";
+	mes "Desafortunadamente no los tienes!, Cuando tengas los objetos no dudes en volver, con gusto ofrecere encantar tu escudo!";
+	mes "hasta pronto.";
+	close2;
+	cutin "",255;
+	end;
+	}
