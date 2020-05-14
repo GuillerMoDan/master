@@ -1,0 +1,3636 @@
+
+//===== rAthena Script ======================================= 
+//= Warper
+//===== Description: ========================================= 
+//= Modified rAthena custom Warper
+//===== Additional Comments: =================================
+//This warper will ask items in change of unlocking account based dungeons//
+//============================================================
+
+-	script	Warper	-1,{
+function Go; function Disp; function Pick; function Restrict;
+
+// --------------------------------------------------
+//	Main Menu:
+// --------------------------------------------------
+mes "^0000FFWarp Agent^000000";
+cutin "warper",2;
+mes "Bienvenido al Warp Service";
+mes "Elige tu Destino:";
+next;
+menu	"^0000FFLast Warp^000000  ^FE2E64["+lastwarp$+"]^000000",-,
+		" ~ ^000000Towns^000000",Towns,
+		" ~ ^FF4000Dungeons^000000",Dungeons,
+    	" ~ ^00CC00Fields^000000",Fields,
+    	" ~ ^0000FFSitios Especiales^000000",Special,
+		" ~ ^DF3A01Instances^000000",Instances;
+
+	if (lastwarp$ == "")
+		message strcharinfo(0),"You haven't warped anywhere yet.";
+	else
+		warp lastwarp$,lastwarpx,lastwarpy;
+	end;
+
+// ------------------- Functions -------------------
+// * Go("<map>",<x>,<y>);
+//	~ Warps directly to a map.
+//
+// * Disp("<Menu Option>",<first option>,<last option>);
+// * Pick("<map_prefix>"{,<index offset>});
+//	~ Dynamic menu and map selection (auto-numbered).
+//	~ Fields and Dungeons must use Disp and Pick Functions.
+//
+// * Disp("<Option 1>:<Option 2>:<etc.>");
+// * Pick("","<map1>","<map2>","<etc.>");
+//	~ Manual menu and map selection (listed).
+//
+// * Restrict("<RE | Pre-RE>"{,<menu option numbers>});
+//	~ Only allows map for Renewal or Pre-Renewal modes.
+//     If menu option numbers are given, only those maps
+//     will be restricted (i.e. not for "Go").
+//
+// Other notes:
+//   ~ Array @c[] holds all (x,y) coordinates.
+//   ~ Use @c[2] EXCEPT when maps begin dynamically
+//	  at 0: use @c[0] and Pick() offset 1.
+// --------------------------------------------------
+
+function Go {
+	set lastwarp$, getarg(0);
+	set lastwarpx, getarg(1,0);
+	set lastwarpy, getarg(2,0);
+	warp getarg(0),getarg(1,0),getarg(2,0);
+	end;
+}
+function Disp {
+	if (getargcount() < 3)
+		set @menu$, getarg(0);
+	else {
+		set @menu$,"";
+		for (set .@i,getarg(1); .@i<=getarg(2); set .@i,.@i+1)
+			set @menu$, @menu$+getarg(0)+" "+.@i+":";
+	}
+	return;
+}
+function Pick {
+	set .@warp_block,@warp_block;
+	set @warp_block,0;
+	if((@f && .OnlyFirstFld) || (@d && .OnlyFirstDun)){
+		set .@select,1;
+		if(.@warp_block){
+			while(.@warp_block & (1<<.@select)){
+				.@select += 1;
+			}
+		}
+	}else{
+		set .@select, select(@menu$);
+	}
+	if (getarg(0) == "") {
+		set .@i, .@select;
+		set .@map$, getarg(.@i);
+	} else {
+		set .@i, .@select-getarg(1,0);
+		set .@map$, getarg(0)+((.@i<10)?"0":"")+.@i;
+	}
+	if (.@warp_block & (1<<.@select)) {
+		message strcharinfo(0),"This map is not enabled in "+((checkre(0))?"":"Pre-")+"Renewal.";
+		end;
+	}
+	set .@x, @c[.@i*2];
+	set .@y, @c[.@i*2+1];
+	deletearray @c[0],getarraysize(@c);
+	@f = false; @d = false;
+	Go(.@map$,.@x,.@y);
+}
+function Restrict {
+	if ((getarg(0) == "RE" && !checkre(0)) || (getarg(0) == "Pre-RE" && checkre(0))) {
+		if (getarg(1,0)) {
+			set @warp_block,0;
+			for (set .@i,1; .@i<getargcount(); set .@i,.@i+1)
+				set @warp_block, @warp_block | (1<<getarg(.@i));
+		} else {
+			message strcharinfo(0),"This map is not enabled in "+((checkre(0))?"":"Pre-")+"Renewal.";
+			end;
+		}
+	}
+	return;
+}
+
+// --------------------------------------------------
+	Towns:
+// --------------------------------------------------
+menu	"Prontera  ["+getmapusers("prontera")+"]",T1, 
+		"Alberta  ["+getmapusers("alberta")+"]",T2, 
+		"Aldebaran  ["+getmapusers("aldebaran")+"]",T3, 
+		"Amatsu  ["+getmapusers("amatsu")+"]",T4, 
+		"Ayothaya  ["+getmapusers("ayothaya")+"]",T5,
+    	"Brasilis  ["+getmapusers("brasilis")+"]",T6, 
+		"Comodo  ["+getmapusers("comodo")+"]",T7, 
+		"Dewata  ["+getmapusers("dewata")+"]",T8, 
+		"Eclage  ["+getmapusers("ecl_in01")+"]",T9, 
+		"Einbech  ["+getmapusers("einbech")+"]",T10, 
+    	"Einbroch  ["+getmapusers("einbroch")+"]",T11, 
+		"El Dicastes ["+getmapusers("dicastes01")+"]",T12, 
+		"Geffen  ["+getmapusers("geffen")+"]",T13, 
+		"Gonryun  ["+getmapusers("gonryun")+"]",T14, 
+		"Hugel  ["+getmapusers("hugel")+"]",T15,
+    	"Izlude  ["+getmapusers("izlude")+"]",T16, 
+		"Jawaii  ["+getmapusers("jawaii")+"]",T17, 
+		"Lasagna  ["+getmapusers("lasagna")+"]",T18, 
+		"Lighthalzen  ["+getmapusers("lighthalzen")+"]",T19, 
+		"Louyang  ["+getmapusers("louyang")+"]",T20,
+		"Lutie  ["+getmapusers("xmas")+"]",T21, 
+		"Malangdo  ["+getmapusers("malangdo")+"]",T22, 
+		"Malaya  ["+getmapusers("malaya")+"]",T23, 
+		"Manuk  ["+getmapusers("manuk")+"]",T24,
+		"Midgarts Expedition Camp  ["+getmapusers("mid_camp")+"]",T25, 
+		"Mora  ["+getmapusers("mora")+"]",T26,
+		"Morroc  ["+getmapusers("morocc")+"]",T27, 
+		"Moscovia  ["+getmapusers("moscovia")+"]",T28, 
+		"Nameless Island  ["+getmapusers("nameless_n")+"]",T29,
+		"Niflheim  ["+getmapusers("niflheim")+"]",T30, 
+		"Payon  ["+getmapusers("payon")+"]",T31, 
+		"Rachel  ["+getmapusers("rachel")+"]",T32, 
+		"Splendide  ["+getmapusers("splendide")+"]",T33,
+		"Thor Camp  ["+getmapusers("thor_camp")+"]",T34, 
+		"Umbala  ["+getmapusers("umbala")+"]",T35, 
+		"Veins  ["+getmapusers("veins")+"]",T36, 
+		"Yuno  ["+getmapusers("yuno")+"]",T37;
+
+T1: Go("prontera",155,183);
+T2: Go("alberta",28,234);
+T3: Go("aldebaran",140,131);
+T4: Go("amatsu",198,84);
+T5: Go("ayothaya",208,166);
+T6: Go("brasilis",196,217);
+T7: Go("comodo",188,159);
+T8: Go("dewata",200,180);
+T9: Go("ecl_in01",48,53);
+T10: Go("einbech",137,241);
+T11: Go("einbroch",64,200);
+T12: Go("dicastes01",198,187);
+T13: Go("geffen",119,59);
+T14: Go("gonryun",160,120);
+T15: Go("hugel",96,145);
+T16: Go("izlude",125,145);
+T17: Go("jawaii",251,132);
+T18: Go("izlude",190,212); 
+T19: Go("lighthalzen",158,92);
+T20: Go("louyang",217,100);
+T21: Go("xmas",147,134);
+T22: Go("malangdo",140,114);
+T23: Go("malaya",212,207);
+T24: Go("manuk",282,138);
+T25: Go("mid_camp",210,288);
+T26: Go("mora",55,146);
+T27: Go("morocc",156,93);
+T28: Go("moscovia",225,188);
+T29: Go("nameless_n",256,215);
+T30: Go("niflheim",202,174);
+T31: Go("payon",168,100);
+T32: Go("rachel",130,110);
+T33: Go("splendide",201,147);
+T34: Go("thor_camp",246,68);
+T35: Go("umbala",97,153);
+T36: Go("veins",217,130);
+T37: Go("yuno",158,173);
+
+// --------------------------------------------------
+	Fields:
+// --------------------------------------------------
+@f = true;
+menu
+"- Amatsu Field",F1, 
+"- Ayothaya Fields",AYO,
+"- Brasilis Fields",BRAF,
+"- Comodo Fields",COMO,
+"- Dewata Fields",F6,
+"- Einbroch Fields",EIN, 
+"- El Dicastes Fields",F9,
+"- Geffen Fields",FG,
+"- Gonryun Fields",F11,
+"- Hugel Fields",HUG,
+"- Lighthalzen Fields",LIF,
+"- Louyang Field",F15,
+"- Lutie Field",F16,
+"- Malaya Fields",F17,
+"- Manuk Fields",MAN,
+"- Mjolnir Fields",F19, 
+"- Niflheim Fields",F21,
+"- Payon Forests ",PFT,
+"- Prontera Fields",PF,
+"- Rachel Fields",RAF,
+"- Sograt Deserts ~ ^B43104Morroc Fields^000000",SOG,
+"- Sograt Deserts ~ ^A901DBMorroc Dimensional^000000",MOD,
+"- Splendide Fields",F26,
+"- Umbala Fields",F27, 
+"- Veins Fields",VF,
+"- Yuno Fields",F29;
+
+//-------------------------------------------------AMATSU FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+F1: setarray @c[2],174,324;
+if(#warpamf ){
+cutin "jpn_mid02",2;
+mes "^0000FFWarp Agent^000000";
+mes "Tienes desbloqueado el Spot de Hydras en Amatsu field:";
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+Disp("- Amatsu Field ~ ^0B6121Hydra Spot^000000 ["+getmapusers("ama_fild01")+"]"); Pick("","ama_fild01");
+end;
+}
+
+if( countitem(748) < 1 ) goto faltarouse;
+npctalk "Requiere 1 Witherless Rose para un desbloqueo permanente.";
+cutin "jpn_mid05",2;
+progressbar "ffff00",1;
+specialeffect 567;
+cutin "jpn_mid05",2;
+npctalk "Vaya! has conseguido la rosa, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 748,1;
+getitem 7539,3;
+set #warpamf,1;
+announce "Warper: Felicidades, haz desbloqueado un atajo facil!",bc_yellow|bc_self;
+Disp("- Amatsu Field ~ ^0B6121Hydra Spot^000000 ["+getmapusers("ama_fild01")+"]"); Pick("","ama_fild01");
+end;
+
+faltarouse:
+npctalk "Requiere 1 Witherless Rose";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^FF0000Witherless Rose^000000";
+cutin "",255;
+end;
+
+//-------------------------------------------------AYOTHAYA FIELDS ES DE QUEST-----------------------------------------------------------------------
+AYO: setarray @c[2],173,134,212,150;
+
+if(#warpayofi ){
+cutin "jpn_mid02",2;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus mapas desbloqueados para Ayothaya Fields:";
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+Disp("- Ayothaya Field 1 ~ ^61210BSmokies^000000 ["+getmapusers("ayo_fild01")+"]:- Ayothaya Field 2 ~ ^0B6121Leaf Cats^000000 ["+getmapusers("ayo_fild02")+"]"); 
+Pick("","ayo_fild01","ayo_fild02");
+end;
+}
+
+if( countitem(7053) < 25 ) goto fcyfar;
+npctalk "Requiere 25 Cyfars  para un desbloqueo permanente.";
+cutin "jpn_mid05",2;
+progressbar "ffff00",1;
+specialeffect 567;
+cutin "jpn_mid05",2;
+npctalk "Vaya! has conseguido 25 Cyfar, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7053,25;
+getitem 7539,3;
+set #warpayofi,1;
+announce "Warper: Felicidades, haz desbloqueado los fields de Ayothaya!",bc_yellow|bc_self;
+Disp("- Ayothaya Field 1 ~ ^61210BSmokies^000000 ["+getmapusers("ayo_fild01")+"]:- Ayothaya Field 2 ~ ^0B6121Leaf Cats^000000 ["+getmapusers("ayo_fild02")+"]"); 
+Pick("","ayo_fild01","ayo_fild02");
+end;
+
+fcyfar:
+npctalk "Requiere 25 Cyfar";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 25 Cyfar.";
+mes "con esto desbloquearas los Fields de Ayothata.";
+cutin "",255;
+end;
+
+//-------------------------------------------------BRASILIS FIELD DESBLOQUEABLE-----------------------------------------------------------------------
+BRAF: setarray @c[2],81,34;
+if(#warpbraf ){
+cutin "jpn_mid02",2;
+mes "^0000FFWarp Agent^000000";
+mes "Tienes desbloqueado el Cable Jungle Field:";
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+Disp("- Brasilis ~ ^0B6121Cable Jungle Field^000000 ["+getmapusers("bra_fild01")+"]"); 
+Pick("","bra_fild01");
+end;
+}
+
+if( countitem(2287) < 1 ) goto faltapirat;
+cutin "jpn_mid05",2;
+npctalk "Requiere 1 Pirate Bandana para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido la bandana, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir la Bandanna!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 2287,1;
+getitem 7539,3;
+set #warpbraf,1;
+announce "Warper: Felicidades, haz desbloqueado un atajo facil!",bc_yellow|bc_self;
+Disp("- Brasilis ~ ^0B6121Cable Jungle Field^000000 ["+getmapusers("bra_fild01")+"]"); Pick("","bra_fild01");
+end;
+
+faltapirat:
+npctalk "Requiere 1 Pirate Bandana";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^FF0000Pirate Bandana^000000, si lo desbloqueas asi ganaras 3 Poring Coin.";
+cutin "",255;
+end;
+
+
+
+//-------------------------------------------------DEWATA FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+F6:
+setarray @c[2],70,276,124,235,53,65;
+if(#warpdewfi ){
+cutin "jpn_mid02",2;
+mes "^0000FFWarp Agent^000000";
+mes "Tienes desbloqueado el Field de Dewata:";
+specialeffect 567;
+specialeffect 618;
+Disp("- Dewata Field ~ Jaty Crown Quest  ["+getmapusers("dew_fild01")+"]:- Dewata Field ~ Keris Quest  ["+getmapusers("dew_fild01")+"]:- Dewata Field ~ Istana Cave Entrance  ["+getmapusers("dew_fild01")+"]");
+Pick("","dew_fild01","dew_fild01","dew_fild01");
+end;
+}
+
+if( countitem(2269) < 1 ) goto faltaromant;
+cutin "jpn_mid05",2;
+npctalk "Requiere 1 Romantic Flower para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 2269,1;
+getitem 7539,3;
+set #warpdewfi,1;
+announce "Warper: Felicidades, haz desbloqueado Dewata field!",bc_yellow|bc_self;
+Disp("- Dewata Field ~ Jaty Crown Quest  ["+getmapusers("dew_fild01")+"]:- Dewata Field ~ Keris Quest  ["+getmapusers("dew_fild01")+"]:- Dewata Field ~ Istana Cave Entrance  ["+getmapusers("dew_fild01")+"]");
+Pick("","dew_fild01","dew_fild01","dew_fild01");
+
+faltaromant:
+npctalk "Requiere 1 Romantic Flower";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^FF0000 Romantic Flower^000000, si lo desbloqueas asi ganaras 3 Poring Coin.";
+cutin "",255;
+end;
+
+
+//-------------------------------------------------EINBROCH FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+EIN: 
+setarray @c[2],107,217,118,186,137,35,193,239,361,181,94,172,277,231,176,174,280,86;
+if( #warpein ){
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Einbroch Fields:";
+Disp("- Einbroch 1 ~ ^86B404Ungoliant^000000 ["+getmapusers("ein_fild01")+"]:- Einbroch 2 ~ ^86B404Ungoliant^000000 ["+getmapusers("ein_fild01")+"]:- Einbroch 3 ~ ^298A08Geographers^000000 ["+getmapusers("ein_fild03")+"]:- Einbroch 4 ~ ^298A08Geographers^000000 ["+getmapusers("ein_fild04")+"]:- Einbroch 5 ~ ^FFBF00Minerals/Obsidians^000000 ["+getmapusers("ein_fild05")+"]:- Einbroch 6 ~ ^8A2908Goats Bridge^000000 ["+getmapusers("ein_fild06")+"]:- Einbroch 7 ~ ^86B404Ungoliant^000000 ["+getmapusers("ein_fild07")+"]:- Einbroch 8 ~ ^FE2EF7Porings^000000 ["+getmapusers("ein_fild08")+"]:- Einbroch 9 ~ ^FF0040Porcellio Area^000000 ["+getmapusers("ein_fild09")+"]");
+Pick("","ein_fild01","ein_fild02","ein_fild03","ein_fild04","ein_fild05","ein_fild06","ein_fild07","ein_fild08","ein_fild09");
+end;
+}
+
+if( countitem(7316) < 1 ) goto faltainsect;
+cutin "jpn_mid05",2;
+npctalk "Requiere 1 Insect Lec (Ungoliant) para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7316,1;
+getitem 7539,3;
+set #warpein,1;
+announce "Warper: Felicidades, haz desbloqueado Einbroch Fields!",bc_yellow|bc_self;
+Disp("- Einbroch 1 ~ ^86B404Ungoliant^000000 ["+getmapusers("ein_fild01")+"]:- Einbroch 2 ~ ^86B404Ungoliant^000000 ["+getmapusers("ein_fild01")+"]:- Einbroch 3 ~ ^298A08Geographers^000000 ["+getmapusers("ein_fild03")+"]:- Einbroch 4 ~ ^298A08Geographers^000000 ["+getmapusers("ein_fild04")+"]:- Einbroch 5 ~ ^FFBF00Minerals/Obsidians^000000 ["+getmapusers("ein_fild05")+"]:- Einbroch 6 ~ ^8A2908Goats Bridge^000000 ["+getmapusers("ein_fild06")+"]:- Einbroch 7 ~ ^86B404Ungoliant^000000 ["+getmapusers("ein_fild07")+"]:- Einbroch 8 ~ ^FE2EF7Porings^000000 ["+getmapusers("ein_fild08")+"]:- Einbroch 9 ~ ^FF0040Porcellio Area^000000 ["+getmapusers("ein_fild09")+"]");
+Pick("","ein_fild01","ein_fild02","ein_fild03","ein_fild04","ein_fild05","ein_fild06","ein_fild07","ein_fild08","ein_fild09");
+end;
+
+faltainsect:
+npctalk "Requiere 1 Insect Leg del Ungoliant";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^04B404Insect Leg^000000";
+mes "con esto desbloquearas los Fields de Einbroch.";
+cutin "",255;
+end;
+
+//-------------------------------------------------EL DICASTES FIELDS-----------------------------------------------------------------------
+F9:
+setarray @c[2],228,174,246,38;
+if( #warpdicf ){
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Dicastes Fields:";
+
+Disp("- Kamidal Mountain Outskirts ~ ^B43104BK Camp^000000 ["+getmapusers("dic_fild01")+"]:- Kamidal Mountain ~ ^3B240BDimmension Crack^000000 ["+getmapusers("dic_fild02")+"]");
+Pick("","dic_fild01","dic_fild02");
+end;
+}
+
+if( countitem(1741) < 1 ) goto faltalyre;
+cutin "jpn_mid05",2;
+npctalk "Requiere 1 Cursed Lyre para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el arco, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 1741,1;
+getitem 7539,3;
+set #warpdicf,1;
+announce "Warper: Felicidades, haz desbloqueado Dicastes Fields!",bc_yellow|bc_self;
+Disp("- Kamidal Mountain Outskirts ~ ^B43104BK Camp^000000 ["+getmapusers("dic_fild01")+"]:- Kamidal Mountain ~ ^3B240BDimmension Crack^000000 ["+getmapusers("dic_fild02")+"]");
+Pick("","dic_fild01","dic_fild02");
+
+faltalyre:
+npctalk "Requiere 1 Cursed Lyre";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^04B404Cursed Lyre^000000, Arco que dropea el monstruo Centipede.";
+mes "con esto desbloquearas los Fields de Dicastes.";
+cutin "",255;
+end;
+
+
+
+
+//-----------------------------------------------GEFFEN FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+FG: setarray @c[2],46,199,307,62,212,206,257,192,189,62,88,145,248,158,284,155,186,183,298,56,69,335,283,254,240,181,177,231,180,357;
+
+
+if( #warpgeff ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para geffen field:";
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+Disp("- Geffen Field 0 ~ ^04B431Fabres^000000 ["+getmapusers("gef_fild00")+"]:- Geffen Field 1 ~ ^04B431x2 Toad^000000 ["+getmapusers("gef_fild01")+"]:- Geffen Field 2 ~ ^FF0000Ork Hero Forest^000000 ["+getmapusers("gef_fild02")+"]:- Geffen Field 3 ~ ^8A2908Orcs/Savages^000000 ["+getmapusers("gef_fild03")+"]:- Geffen Field 4 ~ North Bridge ["+getmapusers("gef_fild04")+"]:- Geffen Field 5 ~ ^B40486WildRose Quest^000000 ["+getmapusers("gef_fild05")+"]:- Geffen Field 6 ~ ^0174DFS.Petites/Kobolds^000000 ["+getmapusers("gef_fild06")+"]:- Geffen Field 7 ~ ^0B6121Frog Hat Quest^000000 ["+getmapusers("gef_fild07")+"]:- Geffen Field 8 ~ ^0174DFKobolds/Golems^000000 ["+getmapusers("gef_fild08")+"]:- Geffen Field 9 ~ ^DF01A5Hidden Cave^000000 ["+getmapusers("gef_fild09")+"]:- Geffen Field 10 ~ ^FF0000Orc Lord^000000 ["+getmapusers("gef_fild10")+"]:- Geffen Field 11 ~ ^61210Bx2 Goblin Leader^000000 ["+getmapusers("gef_fild11")+"]:- Geffen Field 12 ~ ^0431B4x2 Kobold Leader^000000 ["+getmapusers("gef_fild12")+"]:- Geffen Field 13 ~ ^DF01A5Ambernite^000000 ["+getmapusers("gef_fild13")+"]:- Geffen Field 14 ~ ^0000FFOrc Hero Camp^000000 ["+getmapusers("gef_fild14")+"]");
+Pick("","gef_fild00","gef_fild01","gef_fild02","gef_fild03","gef_fild04","gef_fild05","gef_fild06","gef_fild07","gef_fild08","gef_fild09","gef_fild10","gef_fild11","gef_fild12","gef_fild13","gef_fild14");
+end;
+}
+
+if( countitem(4322) < 1 ) goto faltahiorc;
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 High Orc Card para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido la card, eres digno merecedor del acceso.!";
+cutin "jpn_mid05",2;
+specialeffect 618;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir la carta!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 4322,1;
+getitem 7539,5;
+npctalk "Ganaste 5 Poring coins de recompensa por el esfuerzo.!";
+set #warpgeff,1;
+announce "Warper: Felicidades, haz desbloqueado Geffen Fields!",bc_yellow|bc_self;
+cutin "jpn_mid02",2;
+Disp("- Geffen Field 0 ~ ^04B431Fabres^000000 ["+getmapusers("gef_fild00")+"]:- Geffen Field 1 ~ ^04B431x2 Toad^000000 ["+getmapusers("gef_fild01")+"]:- Geffen Field 2 ~ ^FF0000Ork Hero Forest^000000 ["+getmapusers("gef_fild02")+"]:- Geffen Field 3 ~ ^8A2908Orcs/Savages^000000 ["+getmapusers("gef_fild03")+"]:- Geffen Field 4 ~ North Bridge ["+getmapusers("gef_fild04")+"]:- Geffen Field 5 ~ ^B40486WildRose Quest^000000 ["+getmapusers("gef_fild05")+"]:- Geffen Field 6 ~ ^0174DFS.Petites/Kobolds^000000 ["+getmapusers("gef_fild06")+"]:- Geffen Field 7 ~ ^0B6121Frog Hat Quest^000000 ["+getmapusers("gef_fild07")+"]:- Geffen Field 8 ~ ^0174DFKobolds/Golems^000000 ["+getmapusers("gef_fild08")+"]:- Geffen Field 9 ~ ^DF01A5Hidden Cave^000000 ["+getmapusers("gef_fild09")+"]:- Geffen Field 10 ~ ^FF0000Orc Lord^000000 ["+getmapusers("gef_fild10")+"]:- Geffen Field 11 ~ ^61210Bx2 Goblin Leader^000000 ["+getmapusers("gef_fild11")+"]:- Geffen Field 12 ~ ^0431B4x2 Kobold Leader^000000 ["+getmapusers("gef_fild12")+"]:- Geffen Field 13 ~ ^DF01A5Ambernite^000000 ["+getmapusers("gef_fild13")+"]:- Geffen Field 14 ~ ^0000FFOrc Hero Camp^000000 ["+getmapusers("gef_fild14")+"]");
+Pick("","gef_fild00","gef_fild01","gef_fild02","gef_fild03","gef_fild04","gef_fild05","gef_fild06","gef_fild07","gef_fild08","gef_fild09","gef_fild10","gef_fild11","gef_fild12","gef_fild13","gef_fild14");
+end;
+
+
+faltahiorc:
+npctalk "Requiere 1 High Orc Card";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^0000FFHigh Orc Card^000000";
+mes "con esto desbloquearas algunos destinos Geffen de manera permanente.";
+cutin "",255;
+end;
+
+
+//-------------------------------------------------COMODO FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+COMO: setarray @c[2],359,256,256,175,29,270,299,189,26,162,0,0,199,116,76,373;
+if( #warpcomf ){
+cutin "jpn_mid02",2;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Comodo Fields";
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+Disp("- Papuchicha Forest -^088A08Alligators^000000:- ^0000FFKokomo Beach^000000:- Zenhai Marsh -^088A08Anolians^000000:- Comodo Field 04 -^0000FFSea Otters^000000:- Border of Papuchica Forest:-Goblin Archer Fortress:- Rogue Guild Entrance:- Saint Darmain Fortress"); 
+Pick("","cmd_fild01","cmd_fild02","cmd_fild03","cmd_fild04","cmd_fild05","cmd_fild06","cmd_fild07","cmd_fild09");
+end;
+}
+
+if( countitem(991) < 20 )  goto Faltacristal;
+cutin "jpn_mid05",2;
+npctalk "Requiere 20 Crystal Blue para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Comprobando Items.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir los items!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 991,20;
+getitem 7539,3;
+set #warpcomf,1;
+announce "Warper: Felicidades, haz desbloqueado un atajo facil!",bc_yellow|bc_self;
+Disp("- Papuchicha Forest -^088A08Alligators^000000:- ^0000FFKokomo Beach^000000:- Zenhai Marsh -^088A08Anolians^000000:- Comodo Field 04 -^0000FFSea Otters^000000:- Border of Papuchica Forest:-Goblin Archer Fortress:- Rogue Guild Entrance:- Saint Darmain Fortress"); 
+Pick("","cmd_fild01","cmd_fild02","cmd_fild03","cmd_fild04","cmd_fild05","cmd_fild06","cmd_fild07","cmd_fild09");
+end;
+
+Faltacristal:
+npctalk "Requiere 20 Crystal Blue";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 20 ^0000FFCrystal Blue^000000";
+cutin "",255;
+end;
+
+
+
+//-------------------------------------------------HUGEL FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+HUG: setarray @c[2],83,212,265,175,275,145,95,224,303,233,218,155;
+if( #warphug ){
+cutin "jpn_mid02",2;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Hugel Fields:";
+Disp("- Hugel 2 ^DF7401Cheon Choon^000000:- Hugel 3 ^04B404Iguana Yard^000000:- Hugel 4 ^61210BBreeze Hill^000000:- Hugel 5 ^088A4BMutant Dragon Abyss Lake^000000:- Hugel 6 ^0B4C5FHolden Shore Beach^000000:- Hugel 7 ^A901DBSmall Dragons Hill^000000");
+Pick("","hu_fild02","hu_fild03","hu_fild04","hu_fild05","hu_fild06","hu_fild07");
+end;
+}
+
+if( countitem(7296) < 1 ) goto faltahug;
+npctalk "Requiere 1 Pyroxene para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7296,1;
+getitem 7539,3;
+set #warphug,1;
+announce "Warper: Felicidades, haz desbloqueado Hugel Fields!",bc_yellow|bc_self;
+Disp("- Hugel 2 ^DF7401Cheon Choon^000000:- Hugel 3 ^04B404Iguana Yard^000000:- Hugel 4 ^61210BBreeze Hill^000000:- Hugel 5 ^088A4BMutant Dragon Abyss Lake^000000:- Hugel 6 ^0B4C5FHolden Shore Beach^000000:- Hugel 7 ^A901DBSmall Dragons Hill^000000");
+Pick("","hu_fild02","hu_fild03","hu_fild04","hu_fild05","hu_fild06","hu_fild07");
+end;
+
+faltahug:
+cutin "jpn_mid05",2;
+npctalk "Requiere 1 Pyroxene";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^FF0000Pyroxene^000000";
+mes "con esto desbloquearas los Fields de Hugel.";
+cutin "",255;
+end;
+
+//-------------------------------------------------LIGHTHALZEN FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+LIF: setarray @c[2],250,250,151,334,230,137;
+if( #warplig ){
+cutin "jpn_mid02",2;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Lighthalzen Fields:";
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+specialeffect 567;
+specialeffect 618;
+Disp("- Lighthalzen 3 ^2E2E2EStemworms Domain^000000:- Lighthalzen 2 ^3B170BMetaling Cliffs^000000:- Lighthalzen 1 ^2E64FEBackyard Pool^000000");
+Pick("","lhz_fild03","lhz_fild02","lhz_fild01");
+end;
+}
+
+if( countitem(997) < 1 ) goto faltalai;
+npctalk "Requiere 1 Great Nature para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 997,1;
+getitem 7539,3;
+set #warplig,1;
+announce "Warper: Felicidades, haz desbloqueado Lighthalzen Fields!",bc_yellow|bc_self;
+Disp("- Lighthalzen 3 ^2E2E2EStemworms Domain^000000:- Lighthalzen 2 ^3B170BMetaling Cliffs^000000:- Lighthalzen 1 ^2E64FEBackyard Pool^000000");
+Pick("","lhz_fild03","lhz_fild02","lhz_fild01");
+end;
+
+faltalai:
+npctalk "Requiere 1 Great Nature";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^013ADFGreat Nature^000000";
+mes "con esto desbloquearas los Fields de Lighthalzen, no hay nada emocionante aqui, de todas formas podras acceder.";
+cutin "",255;
+end;
+
+
+
+//-------------------------------------------------LUOYANG FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+F15: setarray @c[2],233,352;
+if( #luof ){
+cutin "jpn_mid02",2;
+mes "^0000FFWarp Agent^000000";
+mes "Este es tu acceso desbloqueado para Louyang Field:";
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+specialeffect 567;
+specialeffect 618;
+Disp("Louyang Field",1,1); Pick("lou_fild");
+end;
+}
+
+if( countitem(1031) < 25 ) goto faltaluo;
+npctalk "Requiere 25 Mantis Scythe para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Bah! que facil, y aun asi,.... eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 1031,25;
+getitem 7539,3;
+set #luof,1;
+announce "Warper: Felicidades, haz desbloqueado Louyang Field!",bc_yellow|bc_self;
+Disp("Louyang Field",1,1); Pick("lou_fild");
+end;
+
+faltaluo:
+cutin "jpn_mid03",2;
+npctalk "Requiere 25 Mantis Scythes";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 25 ^088A08Mantis Scythe^000000";
+mes "sin este requisito, lo mas cerca que te puedo dejar es en la misma ciudad de Louyang";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "",255;
+setarray @c[2],218,46;
+Disp("^8b4513Louyang Town^000000");
+Pick("","louyang");
+end;
+
+
+F11: setarray @c[2],220,227;
+Disp("Gonryun Field",1,1); Pick("gon_fild");
+
+
+//-------------------------------------------------DIMENSIONAL MORROC FIELDS SATAN Y WOUNDED MORROC DESBLOQUEABLE-----------------------------------------------------------------------
+MOD:
+setarray @c[2],30,195,39,195;
+if( #warpsatanf ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Oh valiente "+strcharinfo(0)+".!:";
+Disp("Dimensional 1 - Satan Morroc:Dimensional 2 - Wounded Morroc"); 
+Pick("","moc_fild21","moc_fild22");
+end;
+}
+
+if( countitem(7799) < 50 ) goto nohaypiedranegra;
+npctalk "Requiere 50 Crystal of Darkness para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+cutin "jpn_mid02",2;
+npctalk "Vaya! de alguna forma haz conseguido 50 Crystal of Darkness, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7799,50;
+getitem 7539,25;
+set #warpsatanf,1;
+announce "Warper: Felicidades, haz desbloqueado los Mapas Dimensionales de Satan Morocc.",bc_yellow|bc_self;
+Disp("Dimensional 1 - Satan Morroc:Dimensional 2 - Wounded Morroc"); 
+Pick("","moc_fild21","moc_fild22");
+end;
+
+
+nohaypiedranegra:
+npctalk "Requiere 50 Crystal of Darkness";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas ^FF400050 Crystal of Darkness^000000.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "La unica forma de obtenerlo es asesinando a esos horribles demonios de Satan Morroc, si logras esto te premiare con 25 Poring Coins.";
+cutin "",255;
+end;
+
+
+//-------------------------------------------------MORROC SOGRAT DESERTS FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+SOG: setarray @c[2],239,377,78,331,70,335,340,184,200,216,159,373,66,240,189,229,72,273,158,375,344,180;
+
+if( #warpsog ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "A continuacion, te muestro los mapas desbloqueados de Sograt Deserts:";
+Disp("Sograt Desert 1 ~ ^61210BBaby Wolves^000000 ["+getmapusers("moc_fild01")+"]:Sograt Desert 2 ~ ^FE2E2EPecopecos^000000 ["+getmapusers("moc_fild02")+"]:Sograt Desert 3 ~ ^DF0101Elder Willows^000000 ["+getmapusers("moc_fild03")+"]:Sograt Desert 7 ~ ^4B610BMaseph Spot^000000 ["+getmapusers("moc_fild07")+"]:Sograt Desert 11 ~ ^FA8258Golems^000000 ["+getmapusers("moc_fild11")+"]:Sograt Desert 12 ~ ^CC0000Pickys^000000 ["+getmapusers("moc_fild12")+"]:Sograt Desert 13 ~ ^0B610BSnakes Domain^000000 ["+getmapusers("moc_fild13")+"]:Assassin Guild ~ ^610B5EMagnolia/Sandman^000000 ["+getmapusers("moc_fild16")+"]:Sograt Desert 17 ~ ^FE2EF7Phreeoni Map^000000 ["+getmapusers("moc_fild17")+"]:Sograt Desert 18 ~ ^31B404Dragonfly Map^000000 ["+getmapusers("moc_fild18")+"]:Sograt Desert 20 ~ ^b330ffDimensional Rift^000000 ["+getmapusers("moc_fild20")+"]"); 
+Pick("","moc_fild01","moc_fild02","moc_fild03","moc_fild07","moc_fild11","moc_fild12","moc_fild13","moc_fild16","moc_fild17","moc_fild18","moc_fild20");
+end;
+}
+
+if( countitem(7021) < 1 ) goto faltafool;
+npctalk "Requiere 1 Foolishness of the Blind para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido 1 Foolishness of the Blind, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el ^FF4000Foolishness of the Blind^000000.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7021,1;
+getitem 7539,5;
+set #warpsog,1;
+announce "Warper: Felicidades, haz desbloqueado Sograt Deserts.",bc_yellow|bc_self;
+Disp("Sograt Desert 1 ~ ^61210BBaby Wolves^000000 ["+getmapusers("moc_fild01")+"]:Sograt Desert 2 ~ ^FE2E2EPecopecos^000000 ["+getmapusers("moc_fild02")+"]:Sograt Desert 3 ~ ^DF0101Elder Willows^000000 ["+getmapusers("moc_fild03")+"]:Sograt Desert 7 ~ ^4B610BMaseph Spot^000000 ["+getmapusers("moc_fild07")+"]:Sograt Desert 11 ~ ^FA8258Golems^000000 ["+getmapusers("moc_fild11")+"]:Sograt Desert 12 ~ ^CC0000Pickys^000000 ["+getmapusers("moc_fild12")+"]:Sograt Desert 13 ~ ^0B610BSnakes Domain^000000 ["+getmapusers("moc_fild13")+"]:Assassin Guild ~ ^610B5EMagnolia/Sandman^000000 ["+getmapusers("moc_fild16")+"]:Sograt Desert 17 ~ ^FE2EF7Phreeoni Map^000000 ["+getmapusers("moc_fild17")+"]:Sograt Desert 18 ~ ^31B404Dragonfly Map^000000 ["+getmapusers("moc_fild18")+"]:Sograt Desert 20 ~ ^b330ffDimensional Rift^000000 ["+getmapusers("moc_fild20")+"]"); 
+Pick("","moc_fild01","moc_fild02","moc_fild03","moc_fild07","moc_fild11","moc_fild12","moc_fild13","moc_fild16","moc_fild17","moc_fild18","moc_fild20");
+end;
+
+faltafool:
+npctalk "Requiere 1 Foolishness of the Blind";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^FF4000Foolishness of the Blind^000000.";
+cutin "",255;
+end;
+
+
+
+//----------XMAS FIELD DESBLOQUEABLE----------------------------
+F16: setarray @c[2],115,145;
+if( #warpluti ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Ya tienes desbloqueado este field!";
+Disp("- Xmas Field 1 ~ ^0000FFGarm^000000 ["+getmapusers("xmas_fild01")+"]"); 
+Pick("xmas_fild");
+end;
+}
+if( countitem(2236) < 1 ) goto faltasanta;
+npctalk "Requiere 1 Santa Hat para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por encontrar 1 Santa Hat!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 2236,1;
+getitem 7539,3;
+set #warpluti,1;
+announce "Warper: Felicidades, haz desbloqueado Manuk Fields!",bc_yellow|bc_self;
+Disp("- Xmas Field 1 ~ ^0000FFGarm^000000  ["+getmapusers("xmas_fild01")+"]"); 
+Pick("xmas_fild");
+end;
+
+faltasanta:
+npctalk "Requiere 1 Santa Hat";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 Santa Hat";
+mes "con esto desbloquearas el unico field de Lutie.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "De momento lo mejor puedo hacer es dejarte en el Town, pulsa next para ir.";
+next;
+cutin "",255;
+setarray @c[2],148,131;
+Disp("^8b4513Xmas Town^000000  ["+getmapusers("xmas")+"]");
+Pick("","xmas");
+end;
+
+
+
+//----------MALAYA FIELDS DESBLOQUEABLE----------------------------
+F17: setarray @c[2],40,272,207,180,175,261;
+
+if( #warpmalaya ){
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Malaya Fields:";
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+specialeffect 567;
+specialeffect 618;
+Disp("- Malaya 1 ~ ^DF7401Tiyanak/Tikbalang^000000  ["+getmapusers("ma_fild01")+"]:- Malaya 2 ~  ^088A08WakWak/Mangkukulan^000000  ["+getmapusers("ma_fild02")+"]:- ^0000CCPintados Festival Unlock^000000  ["+getmapusers("ma_fild01")+"]");
+Pick("","ma_fild01","ma_fild02","ma_fild01");
+end;
+}
+
+if( countitem(6511) < 25 ) goto faltabeauty;
+npctalk "Requiere 25 Beautiful Flower para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 6511,25;
+getitem 7539,3;
+set #warpmalaya,1;
+
+announce "Warper: Felicidades, haz desbloqueado Malaya Fields!",bc_yellow|bc_self;
+Disp("- Malaya 1 ~ ^DF7401Tiyanak/Tikbalang^000000  ["+getmapusers("ma_fild01")+"]:- Malaya 2 ~  ^088A08WakWak/Mangkukulan^000000  ["+getmapusers("ma_fild02")+"]:- ^0000CCPintados Festival Unlock^000000  ["+getmapusers("ma_fild01")+"]");
+Pick("","ma_fild01","ma_fild02","ma_fild01");
+end;
+
+faltabeauty:
+npctalk "Requiere 25 Beautiful Flower";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 25 Beautiful Flower";
+mes "con esto desbloquearas los Fields de Malaya.";
+cutin "",255;
+end;
+
+
+
+//----------MANUK FIELDS DESBLOQUEABLE----------------------------
+MAN: setarray @c[2],35,246,37,262,84,365;
+if( #warpmanu ){
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Manuk Fields:";
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+specialeffect 567;
+specialeffect 618;
+Disp("- Manuk Field 1 ~ ^2E2E2ENepenthes Domain^000000  ["+getmapusers("man_fild01")+"]:- Manuk Field 2 ~ ^3B170BBradium Golems^000000  ["+getmapusers("man_fild02")+"]:- Manuk Field 3 ~ ^2E64FEHardrock Mammoth^000000  ["+getmapusers("man_fild03")+"]");
+Pick("","man_fild01","man_fild02","man_fild03");
+end;
+}
+
+if( countitem(7340) < 20 ) goto faltawill;
+npctalk "Requiere 20 Will of the Darkness para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7340,20;
+getitem 7539,5;
+set #warpmanu,1;
+
+announce "Warper: Felicidades, haz desbloqueado Manuk Fields!",bc_yellow|bc_self;
+Disp("- Manuk Field 1 ~ ^2E2E2ENepenthes Domain^000000  ["+getmapusers("man_fild01")+"]:- Manuk Field 2 ~ ^3B170BBradium Golems^000000  ["+getmapusers("man_fild02")+"]:- Manuk Field 3 ~ ^2E64FEHardrock Mammoth^000000  ["+getmapusers("man_fild03")+"]");
+Pick("","man_fild01","man_fild02","man_fild03");
+end;
+
+faltawill:
+npctalk "Requiere 20 Will of the Darkness";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 20 Will of the Darkness";
+mes "con esto desbloquearas los Fields de Manuk.";
+cutin "",255;
+end;
+
+
+//-------------------------------------------------PAYON FORESTS DESBLOQUEABLE-----------------------------------------------------------------------
+PFT: setarray @c[2],333,348,83,381,154,216,251,199,106,178,305,370,204,186,142,238,207,201,77,314,291,139;
+
+if( #warppay ){
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Payon Forest:";
+Disp("- Payon Forest 1 ~ South ["+getmapusers("pay_fild01")+"]:- Payon Forest 2 ~ ^013ADFWolves^000000 & ^0B610BSnakes^000000 ["+getmapusers("pay_fild02")+"]:- Payon Forest 3 ~ ^ED1E1ER. Mushroom Spot^000000 ["+getmapusers("pay_fild03")+"]:- Payon Forest 4 ~ ^F83DD2Poring Minibosses^000000 ["+getmapusers("pay_fild04")+"]:- Payon Forest 5 ~ ^6C21BEP.Spore^000000 & ^178D0APoPoring^000000 ["+getmapusers("pay_fild05")+"]:- Payon Forest 6 ~ ^0B610BWormtails^000000 ["+getmapusers("pay_fild06")+"]:- Payon Forest 7 ~ ^FF0000Elder Willows^000000 ["+getmapusers("pay_fild07")+"]:- Payon Forest 8 ~ ^F65EECPoring^000000 & ^FB2F3FSpores^000000 ["+getmapusers("pay_fild08")+"]:- Payon Forest 9 ~ ^B45F04Smokies^000000 ["+getmapusers("pay_fild09")+"]:- Payon Forest 10 ~ ^61210BDokebi & G.General^000000 ["+getmapusers("pay_fild10")+"]:- Payon Forest 11 ~ ^FF8000Eddga^000000 ["+getmapusers("pay_fild11")+"]");
+Pick("","pay_fild01","pay_fild02","pay_fild03","pay_fild04","pay_fild05","pay_fild06","pay_fild07","pay_fild08","pay_fild09","pay_fild10","pay_fild11");
+end;
+}
+
+if( countitem(1029) < 1 ) goto faltatskin;
+npctalk "Requiere 1 Tiger Skin para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 1029,1;
+getitem 7539,5;
+set #warppay,1;
+announce "Warper: Felicidades, haz desbloqueado Payon Field!",bc_yellow|bc_self;
+Disp("- Payon Forest 1 ~ South ["+getmapusers("pay_fild01")+"]:- Payon Forest 2 ~ ^013ADFWolves^000000 & ^0B610BSnakes^000000 ["+getmapusers("pay_fild02")+"]:- Payon Forest 3 ~ ^ED1E1ER. Mushroom Spot^000000 ["+getmapusers("pay_fild03")+"]:- Payon Forest 4 ~ ^F83DD2Poring Minibosses^000000 ["+getmapusers("pay_fild04")+"]:- Payon Forest 5 ~ ^6C21BEP.Spore^000000 & ^178D0APoPoring^000000 ["+getmapusers("pay_fild05")+"]:- Payon Forest 6 ~ ^0B610BWormtails^000000 ["+getmapusers("pay_fild06")+"]:- Payon Forest 7 ~ ^FF0000Elder Willows^000000 ["+getmapusers("pay_fild07")+"]:- Payon Forest 8 ~ ^F65EECPoring^000000 & ^FB2F3FSpores^000000 ["+getmapusers("pay_fild08")+"]:- Payon Forest 9 ~ ^B45F04Smokies^000000 ["+getmapusers("pay_fild09")+"]:- Payon Forest 10 ~ ^61210BDokebi & G.General^000000 ["+getmapusers("pay_fild10")+"]:- Payon Forest 11 ~ ^FF8000Eddga^000000 ["+getmapusers("pay_fild11")+"]");
+Pick("","pay_fild01","pay_fild02","pay_fild03","pay_fild04","pay_fild05","pay_fild06","pay_fild07","pay_fild08","pay_fild09","pay_fild10","pay_fild11");
+end;
+
+faltatskin:
+npctalk "Requiere 1 Tiger Skin";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^FF8000Tiger Skin^000000";
+mes "con esto desbloquearas los Fields de Payon.";
+mes "de momento solo te puedo dejar afuera";
+next;
+setarray @c[2],333,350;
+Disp("^8b4513Payon Field 1^000000 ~ South ["+getmapusers("pay_fild01")+"]");
+Pick("","pay_fild01");
+end;
+
+//-------------------------------------------------PRONTERA FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+PF: setarray @c[2],269,232,260,172,341,307,316,91,370,156,284,219,37,193,160,157,170,131,239,115,109,116,252,212;
+
+if( #warpprt ){
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Prontera Field:";
+
+Disp("- Prontera 0 ^FE2EC8Hornet Pond^000000:- Prontera 1 ^585858Lunatic Forest^000000:- Prontera 2 ^0080FFEclipse^000000 & ^FF0040Mandragoras^000000:- Prontera 3 ^B40431Yoyo Forest^000000:- Prontera 4 ^04B404Rocker^000000 & ^DF01A5Creamies^000000:- Prontera 5 ^4B088ACulvert Entrance^000000:- Prontera 6 ^01DFA5West Field^000000:- Prontera 7 ^04B404Rocker Grasslands^000000:- Prontera 8 ^01DFA5South Field^000000:- Prontera 9 ^FE2E64Stray Savage Baby Hill^000000:- Prontera 10 ^8A0808Savage Mushrooms Pantry^000000:- Prontera 11 ^61380BGoblins Domain^000000");
+Pick("","prt_fild00","prt_fild01","prt_fild02","prt_fild03","prt_fild04","prt_fild05","prt_fild06","prt_fild07","prt_fild08","prt_fild09","prt_fild10","prt_fild11");
+end;
+}
+
+if( countitem(622) < 1 ) goto faltacarr;
+npctalk "Requiere 1 Rainbow Carrot para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 622,1;
+getitem 7539,3;
+set #warpprt,1;
+
+announce "Warper: Felicidades, haz desbloqueado Prontera Fields!",bc_yellow|bc_self;
+Disp("- Prontera 0 ^FE2EC8Hornet Pond^000000:- Prontera 1 ^585858Lunatic Forest^000000:- Prontera 2 ^FF0080Mandragora Forest^000000:- Prontera 3 ^B40431Yoyo Forest^000000:- Prontera 4 ^04B404Rocker^000000 & ^DF01A5Creamies^000000:- Prontera 5 ^4B088ACulvert Entrance^000000:- Prontera 6 ^01DFA5West Field^000000:- Prontera 7 ^04B404Rocker Grasslands^000000:- Prontera 8 ^01DFA5South Field^000000:- Prontera 9 ^FE2E64Stray Savage Baby Hill^000000:- Prontera 10 ^8A0808Savage Mushrooms Pantry^000000:- Prontera 11 ^61380BGoblins Domain^000000");
+Pick("","prt_fild00","prt_fild01","prt_fild02","prt_fild03","prt_fild04","prt_fild05","prt_fild06","prt_fild07","prt_fild08","prt_fild09","prt_fild10","prt_fild11");
+end;
+
+faltacarr:
+npctalk "Requiere 1 Rainbow Carrot";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^DF3A01Rainbow Carrot^000000";
+mes "con esto desbloquearas los Fields de Prontera.";
+cutin "",255;
+end;
+
+//-------------------------------------------------RACHEL FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+RAF: setarray @c[2],185,164,216,267,232,240,216,212,42,240,284,111;
+if( #warpraf ){
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Rachel Fields:";
+Disp("- Rachel 2 ^B43104Atroce at Oz Gorge^000000:- Rachel 3 ^045FB4Atroce at Galions Oz Pond^000000:- Rachel 4 ^31B404Atroce at Roweens Audumra Grass Land^000000:- Rachel 5 ^FF0040Hill Wind Mountain Skirts^000000:- Rachel 9 ^4B8A08Drossera at Audumra Grasslands^000000:- Rachel 13 ^FF8000Unique Atroce at Beach of Tears^000000");
+Pick("","ra_fild02","ra_fild03","ra_fild04","ra_fild05","ra_fild09","ra_fild13");
+end;
+}
+
+if( countitem(7048) < 1 ) goto faltarac;
+npctalk "Requiere 1 Talon of Griffon un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7048,1;
+getitem 7539,4;
+set #warpraf,1;
+announce "Warper: Felicidades, haz desbloqueado Rachel Fields!",bc_yellow|bc_self;
+Disp("- Rachel 2 ^B43104Atroce at Oz Gorge^000000:- Rachel 3 ^045FB4Atroce at Galions Oz Pond^000000:- Rachel 4 ^31B404Atroce at Roweens Audumra Grass Land^000000:- Rachel 5 ^FF0040Hill Wind Mountain Skirts^000000:- Rachel 9 ^4B8A08Drossera at Audumra Grasslands^000000:- Rachel 13 ^Rachel 13 ^FF8000Unique Atroce at Beach of Tears^000000");
+Pick("","ra_fild02","ra_fild03","ra_fild04","ra_fild05","ra_fild09","ra_fild13");
+end;
+
+faltarac:
+npctalk "Requiere 1 Talon of Griffon";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 Talon of Griffon";
+mes "con esto desbloquearas los Fields de Rachel.";
+cutin "",255;
+end;
+
+//-------------------------------------------------VEINS FIELDS DESBLOQUEABLE-----------------------------------------------------------------------
+VF: setarray @c[2],268,76,142,88,168,234,52,249,200,326,81,181,130,130;
+
+
+if( #warpvein ){
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Veins Fields:";
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+specialeffect 567;
+specialeffect 618;
+Disp("- Veins 1 ~ ^3B170BAtroce at Lake^000000 ["+getmapusers("ve_fild01")+"]:- Veins 2 ~ ^3B170BAtroce at Rachel Yard^000000 ["+getmapusers("ve_fild01")+"]:- Veins 3 ~ ^B43104Thor Volcano Entrance^000000:- Veins 4 ~ ^FAAC58Desert Wolves Domain^000000:- Veins 5 ~ ^9E7E71Sleepers^000000:- Veins 6 ~ ^706D6CArrival Turn^000000:- Veins 7 ~ ^FF0000Boat to Nameless Island^000000");
+Pick("","ve_fild01","ve_fild02","ve_fild03","ve_fild04","ve_fild05","ve_fild06","ve_fild07");
+end;
+}
+
+if( countitem(749) < 1 ) goto faltavein;
+npctalk "Requiere 1 Frozen Rose para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido el item, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir el item!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 749,1;
+getitem 7539,3;
+set #warpvein,1;
+announce "Warper: Felicidades, haz desbloqueado Veins Fields!",bc_yellow|bc_self;
+Disp("- Veins 1 ~ ^3B170BAtroce at Lake^000000 ["+getmapusers("ve_fild01")+"]:- Veins 2 ~ ^3B170BAtroce at Rachel Yard^000000 ["+getmapusers("ve_fild01")+"]:- Veins 3 ~ ^B43104Thor Volcano Entrance^000000:- Veins 4 ~ ^FAAC58Desert Wolves Domain^000000:- Veins 5 ~ ^9E7E71Sleepers^000000:- Veins 6 ~ ^706D6CArrival Turn^000000:- Veins 7 ~ ^FF0000Boat to Nameless Island^000000");
+Pick("","ve_fild01","ve_fild02","ve_fild03","ve_fild04","ve_fild05","ve_fild06","ve_fild07");
+end;
+
+faltavein:
+npctalk "Requiere 1 Frozen Rose";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^013ADFFrozen Rose^000000";
+mes "con esto desbloquearas los Fields de Veins.";
+cutin "",255;
+end;
+
+	 
+//--------------MJOLNIR FILD DESBLOQUEABLE---------------------------------------------------------------------	 
+F19: setarray @c[2],310,272,85,357,208,213,166,196,181,240,195,270,235,202,188,215,205,144,245,223,180,206,196,208;
+
+if( #warpmojon ){
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Mjolnir Fields:";
+npctalk "Warper: Granted Access for "+strcharinfo(0)+".!";
+specialeffect 567;
+specialeffect 618;
+Disp("- Mjolnir 1 ^8A4B08Coco Mirador^000000:- Mjolnir 2 ^04B404Coal Mine Entrance^000000:- Mjolnir 3 ^01A9DBSky Petites^000000:- Mjolnir 4 ^FF8000Mistress^000000:- Mjolnir 5 ^B40486Argiopes^000000:- Mjolnir 6 ^FF0040Stainers^000000:- Mjolnir 7:- Mjolnir 8:- Mjolnir 9:- Mjolnir 10:- Mjolnir 11 ^FA58D0Floras^000000:- Mjolnir 12 ^424242Dustiness^000000");
+Pick("","mjolnir_01","mjolnir_02","mjolnir_03","mjolnir_04","mjolnir_05","mjolnir_06","mjolnir_07","mjolnir_08","mjolnir_09","mjolnir_10","mjolnir_11","mjolnir_12");
+end;
+}
+	 
+if( countitem(996) < 5 ) goto faltamojon;
+npctalk "Requiere 5 Rough Winds para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido 5 Rough Winds, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir los 5 Rough Winds!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 996,5;
+getitem 7539,4;
+set #warpmojon,1;
+
+Disp("- Mjolnir 1 ^8A4B08Coco Mirador^000000:- Mjolnir 2 ^04B404Coal Mine Entrance^000000:- Mjolnir 3 ^01A9DBSky Petites^000000:- Mjolnir 4 ^FF8000Mistress^000000:- Mjolnir 5 ^B40486Argiopes^000000:- Mjolnir 6 ^FF0040Stainers^000000:- Mjolnir 7:- Mjolnir 8:- Mjolnir 9:- Mjolnir 10:- Mjolnir 11 ^FA58D0Floras^000000:- Mjolnir 12 ^424242Dustiness^000000");
+Pick("","mjolnir_01","mjolnir_02","mjolnir_03","mjolnir_04","mjolnir_05","mjolnir_06","mjolnir_07","mjolnir_08","mjolnir_09","mjolnir_10","mjolnir_11","mjolnir_12");
+end;	 
+	 
+faltamojon:
+cutin "jpn_mid05",2;
+mes "^0000FFWarp Agent^000000";
+mes "Requiere 5 Rough Winds! Cuando me los entregues, desbloquearas todos los accesos a este sitio.";
+next;
+mes "^0000FFWarp Agent^000000";
+mes "Tambien ganaras 5 Poring Coins si consigues los Rough Wings.";
+cutin "",255;
+end;	 
+	
+//--------------NIF FILD DESBLOQUEABLE---------------------------------------------------------------------	 
+F21: setarray @c[2],215,229,167,234;
+if( #warpniff ){
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Niflheim Fields:";
+Disp("Skellington a Solitary Village in Niflheim:Valley of Gyoll");
+Pick("","nif_fild01","nif_fild02");
+end;
+}	 
+
+if( countitem(7164) < 50 ) goto faltapeach;
+npctalk "Requiere 50 Solid Peach para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido 50 Solid Peach, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Felicidades por conseguir los 5 Rough Winds!.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7164,50;
+getitem 7539,5;
+set #warpniff,1;
+
+Disp("Skellington a Solitary Village in Niflheim:Valley of Gyoll");
+Pick("","nif_fild01","nif_fild02");
+end;	 
+	 
+faltapeach:
+cutin "jpn_mid05",2;
+mes "^0000FFWarp Agent^000000";
+mes "Requiere 50 Solid Peaches! Para desbloquearlo permanentemente.";
+mes "Tambien ganaras 5 Poring Coins.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "",255;
+setarray @c[2],245,259;
+Disp("^0000FFNifleheim Entrance^000000");
+Pick("","yggdrasil0101");
+end;	
+
+//-------------------------------------SPLENDIDE FIELDS DESBLOQUEABLE--------------------------------------------------------
+F26: setarray @c[2],366,110,236,184,188,204;
+if( #warpsplfild ){
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+Disp("- Yggdrasil Tree Root Entrance ~ ^DF0101Nagas^000000:- Splendide Field 2 ~ ^FF0080Pinguicuras / Luciola Vespa^000000:Detoxify Lake ~ ^56E6E6Cornus^000000 & ^FF0000Tendrilion^000000 ");
+Pick("","spl_fild01","spl_fild02","spl_fild03");
+end;
+}	
+
+if( countitem(7293) < 1 )  goto Faltarosecu;
+npctalk "Requiere 1 Rose Quartz";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Haz conseguido 1 Rose Quartz!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Splendide Fields.";
+set #warpsplfild,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los accesos a Splendide Fields!",bc_yellow|bc_self;
+delitem 7293,1;
+getitem 7539,5;
+
+
+Disp("- Yggdrasil Tree Root Entrance ~ ^DF0101Nagas^000000:- Splendide Field 2 ~ ^FF0080Pinguicuras / Luciola Vespa^000000:Detoxify Lake ~ ^56E6E6Cornus^000000 & ^FF0000Tendrilion^000000 ");
+Pick("","spl_fild01","spl_fild02","spl_fild03");
+end;
+
+
+Faltarosecu:
+npctalk "Requiere 1 Rose Quartz!";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 <ITEM>Rose Quartz<INFO>7293</INFO></ITEM>. puedes desbloquear los accesos directos.";
+mes "recibiras 5 poring coins por desbloquear estos mapas.";
+cutin "warper",255;
+end; 
+
+
+
+//-------------------------------------UMBALA FIELDS DEBSLOQUEABLE--------------------------------------------------------
+F27: setarray @c[2],37,278,223,221,237,215,202,197;
+if( #warpumfild ){
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+Disp("Luluka Forest - ^088A08Dryads^000000:Hoomga Forest - ^B45F04Wootangs^000000:Kalala Swamp - ^5FB404Gryphon & Parasites^000000:Hoomga Jungle - ^8A2908Beetles^000000");
+Pick("","um_fild01","um_fild02","um_fild03","um_fild04");
+end;
+}	
+
+if( countitem(634) < 1 )  goto Faltaumbfild;
+npctalk "Requiere 1 Tropical Bananna";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Haz conseguido 1 Tropical Banana!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Umbala Fields.";
+set #warpumfild,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Umbala fields!",bc_yellow|bc_self;
+delitem 634,1;
+getitem 7539,3;
+Disp("Luluka Forest - ^088A08Dryads^000000:Hoomga Forest - ^B45F04Wootangs^000000:Kalala Swamp - ^5FB404Gryphon & Parasites^000000:Hoomga Jungle - ^8A2908Beetles^000000");
+Pick("","um_fild01","um_fild02","um_fild03","um_fild04");
+end;
+
+Faltaumbfild:
+npctalk "Requiere 1 Tropical Bananna";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 <ITEM>Tropical Bananna<INFO>634</INFO></ITEM>. puedes desbloquear los accesos directos.";
+mes "recibiras 3 poring coins por desbloquear estos mapas.";
+cutin "warper",255;
+end; 
+
+
+//-------------------------------------YUNO DEBSLOQUEABLE--------------------------------------------------------
+F29:setarray @c[2],189,224,94,197,221,157,226,199,223,177,187,232,231,174,196,203,183,214,200,124,195,226,210,304;
+
+if( #warpyuno ){
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Yuno Field:";
+Disp("Yuno Field 1 - Border Posts:Yuno Field 2 - Kiel Hyre's Cottage:Yuno Field 3 -^9A2EFEAngeling & Deviling^000000:Yuno Field 4 -^FE2EF7Mastering^000000:Yuno Field 5 -^01A9DBArch Angeling^000000:Yuno Field 6 -^8A4B08Sleepers & Goats^000000:Yuno Field 7 -Harpys:Kiel's Academy -Grand Pecos:Yuno Field 9 -Schwarzwald Guards Camp:Yuno Field 10:- Yuno Field 11 ~ ^FE2E2ESleepers^000000:Yuno Field 12 -Border CheckPoint");
+Pick("","yuno_fild01","yuno_fild02","yuno_fild03","yuno_fild04","yuno_fild05","yuno_fild06","yuno_fild07","yuno_fild08","yuno_fild09","yuno_fild10","yuno_fild11","yuno_fild12");
+end;
+}
+
+if( countitem(969) < 1 )  goto Faltayuno;
+npctalk "Requiere 1 Gold";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Haz conseguido 1 Gold!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Yuno Fields.";
+set #warpyuno,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Yuno fields!",bc_yellow|bc_self;
+delitem 969,1;
+getitem 7539,10;
+Disp("Yuno Field 1 - Border Posts:Yuno Field 2 - Kiel Hyre's Cottage:Yuno Field 3 -Angeling & Deviling:Yuno Field 4 -Mastering:Yuno Field 5 -Arch Angeling:Yuno Field 6 -Sleepers:Yuno Field 7 -Harpys:Kiel's Academy -Grand Pecos:Yuno Field 9 -Schwarzwald Guards Camp:Yuno Field 10:- Yuno Field 11 ~ ^FE2E2ESleepers^000000:Yuno Field 12 -Border CheckPoint");
+Pick("","yuno_fild01","yuno_fild02","yuno_fild03","yuno_fild04","yuno_fild05","yuno_fild06","yuno_fild07","yuno_fild08","yuno_fild09","yuno_fild10","yuno_fild11","yuno_fild12");
+end;
+
+Faltayuno:
+npctalk "Requiere 1 Gold";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 <ITEM>Gold<INFO>969</INFO></ITEM>. puedes desbloquear los accesos directos.";
+mes "recibiras 10 poring coins por desbloquear estos mapas.";
+cutin "warper",255;
+end; 
+
+// --------------------------------------------------
+	Dungeons:
+// --------------------------------------------------
+@d = true;
+menu	"- Abyss Lakes",D1, 
+		"- Amatsu Dungeon",D2, 
+		"- Anthell",D3,
+    	"- Ayothaya Dungeon",D4, 
+		"- Beach Dungeon",D5,
+		"- Brasilis Dungeon",D7, 	
+		"- Byalan Dungeon ^0404B4~ Izlude^000000",D8, 		
+		"- Clock Tower ^FF0000~ Aldebaran Tower Dungeon^000000",D9,
+		"- Clock Tower ^FF0080~ Undergrounds^000000",DA,
+		"- Coal Mines",D10, 
+		"- Culvert",D11, 
+		"- Cursed Abbey",D12,
+		"- Dewata Dungeon",D13,
+		"- Dimensional Rift ~ ^A901DBMorroc^000000",MOD,
+		"- Einbroch Mine Dungeon",D14,
+		"- Geffen Dungeon",D16,
+		"~ ^FF0080Gefenia^000000",D15, 
+		"- Glast Heim",D17,
+		"- Gonryun Dungeon",D18,
+		"- Hidden Dungeon",D19,
+		"- Ice Dungeon",D20,
+		"- Juperos",D21,		
+		"- Kiel Dungeon",D22,
+		"- Lighthalzen Biolabs",D6,
+		"- Louyang Dungeon",D24,
+		"- Magma Dungeon",D25,
+		"- Malangdo Dungeon",D26,
+		"- Malaya Hospital",MAHOSP,
+		"- Moscovia Dungeon",D27,
+		"- Nidhogg's Dungeon",D28,
+		"- Orc Dungeon",D30,
+		"- Pyramid Dungeon",D32,		
+		"- Pyramid ^FF0080~ Basement^000000",PBA,
+		"- Payon Dungeon",D31,
+		"- Rachel Sanctuary",D33,
+		"- Scaraba Hole",D34,
+		"- Sphinx",D35,
+		"- Sunken Ship",D36,
+		"- Thanatos Tower",D37,
+    	"- Thor Volcano",D38,	
+		"- Toy Factory",D39,
+		"- Turtle Dungeon",D40,	
+		"- Umbala Dungeon",D41, 
+		"- Odin Temple",D29;
+
+
+//--------ABYSS-------------------------------------------------------------------------------
+D1: setarray @c[2],258,273,272,270,115,30,165,175;
+if( #warpabys ){
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Abyss:";
+Disp("- Abyss 1 ~ ^01DF01Green Ferus^000000  ["+getmapusers("abyss_01")+"]:- Abyss 2 ~ ^0000FFAcidus^000000  ["+getmapusers("abyss_02")+"]:- Abyss 3 ~ ^8000FF(Detale/Hydrolancer)^000000  ["+getmapusers("abyss_03")+"]:- Abyss Secret Passage  ["+getmapusers("abyss_04")+"]");
+Pick("","abyss_01","abyss_02","abyss_03","abyss_04");
+end;
+}
+
+if( countitem(706) < 1 )  goto Faltaabyss;
+npctalk "Desbloquea este mapa para todos tus chars con un 4 LEAF CLOVER";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Ya lo conseguiste? el 4leaf clover?!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+cutin "jpn_mid02",2;
+mes "Wao, conseguiste el vil trebol.";
+set #warpabys,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Abyss Lakes!",bc_yellow|bc_self;
+delitem 706,1;
+getitem 7539,5;
+Disp("- Abyss 1 ~ ^01DF01Green Ferus^000000  ["+getmapusers("abyss_01")+"]:- Abyss 2 ~ ^0000FFAcidus^000000  ["+getmapusers("abyss_02")+"]:- Abyss 3 ~ ^8000FF(Detale/Hydrolancer)^000000  ["+getmapusers("abyss_03")+"]:- Abyss Secret Passage  ["+getmapusers("abyss_04")+"]");
+Pick("","abyss_01","abyss_02","abyss_03","abyss_04");
+end;
+
+Faltaabyss:
+npctalk "Requiere 1 Four Leaf Clover";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Abyss, pero necesitas desbloquearlos con 1 Four Leaf Clover.";
+next;
+mes "^0000FFWarp Agent^000000";
+cutin "jpn_mid03",2;
+mes "Solo podras acceder al primer nivel...";
+next;
+cutin "warper",255;
+specialeffect 543; specialeffect2 543; sleep2 500; specialeffect 543; specialeffect2 543; sleep2 500; 
+setarray @c[2],258,273;
+Disp("^8b4513Abbys Level 1^000000  ["+getmapusers("abyss_01")+"]");
+Pick("","abyss_01");
+end;
+
+//--------------AMATSU DESBLOQUEABLE---------------------------------------------------------------------	
+D2: setarray @c[2],228,11,34,41,119,14;
+if( #warpamats ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Amatsu:";
+Disp("Tatami Maze ~ ^FF0000 Revealed^000000  ["+getmapusers("ama_dun01")+"]:Battle Field in Underground Forest  ["+getmapusers("ama_dun02")+"]:Undeground Shrine ~ ^8000FFSamurai Specter^000000  ["+getmapusers("ama_dun03")+"]");
+Pick("","ama_dun01","ama_dun02","ama_dun03");
+end;
+}
+
+if( countitem(754) < 1 )  goto Faltaamats;
+npctalk "Requiere 1 Raccoon Doll";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste un Raccoon Doll!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, de alguna manera, lograste conseguir 1 Raccoon Doll, por supuesto que puedes usar mi servicio.";
+set #warpamats,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Amatsu dungeons!",bc_yellow|bc_self;
+delitem 754,1;
+getitem 7539,5;
+Disp("Tatami Maze ~ ^FF0000 Revealed^000000  ["+getmapusers("ama_dun01")+"]:Battle Field in Underground Forest  ["+getmapusers("ama_dun02")+"]:Undeground Shrine ~ ^8000FFSamurai Specter^000000  ["+getmapusers("ama_dun03")+"]");
+Pick("","ama_dun01","ama_dun02","ama_dun03");
+end;
+
+Faltaamats:
+npctalk "Requiere 1 Raccoon Doll";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Amatsu Dungeons, pero necesitas desbloquearlos con 1 Raccoon Doll.";
+cutin "jpn_mid03",2;
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Solo podre llevarte hasta el primer nivel.";
+next;
+cutin "warper",255;
+specialeffect 543; specialeffect2 543; sleep2 500; specialeffect 543; specialeffect2 543; sleep2 500; 
+setarray @c[2],228,11;
+Disp("^8b4513Amatsu Level 1^000000  ["+getmapusers("ama_dun01")+"]");
+Pick("","ama_dun01");
+end;
+
+
+
+//-----------------------------------------ANT HELL SOLO AFUERA------------------------------------------------------------------
+D3: setarray @c[2],36,265,168,170;
+if( #warpanth ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Ant Hell:";
+Disp("Ant Hell 1 ~ ^B404AEMaya Purple^000000  ["+getmapusers("anthell01")+"]:Ant Hell 2 ~ ^FF0000Maya^000000  ["+getmapusers("anthell02")+"]");
+Pick("","anthell01","anthell02");
+end;
+}
+
+if( countitem(1056) < 25 )  goto Faltaanth;
+npctalk "Requiere 25 Grits";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste 25 Grits!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, asi que encontraste lo que te pedi!.";
+set #warpanth,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Ant Hell!",bc_yellow|bc_self;
+
+delitem 1056,25;
+getitem 7539,5;
+Disp("Ant Hell 1 ~ ^B404AEMaya Purple^000000  ["+getmapusers("anthell01")+"]:Ant Hell 2 ~ ^FF0000Maya^000000  ["+getmapusers("anthell02")+"]");
+Pick("","anthell01","anthell02");
+end;
+
+Faltaanth:
+cutin "jpn_mid05",2;
+npctalk "Requiere 25 Grits";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Ant Hell, pero necesitas desbloquearlos con 25 Grits";
+next;
+cutin "jpn_mid03",2;
+mes "^0000FFWarp Agent^000000";
+mes "Creo que el Grit lo suelta el sandman o hode, Lo mas que puedo hacer es dejarte en la entrada.";
+next;
+cutin "warper",255;
+setarray @c[2],327,355;
+Disp("^0000FFEntrance of Ant Hell^000000  ["+getmapusers("anthell01")+"]");
+Pick("","cmd_fild08");
+end;
+
+
+//-----------------------------------------AYOTHAYA DESBLOQUEABLE---------------------------------------------------------------------	
+D4: setarray @c[2],279,152,24,28;
+if( #warpayo ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Ayothaya:";
+Disp("Ancient Shrine Maze Entrance  ["+getmapusers("ayo_dun01")+"]:inside Ancient Shrine - ^0B615ELady Tanee^000000  ["+getmapusers("ayo_dun02")+"]");
+Pick("","ayo_fild02","ayo_dun02");
+end;
+}
+
+if( countitem(1059) < 25 )  goto Faltaayo;
+npctalk "Requiere 25 Fabric";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste Fabric!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, de alguna manera, lograste conseguir 25 Fabrics, por supuesto que puedes usar mi servicio.";
+set #warpayo,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Ayothaya!",bc_yellow|bc_self;
+delitem 1059,25;
+getitem 7539,5;
+Disp("Ancient Shrine Maze Entrance  ["+getmapusers("ayo_dun01")+"]:inside Ancient Shrine - ^0B615ELady Tanee^000000  ["+getmapusers("ayo_dun02")+"]");
+Pick("","ayo_fild02","ayo_dun02");
+end;
+
+Faltaayo:
+cutin "jpn_mid03",2;
+npctalk "Requiere 25 Fabric";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Ayothaya, pero necesitas desbloquearlos con 25 Fabrics";
+next;
+cutin "jpn_mid03",2;
+mes "^0000FFWarp Agent^000000";
+mes "Solo podre llevarte hasta la entrada del primer nivel de ese templo.";
+next;
+cutin "warper",255;
+setarray @c[2],279,152;
+Disp("^0000FFAyothaya Temple Entrance^000000  ["+getmapusers("ayo_dun01")+"]");
+Pick("","ayo_fild02");
+end;
+
+
+//-----------------------------------------BEACH DUNGEON DESBLOQUEABLE---------------------------------------------------------------------
+D5: setarray @c[2],273,67,255,244,21,264;
+if( #warpbitch ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Beach Dungeons:";
+Disp("^cb0000Karu the West Cave^000000  ["+getmapusers("beach_dun")+"]:Ruande the North Cave ~ ^0000FFStalatic Golems^000000 ["+getmapusers("beach_dun2")+"]:Mao the East Cave ~ ^FF0080Thara Frogs^000000  ["+getmapusers("beach_dun3")+"]");
+Pick("","beach_dun","beach_dun2","beach_dun3");
+end;
+}
+if( countitem(995) < 10 )  goto Faltabitch;
+npctalk "Requiere 10 Mystic Frozen";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste un Mystic Frozen!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Tienes los Mystic Frozen, por supuesto que puedes usar mi servicio.";
+set #warpbitch,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Comodo Beach Dungeon!",bc_yellow|bc_self;
+delitem 995,10;
+getitem 7539,3;
+Disp("^cb0000Karu the West Cave^000000  ["+getmapusers("beach_dun")+"]:Ruande the North Cave ~ ^0000FFStalatic Golems^000000 ["+getmapusers("beach_dun2")+"]:Mao the East Cave ~ ^FF0080Thara Frogs^000000  ["+getmapusers("beach_dun3")+"]");
+Pick("","beach_dun","beach_dun2","beach_dun3");
+end;
+
+Faltabitch:
+npctalk "Requiere 10 Mystic Frozen";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Beach Dungeon, pero necesitas desbloquearlos con 10 Mystic Frozen.";
+next;
+cutin "jpn_mid03",2;
+mes "^0000FFWarp Agent^000000";
+mes "Lo mas que puedo hacer en esta condicion, es dejarte en la entrada de las Tharas.";
+next;
+cutin "warper",255;
+setarray @c[2],21,264;
+Disp("^FF0080Thara Frogs^000000  ["+getmapusers("beach_dun3")+"]");
+Pick("","beach_dun3");
+end;
+
+//-----------------------------------------BIO LAB ES DESBLOQUEABLE---------------------------------------------------------------------	
+D6: setarray @c[2],50,288,150,18,140,134;
+if( #warpbio ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Somatology Laboratory:";
+Disp("Somatology Laboraroty 1 ["+getmapusers("lhz_dun01")+"]:Somatology Laboratory 2 ~ ^ff8215Ygnizem^000000 ["+getmapusers("lhz_dun02")+"]:^cb0000Somatology Laboratory 3^000000 ["+getmapusers("lhz_dun03")+"]");
+Pick("","lhz_dun01","lhz_dun02","lhz_dun03");
+end;
+}	 
+
+if( countitem(1008) < 1 )  goto Faltanoo;
+npctalk "Requiere 1 Necklace of Oblivion";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste 1 Necklace of Oblivion!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Tienes 1 Necklace of Oblivion, por supuesto que puedes usar mi servicio.";
+set #warpbio,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Somatology Laboratory dungeons!",bc_yellow|bc_self;
+delitem 1008,1;
+getitem 7539,5;
+Disp("Somatology Laboraroty 1 ["+getmapusers("lhz_dun01")+"]:Somatology Laboratory 2 ~ ^ff8215Ygnizem^000000 ["+getmapusers("lhz_dun02")+"]:^cb0000Somatology Laboratory 3^000000 ["+getmapusers("lhz_dun03")+"]");
+Pick("","lhz_dun01","lhz_dun02","lhz_dun03");
+end;
+
+Faltanoo:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Necklace of Oblivion";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Bio Labs, pero necesitas desbloquearlos con 1 Necklace of Oblivion.";
+mes "Ese Necklace lo puedes encontrar matando a los monstruos Jakk, o Rybio.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],149,288;
+Disp("^0000FFBiolabs Entrance^000000  ["+getmapusers("lhz_dun01")+"]");
+Pick("","lhz_dun01");
+end;
+
+//--------------------------------------------------------BRASILIS-----------------------------------------------------------------
+D7: setarray @c[2],87,47,262,262;
+if( #warpbras ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Brasilis Dungeons:";
+Disp("- At the Dusk  ["+getmapusers("bra_dun01")+"]:- At the Dusk 2 ~ ^FF0000Boitata^000000  ["+getmapusers("bra_dun02")+"]");
+Pick("","bra_dun01","bra_dun02");
+end;
+}	
+
+if( countitem(1053) < 1 )  goto Faltaatoot;
+npctalk "Requiere 1 Ancient Tooth";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste 1 Ancient tooth!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Tienes 1 Ancient Tooth, por supuesto que puedes usar mi servicio.";
+set #warpbras,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Brasilis dungeons!",bc_yellow|bc_self;
+delitem 1053,1;
+getitem 7539,3;
+Disp("- At the Dusk  ["+getmapusers("bra_dun01")+"]:- At the Dusk 2 ~ ^FF0000Boitata^000000  ["+getmapusers("bra_dun02")+"]");
+Pick("","bra_dun01","bra_dun02");
+end;
+
+Faltaatoot:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Ancient Tooth";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Brasilis, pero necesitas desbloquearlos con 1 Ancient Tooth.";
+next;
+cutin "",255;
+mes "^0000FFAgente Warp^000000";
+mes "No existe un atajo valido, tendras que matar un Deviace, o abrir docenas de cajas para encontrar el diente!.";
+end;
+
+//-----------------------------------------BYALAN IZLUDE DUNGEON DESBLOQUEABLE---------------------------------------------------------------------
+D8: setarray @c[2],168,168,253,252,236,204,32,63,26,27,141,187;
+if( #warpizl ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Byalan Dungeons:";
+Disp("- Byalan Dun 0 ~ ^E96244Plankton^000000/^0399D0Marina^000000  ["+getmapusers("iz_dun00")+"]:- Byalan Dun 1 ~ ^BA0F02Vadon^000000/^3B170BKukre^000000  ["+getmapusers("iz_dun01")+"]:- Byalan Dun 2 ~ ^FE2EF7Obeaune^000000/^FE9A2EMarse^000000  ["+getmapusers("iz_dun02")+"]:- Byalan Dun 3 ~ ^084B8APhen/Marc/Swordfish^000000  ["+getmapusers("iz_dun03")+"]:- Byalan Dun 4 ~ ^B40431Merman/Strouf/Deviace^000000  ["+getmapusers("iz_dun04")+"]:- Byalan Dun 5 ~ ^CC0000Kaken^000000  ["+getmapusers("iz_dun05")+"]");
+Pick("","iz_dun00","iz_dun01","iz_dun02","iz_dun03","iz_dun04","iz_dun05");
+end;
+}	 	
+	
+if( countitem(1007) < 1 )  goto Faltawisdom;
+npctalk "Requiere 1 Necklace of Wisdom";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste 1 Necklace of Wisdom!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Tienes 1 Necklace of Wisdom, por supuesto que puedes usar mi servicio.";
+set #warpizl,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Byalan dungeons!",bc_yellow|bc_self;
+delitem 1007,1;
+getitem 7539,4;
+Disp("- Byalan Dun 0 ~ ^E96244Plankton^000000/^0399D0Marina^000000  ["+getmapusers("iz_dun00")+"]:- Byalan Dun 1 ~ ^BA0F02Vadon^000000/^3B170BKukre^000000  ["+getmapusers("iz_dun01")+"]:- Byalan Dun 2 ~ ^FE2EF7Obeaune^000000/^FE9A2EMarse^000000  ["+getmapusers("iz_dun02")+"]:- Byalan Dun 3 ~ ^084B8APhen/Marc/Swordfish^000000  ["+getmapusers("iz_dun03")+"]:- Byalan Dun 4 ~ ^B40431Merman/Strouf/Deviace^000000  ["+getmapusers("iz_dun04")+"]:- Byalan Dun 5 ~ ^CC0000Kaken^000000  ["+getmapusers("iz_dun05")+"]");
+Pick("","iz_dun00","iz_dun01","iz_dun02","iz_dun03","iz_dun04","iz_dun05");
+end;
+	
+Faltawisdom:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Necklace of Wisdom";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Byalan, pero necesitas desbloquearlos con 1 Necklace of Wisdom, item drop de Marse.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],108,88;
+Disp("^8b4513Byalan Island Entrance^000000  ["+getmapusers("iz_dun00")+"]");
+Pick("","izlu2dun");
+end;
+
+//-----------------------------------------CLOCK TOWER NORMAL DESBLOQUEABLE---------------------------------------------------------------------
+D9: setarray @c[2],199,159,148,283,65,147,56,155;
+if( #warpclo ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Clock Tower:";
+Disp("- Clock Tower 1 ~ ^B404AEPunks/Ridewords^000000:- Clock Tower 2 ~ ^B45F04Clocks^000000:- Clock Tower 3 ~ ^0000FFAlarms^000000:- Clock Tower 4 ~ ^688A08Sorted^000000");
+Pick("","c_tower1","c_tower2","c_tower3","c_tower4");
+end;
+}
+if( countitem(7026) < 20 )  goto Faltaclocktower;
+npctalk "Requiere 20 Keys of Clock Tower";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido todas las llaves!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, lograste conseguir todas las llaves, por supuesto que puedes usar mi servicio.";
+set #warpclo,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Clock Tower Dungeon!",bc_yellow|bc_self;
+delitem 7026,20;
+getitem 7539,5;
+Disp("- Clock Tower 1 ~ ^B404AEPunks/Ridewords^000000:- Clock Tower 2 ~ ^B45F04Clocks^000000:- Clock Tower 3 ~ ^0000FFAlarms^000000:- Clock Tower 4 ~ ^688A08Sorted^000000");
+Pick("","c_tower1","c_tower2","c_tower3","c_tower4");
+end;
+Faltaclocktower:
+cutin "jpn_mid03",2;
+npctalk "Requiere 20 Keys of Clock Tower";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a los dungeons, pero necesita desbloquearlos con 20 Key of Clock Tower,";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],142,133;
+Disp("^0000FFClock Tower Entrance^000000");
+Pick("","aldebaran");
+end;
+
+//-----------------------------------------CLOCK TOWER BASEMENTS DESBLOQUEABLE---------------------------------------------------------------------
+DA: setarray @c[2],297,25,127,169,277,178,268,74;
+if( #warpun ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+",!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados:";
+Disp("Basement 1 ~ ^FF0080Drainliars^000000  ["+getmapusers("alde_dun01")+"]:Basement 2 ~ ^0000FFOrcs^000000  ["+getmapusers("alde_dun02")+"]:Basement 3 ~ ^FF0000Penomenas^000000  ["+getmapusers("alde_dun03")+"]:Basement 4 ~ ^FF8000Bathorys^000000  ["+getmapusers("alde_dun04")+"]");
+Pick("","alde_dun01","alde_dun02","alde_dun03","alde_dun04");
+end;
+}
+
+if( countitem(7027) < 15 )  goto FaltaKOTU;
+cutin "jpn_mid03",2;
+npctalk "Requiere 15 Key of Underground para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido todas, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, lograste conseguir todas las llaves, solo asi puedes usar mi servicio.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 7027,15;
+getitem 7539,5;
+set #warpun,1;
+announce "Warper: Felicidades, haz desbloqueado los mapas de Clock Tower Underground",bc_yellow|bc_self;
+Disp("Basement 1 ~ ^FF0080Drainliars^000000  ["+getmapusers("alde_dun01")+"]:Basement 2 ~ ^0000FFOrcs^000000  ["+getmapusers("alde_dun02")+"]:Basement 3 ~ ^FF0000Penomenas^000000  ["+getmapusers("alde_dun03")+"]:Basement 4 ~ ^FF8000Bathorys^000000  ["+getmapusers("alde_dun04")+"]");
+Pick("","alde_dun01","alde_dun02","alde_dun03","alde_dun04");
+end;
+
+FaltaKOTU:
+npctalk "Requiere 15 Key of Underground";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 15 ^FF0080Key of Underground^000000.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],142,133;
+Disp("^0000FFClock Tower Entrance^000000  ["+getmapusers("c_tower1")+"]");
+Pick("","aldebaran");
+end;
+
+
+//-----------------------------------------COAL MINES DESBLOQUEABLE---------------------------------------------------------------------
+D10: setarray @c[2],52,17,381,343,302,262;
+if( #warpcoal ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+",!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Coal Mines:";
+Disp("Dead Pit Area 1 ~ ^BF00FFTarous^000000  ["+getmapusers("mjo_dun01")+"]:Dead Pit Area 2 ~ ^045FB4Giearths^000000  ["+getmapusers("mjo_dun02")+"]:Dead Pit Area 3 ~ ^04B404SkelWorker/Myst^000000  ["+getmapusers("mjo_dun03")+"]");
+Pick("","mjo_dun01","mjo_dun02","mjo_dun03");
+end;
+}
+
+if( countitem(1041) < 50 )  goto Faltalantern;
+npctalk "Requiere 50 Lanterns para un desbloqueo permanente.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Vaya! has conseguido todas las Lanterns, eres digno merecedor del acceso.!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, lograste conseguir todas las Lanterns, solo asi puedes usar mi servicio.";
+specialeffect2 367;
+specialeffect2 71;
+delitem 1041,50;
+getitem 7539,5;
+set #warpcoal,1;
+announce "Warper: Felicidades, haz desbloqueado los mapas de Coal Mines",bc_yellow|bc_self;
+mes "Estos son tus portales desbloqueados para Coal Mines:";
+Disp("Dead Pit Area 1 ~ ^BF00FFTarous^000000  ["+getmapusers("mjo_dun01")+"]:Dead Pit Area 2 ~ ^045FB4Giearths^000000  ["+getmapusers("mjo_dun02")+"]:Dead Pit Area 3 ~ ^04B404SkelWorker/Myst^000000  ["+getmapusers("mjo_dun03")+"]");
+Pick("","mjo_dun01","mjo_dun02","mjo_dun03");
+end;
+
+Faltalantern:
+cutin "jpn_mid03",2;
+npctalk "Requiere 50 Lantern";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 50 ^FF0080Lantern^000000.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+
+setarray @c[2],81,358;
+Disp("^0000FFCoal Mine Entrance^000000  ["+getmapusers("mjo_dun01")+"]");
+Pick("","mjolnir_02");
+end;
+
+//-----------------------------------------PAYON DUNGEON DESBLOQUEABLE---------------------------------------------------------------------
+D31: setarray @c[2],21,181,239,50,110,218,52,89,0,0;
+if( #warppayd ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+",!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Payon Dungeons:";
+Disp("Payon Cave Area 1 ~ ^BF00FFZombies^000000  ["+getmapusers("pay_dun00")+"]:Payon Cave Area 2 ~ ^045FB4Skeletons^000000  ["+getmapusers("pay_dun01")+"]:Payon Cave Area 3 ~ ^04B404Hydra Pond^000000  ["+getmapusers("pay_dun02")+"]:Payon Cave Area 4 ~ ^DF7401Sohees^000000  ["+getmapusers("pay_dun03")+"]:Payon Cave Area 5 ~ ^FFBF00Moonlight Flower^000000  ["+getmapusers("pay_dun04")+"]");
+Pick("","pay_dun00","pay_dun01","pay_dun02","pay_dun03","pay_dun04");
+end;
+}
+
+if( countitem(638) < 1 )  goto Faltapayd;
+npctalk "Requiere 1 Silver Knife of Chastity";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido 1 Silver Knife of Chastity!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Encontraste el Silver Knife of Chastity, por supuesto que puedes usar mi servicio.";
+set #warppayd,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas Payon Dungeon!",bc_yellow|bc_self;
+delitem 638,1;
+getitem 7539,3;
+Disp("Payon Cave Area 1 ~ ^BF00FFZombies^000000  ["+getmapusers("pay_dun00")+"]:Payon Cave Area 2 ~ ^045FB4Skeletons^000000  ["+getmapusers("pay_dun01")+"]:Payon Cave Area 3 ~ ^04B404Hydra Pond^000000  ["+getmapusers("pay_dun02")+"]:Payon Cave Area 4 ~ ^DF7401Sohees^000000  ["+getmapusers("pay_dun03")+"]:Payon Cave Area 5 ~ ^FFBF00Moonlight Flower^000000  ["+getmapusers("pay_dun04")+"]");
+Pick("","pay_dun00","pay_dun01","pay_dun02","pay_dun03","pay_dun04");
+end;
+
+Faltapayd:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Silver Knife of Chastity";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte, pero necesitas 1 ^DF7401Silver Knife of Chastity^000000.";
+mes "asi es, se trata del drop del ^B40404Cat o Ninetails & Moonlight Flower^000000. Solamente hay uno en el ultimo piso de Payon dungeon.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "lo mas que puedo hacer es dejarte en la entrada Payon Cave.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],44,132;
+Disp("^0000FFEntrance of Payon Dungeon^000000  ["+getmapusers("pay_dun00")+"]");
+Pick("","pay_arche");
+end;
+
+//--------------------------------------------------------------------PYRAMID DESBLOQUEABLE---------------------------------------------------------------------
+D32: setarray @c[2],192,9,10,192,100,92,179,12;
+if( #warppryd ){
+
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Pyramid Dungeons:";
+Disp("Pyramids 1 ~ ^9A2EFEFarmiliars^000000 :Pyramids 2 ~ Skeletons :Pyramids 3 ~ ^FE2E9AVerits/Mummies^000000:Pyramids 4 ~ ^BF00FFOsiris^000000");
+Pick("","moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04");
+end;
+}
+
+if( countitem(751) < 1 )  goto Faltapryd;
+npctalk "Requiere 1 Osiris Doll";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido Osiris Doll!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, lograste conseguir un Osiris doll, por supuesto que puedes usar mi servicio.";
+set #warppryd,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas Pyramid Dungeon!",bc_yellow|bc_self;
+delitem 751,1;
+getitem 7539,5;
+Disp("Pyramids 1 ~ ^9A2EFEFarmiliars^000000  ["+getmapusers("moc_pryd01")+"]:Pyramids 2 ~ Skeletons  ["+getmapusers("moc_pryd02")+"]:Pyramids 3 ~ ^FE2E9AVerits/Mummies^000000  ["+getmapusers("moc_pryd03")+"]:Pyramids 4 ~ ^BF00FFOsiris^000000  ["+getmapusers("moc_pryd04")+"]");
+Pick("","moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04");
+end;
+
+Faltapryd:
+cutin "jpn_mid03",2;
+npctalk "Requiere Osiris Doll";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Pyramid Dungeons, pero necesitas desbloquearlos con 1 Osiris Doll.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],62,161;
+Disp("^8b4513Pyramid Dungeon Entrance^000000  ["+getmapusers("moc_pryd01")+"]");
+Pick("","moc_ruins");
+end;
+
+
+//-----------------------------------------PYRAMID BASEMENT DESBLOQUEABLE---------------------------------------------------------------------
+PBA: setarray @c[2],94,93,193,10;
+if( #warppryd2 ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Pyramid Basement:";
+Disp("Pyramids Basement 1  ["+getmapusers("moc_pryd05")+"]:Pyramids Basement 2 ~ ^298A08Amon Ra^000000  ["+getmapusers("moc_pryd06")+"]");
+Pick("","moc_pryd05","moc_pryd06");
+end;
+}
+
+if( countitem(7114) < 1 )  goto Faltapryd2;
+npctalk "Requiere 1 Tutankhamen Mask";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido un Tutankhamen Mask!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, lograste conseguir un Tutankhamen Mask, por supuesto que puedes usar mi servicio.";
+set #warppryd2,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas Pyramid Dungeon!",bc_yellow|bc_self;
+delitem 7114,1;
+getitem 7539,5;
+Disp("Pyramids Basement 1  ["+getmapusers("moc_pryd05")+"]:Pyramids Basement 2 ~ ^298A08Amon Ra^000000  ["+getmapusers("moc_pryd06")+"]");
+Pick("","moc_pryd05","moc_pryd06");
+end;
+
+Faltapryd2:
+cutin "jpn_mid03",2;
+npctalk "Requiere Tutankhamen Mask";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Pyramid Basements, pero necesitas desbloquearlos con 1 Tutankhamen Mask.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],62,161;
+Disp("^8b4513Pyramid Dungeon Entrance^000000  ["+getmapusers("moc_pryd01")+"]");
+Pick("","moc_ruins");
+end;
+
+//--------------------------------------------------------------------SPHINX DESBLOQUEABLE---------------------------------------------------------------------
+D35: setarray @c[2],288,9,149,81,210,54,10,222,100,99;
+if( #warpsphi ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Sphinx:";
+Disp("Sphinx 1  ["+getmapusers("in_sphinx1")+"]:Sphinx 2 - ^BF00FFZeroms^000000  ["+getmapusers("in_sphinx2")+"]:Sphinx 3 - ^FE2E2EMarduks^000000  ["+getmapusers("in_sphinx3")+"]:Sphinx 4 - ^DF7401Anubis^000000  ["+getmapusers("in_sphinx4")+"]:Sphinx 5 - ^FF0000Pharaoh^000000  ["+getmapusers("in_sphinx5")+"]");
+Pick("","in_sphinx1","in_sphinx2","in_sphinx3","in_sphinx4","in_sphinx5");
+end;
+}
+
+if( countitem(725) < 5 )  goto Faltasphinx;
+npctalk "Requiere 5 Sardonyx";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido 5 Sardonyx!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Wao, lograste conseguir 5 Sardonyx, por supuesto que puedes usar mi servicio.";
+set #warpsphi,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Sphinx!",bc_yellow|bc_self;
+delitem 725,5;
+getitem 7539,5;
+Disp("Sphinx 1  ["+getmapusers("in_sphinx1")+"]:Sphinx 2 - ^BF00FFZeroms^000000  ["+getmapusers("in_sphinx2")+"]:Sphinx 3 - ^FE2E2EMarduks^000000  ["+getmapusers("in_sphinx3")+"]:Sphinx 4 - ^DF7401Anubis^000000  ["+getmapusers("in_sphinx4")+"]:Sphinx 5 - ^FF0000Pharaoh^000000  ["+getmapusers("in_sphinx5")+"]");
+Pick("","in_sphinx1","in_sphinx2","in_sphinx3","in_sphinx4","in_sphinx5");
+end;
+
+Faltasphinx:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Sardonyx";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Sphinx, pero necesitas desbloquearlos con 5 Sardonyx.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],113,101;
+Disp("^8b4513Entrance of Sphinx Dungeon^000000  ["+getmapusers("in_sphinx1")+"]");
+Pick("","moc_fild19");
+end;
+
+//--------------------------------------------------------------------TURTLE DUNGEON DESBLOQUEABLE---------------------------------------------------------------------
+D40: setarray @c[2],157,80,148,265,132,190,100,188;
+if( #warpturdun ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Turtle Dungeons:";
+Disp("- Turtle Island Entrance ["+getmapusers("tur_dun01")+"]:- Turtle Dungeon 2 ~ ^FF0080Element Turtles^000000 ["+getmapusers("tur_dun02")+"]:- Good Turtles Village  ["+getmapusers("tur_dun03")+"]:- Turtle Palace ~ ^04B404Turtle General^000000  ["+getmapusers("tur_dun04")+"]");
+Pick("","tur_dun01","tur_dun02","tur_dun03","tur_dun04");
+end;
+}
+
+if( countitem(7070) < 25 )  goto Faltaturt;
+npctalk "Requiere 25 Turtle Shells";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste las Broken Shells!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Tienes las Turtle Shells, por supuesto que puedes usar mi servicio.";
+set #warpturdun,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Turtle Dungeon!",bc_yellow|bc_self;
+delitem 7070,25;
+getitem 7539,3;
+Disp("- Turtle Island Entrance ["+getmapusers("tur_dun01")+"]:- Turtle Dungeon 2 ~ ^FF0080Element Turtles^000000 ["+getmapusers("tur_dun02")+"]:- Good Turtles Village  ["+getmapusers("tur_dun03")+"]:- Turtle Palace ~ ^04B404Turtle General^000000  ["+getmapusers("tur_dun04")+"]");
+Pick("","tur_dun01","tur_dun02","tur_dun03","tur_dun04");
+end;
+
+Faltaturt:
+cutin "jpn_mid03",2;
+npctalk "Requiere 25 Broken Shells";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Turtle Dungeon, pero necesitas desbloquearlos con 25 Turtle Shells.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la isla.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],159,35;
+Disp("^8b4513Turtle Island^000000 ["+getmapusers("tur_dun01")+"]");
+Pick("","tur_dun01");
+end;
+
+//-----------------------------------------UMBALA DUNGEON DESBLOQUEABLE---------------------------------------------------------------------
+D41: setarray @c[2],42,31,48,30,204,78,245,259;
+if( #warpumdun ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+ mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Umbala Dungeon:";
+Disp("Carpenter's Shop in the Tree ["+getmapusers("um_dun01")+"]:Passage to a Foreign World ["+getmapusers("um_dun02")+"]:Hvergermil's Fountain ["+getmapusers("yggdrasil01")+"]:^6A0888Skelligton Niflheim Village Entrance^000000. ["+getmapusers("yggdrasil01")+"]");
+Pick("","um_dun01","um_dun02","yggdrasil01","yggdrasil01");
+end;
+}	 
+	 
+if( countitem(7189) < 25 )  goto Faltawood;
+npctalk "Requiere 25 Wooden Hearts";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste los 25 Wooden Hearts!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Tienes los Wooden Hearts, por supuesto que puedes usar mi servicio.";
+set #warpumdun,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Umbala Dungeon y Niflheim Fields!",bc_yellow|bc_self;
+delitem 7189,25;
+getitem 7539,3;
+Disp("Carpenter's Shop in the Tree ["+getmapusers("um_dun01")+"]:Passage to a Foreign World ["+getmapusers("um_dun02")+"]:Hvergermil's Fountain ["+getmapusers("yggdrasil01")+"]:^6A0888Skelligton Niflheim Village Entrance^000000. ["+getmapusers("yggdrasil01")+"]");
+Pick("","um_dun01","um_dun02","yggdrasil01","yggdrasil01");
+end;
+
+Faltawood:
+cutin "jpn_mid03",2;
+npctalk "Requiere 25 Wooden Hearts";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Umbala Dungeon, pero necesitas desbloquearlos con 25 Wooden Hearts.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],111,284;
+Disp("^8b4513Umbala Tree Entrance^000000  ["+getmapusers("umbala")+"]");
+Pick("","umbala");
+end;
+
+//------------------------------------CULVERTS------------------------------------------------------------------
+D11: setarray @c[2],131,247,19,19,180,169,100,92;
+if( #warpculv ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+ mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Prontera Culverts.";
+
+Disp("Culverts 1 ~ Thiefbugg Larvas  ["+getmapusers("prt_sewb1")+"]:Culverts 2 ~ Thiefbuggs/Spores  ["+getmapusers("prt_sewb2")+"]:Culverts 3 ~ Male/Female Bugs  ["+getmapusers("prt_sewb3")+"]:Culverts 4 ~ ^6A0888Golden Thiefbug^000000  ["+getmapusers("prt_sewb4")+"]"); 
+Pick("","prt_sewb1","prt_sewb2","prt_sewb3","prt_sewb4");
+end;
+}	 
+	 
+if( countitem(724) < 5 )  goto Faltacurs;
+npctalk "Requiere 5 Cursed Ruby";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste los 5 Cursed Ruby!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Tienes los Cursed Ruby, por supuesto que puedes usar mi servicio.";
+set #warpculv,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Prontera Culvers!",bc_yellow|bc_self;
+delitem 724,5;
+getitem 7539,3;
+Disp("Culverts 1 ~ Thiefbugg Larvas  ["+getmapusers("prt_sewb1")+"]:Culverts 2 ~ Thiefbuggs/Spores  ["+getmapusers("prt_sewb2")+"]:Culverts 3 ~ Male/Female Bugs  ["+getmapusers("prt_sewb3")+"]:Culverts 4 ~ ^6A0888Golden Thiefbug^000000  ["+getmapusers("prt_sewb4")+"]"); 
+Pick("","prt_sewb1","prt_sewb2","prt_sewb3","prt_sewb4");
+end;
+
+Faltacurs:
+cutin "jpn_mid03",2;
+npctalk "Requiere 5 Cursed Ruby";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a todos los Culverts, pero necesitas desbloquearlos con 5 Cursed Ruby.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta el primer piso.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],131,247;
+Disp("^8b4513Culvert Entrance^000000  ["+getmapusers("prt_sewb1")+"]");
+Pick("","prt_sewb1");
+end;
+
+//--------------------------------------------------------------------CURSED ABBEY---------------------------------------------------------------------
+D12: setarray @c[2],256,215,51,12,149,12,120,10;
+if( #warpabbey ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Cursed Abbey:";
+Disp("Nameless Island Entrance  ["+getmapusers("nameless_n")+"]:Cursed Abbey Dungeon Area 1  ["+getmapusers("abbey01")+"]:Cursed Abbey Dungeon Area 2  ["+getmapusers("abbey02")+"]:Cursed Abbey Dungeon Area 3  ["+getmapusers("abbey03")+"]");
+Pick("","nameless_n","abbey01","abbey02","abbey03");
+end;
+}	 
+	 
+if( countitem(750) < 1 )  goto Faltabadoll;
+npctalk "Requiere 1 Baphomet Doll";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Vaya Vaya, encontraste un Baphomet Doll!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Me alegro por ti, y  por hallar un Baphomet Doll.";
+set #warpabbey,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste los pisos de Cursed Abbey!",bc_yellow|bc_self;
+delitem 750,1;
+getitem 7539,10;
+Disp("Nameless Island Entrance  ["+getmapusers("nameless_n")+"]:Cursed Abbey Dungeon Area 1  ["+getmapusers("abbey01")+"]:Cursed Abbey Dungeon Area 2  ["+getmapusers("abbey02")+"]:Cursed Abbey Dungeon Area 3  ["+getmapusers("abbey03")+"]");
+Pick("","nameless_n","abbey01","abbey02","abbey03");
+end;
+
+Faltabadoll:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Baphomet Doll";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Cursed Abbey, pero necesitas desbloquearlos con 1 Baphomet Doll.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],256,215;
+Disp("^8b4513Nameless Island Entrance^000000  ["+getmapusers("nameless_n")+"]");
+Pick("","nameless_n");
+end;
+
+//----------------------------------------------DEWATA--------------------------------------------------------------------------------------	 
+	 
+D13: setarray @c[2],288,161,301,30;
+if( #warpdew ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Dewata:";
+Disp("- Krakatoa Volcanic Island ~ ^FF0000Leak^000000  ["+getmapusers("dew_dun01")+"]:- Istana Cave ~ ^FF8000Banaspatys^000000  ["+getmapusers("dew_dun02")+"]");
+Pick("","dew_dun01","dew_dun02");
+end;
+}	
+if( countitem(7101  ) < 50 )  goto Faltapef;
+npctalk "Requiere 50 PecoPeco Feathers";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste las 50 Pecopeco Feathers?";
+specialeffect 618;
+cutin "jpn_mid05",2;
+mes "^0000FFAgente Warp^000000";
+mes "Recogiste los 50 Pecopeco Feathers, por supuesto que puedes usar mi servicio.";
+mes "Mira los mapas que acabas de desbloquear para Dewata";
+set #warpdew,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Dewata Dungeon!",bc_yellow|bc_self;
+delitem 7101,50;
+getitem 7539,10;
+Disp("- Krakatoa Volcanic Island ~ ^FF0000Leak^000000  ["+getmapusers("dew_dun01")+"]:- Istana Cave ~ ^FF8000Banaspatys^000000  ["+getmapusers("dew_dun02")+"]");
+Pick("","dew_dun01","dew_dun02");
+end; 
+
+Faltapef:
+mes "^0000FFAgente Warp^000000";
+mes "Lo siento, Para abrir estos accesos debes tener 50 <ITEM>PecoPeco Feather<INFO>7101</INFO></ITEM>.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la ciudad.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],50,250;
+Disp("^FF0000Dewata lil far..^000000");
+Pick("","dewata");
+end;
+	 
+//--------------EINBROCH DUNGEON DESBLOQUEABLE---------------------------------------------------------------------------------------------------------------------------	  
+D14: setarray @c[2],22,14,292,290;
+if( #warpemine ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Einbech Mines:";
+Disp("- Einbech Mine Area 1  ["+getmapusers("ein_dun01")+"]:- Einbech 2 ~ ^FF0000RSX^000000  ["+getmapusers("ein_dun02")+"]"); 
+Pick("","ein_dun01","ein_dun02");
+end;
+
+}	 
+if( countitem(7321) < 25 )  goto Faltafrag;
+npctalk "Requiere 25 Crystal Fragments";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste los 25 Crystal Fragments!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Recogiste los 25 Crystal Fragments, por supuesto que puedes usar mi servicio.";
+mes "Mira los mapas que acabas de desbloquear para Einbech Mines.";
+set #warpemine,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Einbech Mines!",bc_yellow|bc_self;
+delitem 7321,25;
+getitem 7539,3;
+Disp("- Einbech Mine Area 1  ["+getmapusers("ein_dun01")+"]:- Einbech 2 ~ ^FF0000RSX^000000  ["+getmapusers("ein_dun02")+"]"); 
+Pick("","ein_dun01","ein_dun02");
+end; 
+
+Faltafrag:
+npctalk "Requiere 25 Crystal Fragments";
+mes "^0000FFAgente Warp^000000";
+mes "Me encantaria llevarte a Einbech Mines, pero necesitas desbloquearlos con 25 Crystal Fragments, Drop de Mineral.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250; 
+cutin "warper",255;
+setarray @c[2],138,246;
+Disp("^FF0000- Einbech Mine entrance^000000  ["+getmapusers("ein_dun01")+"]");
+Pick("","einbech");
+end;
+
+//--------------GEFFEN DUNGEON DESBLOQUEABLE--------------------------------------------------------------------------------------------------------------------------- 
+D16: setarray @c[2],104,99,115,236,106,131,199,203;
+
+
+if( #warpgeduf ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Geffen Dungeon:";
+Disp("- Geffen Dungeon B1  ["+getmapusers("gef_dun00")+"]:- Geffen Dungeon B2 ~ ^DF0101Dracula^000000  ["+getmapusers("gef_dun01")+"]:- Geffen Dungeon B3 ~ ^8904B1Doppelganger^000000  ["+getmapusers("gef_dun02")+"]:- Geffen Dungeon B4 ~ ^240B3BDark Priests^000000  ["+getmapusers("gef_dun03")+"]");
+Pick("","gef_dun00","gef_dun01","gef_dun02","gef_dun03");
+end;
+}	 
+
+if( countitem(944) < 50 )  goto Faltahorse;
+npctalk "Requiere 50 Horseshoe";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste los 50 Horseshoe!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Recogiste los 50 Horseshoes, por supuesto que puedes usar mi servicio.";
+mes "Mira los mapas que acabas de desbloquear para Geffen Tower Dungeon.";
+set #warpgeduf,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Geffen Tower Dungeon!",bc_yellow|bc_self;
+delitem 944,50;
+getitem 7539,3;
+Disp("- Geffen Dungeon B1  ["+getmapusers("gef_dun00")+"]:- Geffen Dungeon B2 ~ ^DF0101Dracula^000000  ["+getmapusers("gef_dun01")+"]:- Geffen Dungeon B3 ~ ^8904B1Doppelganger^000000  ["+getmapusers("gef_dun02")+"]:- Geffen Dungeon B4 ~ ^240B3BDark Priests^000000  ["+getmapusers("gef_dun03")+"]");
+Pick("","gef_dun00","gef_dun01","gef_dun02","gef_dun03");
+end; 
+	 
+Faltahorse:
+cutin "jpn_mid03",2;
+npctalk "Requiere 50 Horseshoes";
+mes "^0000FFAgente Warp^000000";
+mes "Para ir a los mapas de Geffen Tower, necesitas desbloquearlos con 50 Horse Shoes.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFAgente Warp^000000";
+mes "de momento, solo podre llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],104,99;
+cutin "",255;
+Disp("- ^FF0000Geffen Dungeon Entrance^000000  ["+getmapusers("gef_dun00")+"]"); Pick("","gef_dun00");
+end;
+
+//--------------GEFFENIA --------------------------------------------------------------------------------------------------------------------------
+D15: setarray @c[2],40,103,203,34,266,168,130,272;
+if( #warpgefnia ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Geffenia:";
+Disp("Geffenia 1 ~ ^FF0040Succubus^000000  ["+getmapusers("gefenia01")+"]:Geffenia 2 ~ ^FE2EF7Violy^000000  ["+getmapusers("gefenia02")+"]:Geffenia 3 ~ ^BF00FFIncubus^000000  ["+getmapusers("gefenia03")+"]:Geffenia 4 ~ ^FF8000G. Bloody Knight^000000  ["+getmapusers("gefenia04")+"]");
+Pick("","gefenia01","gefenia02","gefenia03","gefenia04");
+end;
+}	
+
+if( countitem(7291) < 1 )  goto Faltagate;
+npctalk "Requiere 1 Agate";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Increible, haz conseguido 1 Agate!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Encontraste 1 Agate, por supuesto que puedes usar mi servicio.";
+mes "Mira los mapas que acabas de desbloquear para Geffenia";
+set #warpgefnia,1;
+specialeffect2 367; specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Geffenia!",bc_yellow|bc_self;
+delitem 7291,1;
+getitem 7539,6;
+Disp("Geffenia 1 ~ ^FF0040Succubus^000000  ["+getmapusers("gefenia01")+"]:Geffenia 2 ~ ^FE2EF7Violy^000000  ["+getmapusers("gefenia02")+"]:Geffenia 3 ~ ^BF00FFIncubus^000000  ["+getmapusers("gefenia03")+"]:Geffenia 4 ~ ^FF8000G. Bloody Knight^000000  ["+getmapusers("gefenia04")+"]");
+Pick("","gefenia01","gefenia02","gefenia03","gefenia04");
+end;
+
+Faltagate:
+cutin "",255;
+npctalk "Requiere 1 Agate";
+mes "^0000FFAgente Warp^000000";
+mes "Para ir a los mapas de Geffenia conmigo, necesita desbloquearlo con 1 Agate.";
+mes "no hay otra forma de llegar, nisiquiera a una entrada.";
+end;
+	 
+//--------------GLASTH HEIM DESBLOQUEABLE---------------------------------------------------------------------------------------------------------------------------
+D17: setarray @c[2],370,304,0,0,199,29,104,25,150,15,157,287,156,7,147,15,258,255,108,291,171,283,68, 277,12,7,133,271,224,274,14,70,150,14;
+if( #warpglast ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFWarp Agent^000000";
+mes "Estos son tus portales desbloqueados para Glast Heim:";
+Disp("Entrance:In Glastheim ~ ^886A08D.Frame/Sageworm^000000  ["+getmapusers("gl_in01")+"]:Castle F1 ~ ^0101DFCarats^000000  ["+getmapusers("gl_cas01")+"]:Castle F2 ~ ^6A0888Chimeras^000000 ["+getmapusers("gl_cas02")+"]:Chivalry 1 ~ ^EC3131Raydrics^000000  ["+getmapusers("gl_knt01")+"]:Chivalry 2 ~ ^4B088AKhalitzburg^000000  ["+getmapusers("gl_knt02")+"]:St. Abbey ~ ^B40404Evil Druids^000000  ["+getmapusers("gl_church")+"]:Churchyard ~ ^298A08Dark Lord^000000  ["+getmapusers("gl_chyard")+"]:Undeground Waterway 1 ~ ^298A08Whisper^000000  ["+getmapusers("gl_sew01")+"]:Undeground Waterway 2 ~ ^2E64FEGargoyles^000000  ["+getmapusers("gl_sew02")+"]:Undeground Waterway 3 ~ ^8904B1Stings^000000  ["+getmapusers("gl_sew03")+"]:Undeground Waterway 4 ~ ^0B610BAnolians^000000  ["+getmapusers("gl_sew04")+"]:Staircase Dungeon ~ ^088A4BWindghosts^000000  ["+getmapusers("gl_step")+"]:Underground Cave 1 ~ ^8904B1Stings^000000  ["+getmapusers("gl_dun01")+"]:Underground Cave 2 ~ ^FF4000Majoruros^000000  ["+getmapusers("gl_dun02")+"]:Underground Prison 1 ~ ^61380BInjustices^000000  ["+getmapusers("gl_prison")+"]:Underground Prison 2 ~ ^FE2EC8Zealotus^000000  ["+getmapusers("gl_prison1")+"]");
+Pick("","glast_01","gl_in01","gl_cas01","gl_cas02","gl_knt01","gl_knt02","gl_church","gl_chyard","gl_sew01","gl_sew02","gl_sew03","gl_sew04","gl_step","gl_dun01","gl_dun02","gl_prison","gl_prison1");
+end;
+}	
+
+if( countitem(714) < 1 )  goto noempe;
+npctalk "Requiere 1 Emperium";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Warper: Conseguiste el Emperium!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Conseguiste 1 Emperium, por supuesto que puedes usar mi servicio.";
+mes "Mira los mapas que acabas de desbloquear para Glast Heim.";
+set #warpglast,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Glast Heim!",bc_yellow|bc_self;
+delitem 714,1;
+getitem 7539,3;
+Disp("Entrance:In Glastheim ~ ^886A08D.Frame/Sageworm^000000  ["+getmapusers("gl_in01")+"]:Castle F1 ~ ^0101DFCarats^000000  ["+getmapusers("gl_cas01")+"]:Castle F2 ~ ^6A0888Chimeras^000000 ["+getmapusers("gl_cas02")+"]:Chivalry 1 ~ ^EC3131Raydrics^000000  ["+getmapusers("gl_knt01")+"]:Chivalry 2 ~ ^4B088AKhalitzburg^000000  ["+getmapusers("gl_knt02")+"]:St. Abbey ~ ^B40404Evil Druids^000000  ["+getmapusers("gl_church")+"]:Churchyard ~ ^298A08Dark Lord^000000  ["+getmapusers("gl_chyard")+"]:Undeground Waterway 1 ~ ^298A08Whisper^000000  ["+getmapusers("gl_sew01")+"]:Undeground Waterway 2 ~ ^2E64FEGargoyles^000000  ["+getmapusers("gl_sew02")+"]:Undeground Waterway 3 ~ ^8904B1Stings^000000  ["+getmapusers("gl_sew03")+"]:Undeground Waterway 4 ~ ^0B610BAnolians^000000  ["+getmapusers("gl_sew04")+"]:Staircase Dungeon ~ ^088A4BWindghosts^000000  ["+getmapusers("gl_step")+"]:Underground Cave 1 ~ ^8904B1Stings^000000  ["+getmapusers("gl_dun01")+"]:Underground Cave 2 ~ ^FF4000Majoruros^000000  ["+getmapusers("gl_dun02")+"]:Underground Prison 1 ~ ^61380BInjustices^000000  ["+getmapusers("gl_prison")+"]:Underground Prison 2 ~ ^FE2EC8Zealotus^000000  ["+getmapusers("gl_prison1")+"]");
+Pick("","glast_01","gl_in01","gl_cas01","gl_cas02","gl_knt01","gl_knt02","gl_church","gl_chyard","gl_sew01","gl_sew02","gl_sew03","gl_sew04","gl_step","gl_dun01","gl_dun02","gl_prison","gl_prison1");
+end;
+
+noempe:
+cutin "jpn_mid05",2;
+npctalk "Requiere Emperium";
+mes "^0000FFAgente Warp^000000";
+mes "Para ir a los mapas de Glast Heim, necesitas desbloquearlos con 1 Emperium.";
+next;
+cutin "jpn_mid03",2;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "Lo mas que puedo hacer en esta condicion, es llevarte hasta la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],370,304;
+Disp("- ^FF0000 Glast Heim^000000  ["+getmapusers("glast_01")+"]"); Pick("","glast_01");
+end;
+
+//--------------Gonryun DESBLOQUEABLE---------------------------------------------------------------------------------------------------------------------------
+D18: setarray @c[2],153,49,28,113,68,16;
+if( #warpkunl ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Gonryun Dungeon";
+Disp("Gonryun 1 ~ ^2A120AZipper Bears^000000  ["+getmapusers("gon_dun01")+"]:Hermit's Checkerdboard  ["+getmapusers("gon_dun02")+"]:Peach Blossom Land ~ ^FE2EC8Evil Snake Lord^000000  ["+getmapusers("gon_dun03")+"]");
+Pick("","gon_dun01","gon_dun02","gon_dun03");
+end;
+}
+
+if( countitem(7007) < 10 )  goto Faltakunl;
+npctalk "Requiere 10 Claw of Rat";
+progressbar "ffff00",1;
+cutin "jpn_mid05",2;
+specialeffect 567;
+npctalk "Increible, haz conseguido 10 Claws of Rats!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Gonryun Dungeons.";
+set #warpkunl,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Gonryun Dungeon!",bc_yellow|bc_self;
+delitem 7007,10;
+getitem 7539,3;
+Disp("Gonryun 1 ~ ^2A120AZipper Bears^000000  ["+getmapusers("gon_dun01")+"]:Hermit's Checkerdboard  ["+getmapusers("gon_dun02")+"]:Peach Blossom Land ~ ^FE2EC8Evil Snake Lord^000000  ["+getmapusers("gon_dun03")+"]");
+Pick("","gon_dun01","gon_dun02","gon_dun03");
+end;
+
+Faltakunl:
+cutin "jpn_mid03",2;
+npctalk "Requiere 10 Claw of Rat";
+mes "^0000FFAgente Warp^000000";
+mes "Con 10 Claw of Rat puedes desbloquear los accesos directos.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],153,49;
+Disp("- ^0B6121Gonryun Dungeon Entrance^000000  ["+getmapusers("gon_dun01")+"]"); Pick("","gon_dun01");
+end;
+
+
+//--------------HIDDEN DESBLOQUEABLE------------------------------------------------------------------------------------------------
+D19: setarray @c[2],176,7,93,20,23,8;
+if( #warphidd ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Hidden Temple:";
+Disp("- Hidden Dungeon 1 ~ ^01A9DBVagabond Wolf^000000  ["+getmapusers("prt_maze01")+"]:- Hidden Dungeon 2 ~ ^2F0B3ALeib-Olmai^000000  ["+getmapusers("prt_maze02")+"]:- Hidden Dungeon 3 ~ ^CC3333Baphomet^000000  ["+getmapusers("prt_maze03")+"]");
+Pick("","prt_maze01","prt_maze02","prt_maze03");
+end;
+}
+
+if( countitem(626) < 1 )  goto Faltahidden;
+npctalk "Requiere 1 Monster Juice";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido 1 Monster Juice!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Hidden dungeon.";
+set #warphidd,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Hidden Temple!",bc_yellow|bc_self;
+delitem 626,1;
+getitem 7539,3;
+Disp("- Hidden Dungeon 1 ~ ^01A9DBVagabond Wolf^000000  ["+getmapusers("prt_maze01")+"]:- Hidden Dungeon 2 ~ ^2F0B3ALeib-Olmai^000000  ["+getmapusers("prt_maze02")+"]:- Hidden Dungeon 3 ~ ^CC3333Baphomet^000000  ["+getmapusers("prt_maze03")+"]");
+Pick("","prt_maze01","prt_maze02","prt_maze03");
+end;
+
+Faltahidden:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Monster Juice";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 Monster Juice puedes desbloquear los accesos directos.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],137,366;
+Disp("- ^0B6121Hidden Dungeon Entrance^000000  ["+getmapusers("prt_maze01")+"]"); Pick("","prt_fild01");
+end;
+
+//-------------------ICE DUNGEON--------------------------------------------------------------------------------------------------------------------------------------
+D20: setarray @c[2],157,14,151,155,149,22,33,158;
+if( #warpice ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Ice Dungeon:";
+Disp("- Rachel Ice Cave F1 ~ ^01A9DBSiromas^000000  ["+getmapusers("ice_dun01")+"]:- Rachel Ice Cave F2 ~ ^0040FFSnowiers^000000  ["+getmapusers("ice_dun02")+"]:- Rachel Ice Cave F3 ~ ^0B0B61Titan/Gazeti^000000  ["+getmapusers("ice_dun03")+"]:- Rachel Ice Cave ~ Sealed Space  ["+getmapusers("ice_dun04")+"]"); 
+Pick("","ice_dun01","ice_dun02","ice_dun03","ice_dun04");
+end;
+}
+if( countitem(7561) < 25 )  goto Faltaiced;
+npctalk "Requiere 25 Glacial Hearts";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido 25 Glacial Hearts!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Ice Dungeon.";
+set #warpice,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Ice Dungeon!",bc_yellow|bc_self;
+delitem 7561,25;
+getitem 7539,5;
+Disp("- Rachel Ice Cave F1 ~ ^01A9DBSiromas^000000  ["+getmapusers("ice_dun01")+"]:- Rachel Ice Cave F2 ~ ^0040FFSnowiers^000000  ["+getmapusers("ice_dun02")+"]:- Rachel Ice Cave F3 ~ ^0B0B61Titan/Gazeti^000000  ["+getmapusers("ice_dun03")+"]:- Rachel Ice Cave ~ Sealed Space  ["+getmapusers("ice_dun04")+"]"); 
+Pick("","ice_dun01","ice_dun02","ice_dun03","ice_dun04");
+end;
+
+Faltaiced:
+cutin "jpn_mid03",2;
+npctalk "Requiere 25 Glacial Hearts";
+mes "^0000FFAgente Warp^000000";
+mes "Con 25 Glacial Hearts puedes desbloquear los accesos directos.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],233,324;
+Disp("- ^0000FF Ice Dungeon Entrance^000000  ["+getmapusers("ice_dun01")+"]"); Pick("","ra_fild01");
+end;
+
+//----------------------------------------------------------------JUPEROS CAVE--------------------------------------------------------------------
+D21: setarray @c[2],140,51,53,247,37,63,150,285;
+if( #warpjupe ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Juperos:";
+Disp("Entrance  ["+getmapusers("jupe_cave")+"]:Juperos 1 ~ ^04B45FVenatus^000000  ["+getmapusers("juperos_01")+"]:Juperos 2  ~ ^F78181Dimik / Achdam^000000  ["+getmapusers("juperos_02")+"]:Core ~ ^DF013AVesper Apocalypse^000000  ["+getmapusers("jupe_core")+"]");
+Pick("","jupe_cave","juperos_01","juperos_02","jupe_core");
+end;
+}
+
+if( countitem(4369) < 1 )  goto Faltajupe;
+npctalk "Requiere 1 Venatu Card";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido 1 Venatu Card!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Juperos.";
+set #warpjupe,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Juperos Dungeon!",bc_yellow|bc_self;
+delitem 4369,1;
+getitem 7539,10;
+Disp("Entrance  ["+getmapusers("jupe_cave")+"]:Juperos 1 ~ ^04B45FVenatus^000000  ["+getmapusers("juperos_01")+"]:Juperos 2  ~ ^F78181Dimik / Achdam^000000  ["+getmapusers("juperos_02")+"]:Core ~ ^DF013AVesper Apocalypse^000000  ["+getmapusers("jupe_core")+"]");
+Pick("","jupe_cave","juperos_01","juperos_02","jupe_core");
+end;
+
+Faltajupe:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Venatu Card";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 Venatu Card puedes desbloquear los accesos directos.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],213,175;
+Disp("- ^8A4B08Entrance of Juperos^000000  ["+getmapusers("jupe_cave")+"]"); Pick("","yuno_fild07");
+end;
+
+//----------------------------------------------KIEL DUNGEON--------------------------------------------------------------------
+D22: setarray @c[2],28,226,41,198;
+if( #warpkield ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Kiel Dungeon:";
+Disp("- Kiel Dungeon 1  ["+getmapusers("kh_dun01")+"]:- Kiel Dungeon 2  ["+getmapusers("kh_dun02")+"]"); 
+Pick("kh_dun");
+end;
+}
+
+if( countitem(1032) < 50 )  goto Faltakield;
+npctalk "Requiere 50 Maneater Blossom";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Lo haz conseguido!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Kiel Dungeon.";
+set #warpkield,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Kiel Dungeons!",bc_yellow|bc_self;
+delitem 1032,50;
+getitem 7539,5;
+Disp("- Kiel Dungeon 1  ["+getmapusers("kh_dun01")+"]:- Kiel Dungeon 2  ["+getmapusers("kh_dun02")+"]"); 
+Pick("kh_dun");
+end;
+
+Faltakield:
+cutin "jpn_mid03",2;
+npctalk "Requiere 50 Maneater Blossom";
+mes "^0000FFAgente Warp^000000";
+mes "Con 50 Maneater Blossom puedes desbloquear los accesos directos.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],74,174;
+Disp("- ^8A4B08Kiel Dungeon Entrance^000000  ["+getmapusers("kh_dun01")+"]"); Pick("","yuno_fild08");
+end;
+
+//----------------------------------------------LOUYANG DUNGEON--------------------------------------------------------------------
+
+D24: setarray @c[2],218,196,282,20,165,38;
+if( #warploudun ){cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Louyang Dungeon:";
+Disp("- The Royal Tomb ~ ^FF8000Jing Guai^000000  ["+getmapusers("lou_dun01")+"]:- Inside the Royal Tomb ~ ^61210BHyegun^000000  ["+getmapusers("lou_dun02")+"]:- Suei Long Gon ~ ^B18904Bacsojin^000000  ["+getmapusers("lou_dun03")+"]"); 
+Pick("lou_dun");
+end;
+}
+
+if( countitem(609) < 20 )  goto Faltaamulet;
+npctalk "Requiere 20 Amulet";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Lo haz conseguido!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Louyang Dungeon.";
+set #warploudun,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Louyang Dungeons!",bc_yellow|bc_self;
+delitem 609,20;
+getitem 7539,5;
+Disp("- The Royal Tomb ~ ^FF8000Jing Guai^000000  ["+getmapusers("lou_dun01")+"]:- Inside the Royal Tomb ~ ^61210BHyegun^000000  ["+getmapusers("lou_dun02")+"]:- Suei Long Gon ~ ^B18904Bacsojin^000000  ["+getmapusers("lou_dun03")+"]"); 
+Pick("lou_dun");
+end;
+
+Faltaamulet:
+cutin "jpn_mid03",2;
+npctalk "Requiere 20 Amulet";
+mes "^0000FFAgente Warp^000000";
+mes "Con 20 Amulet puedes desbloquear los accesos directos.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],218,196;
+Disp("- The Royal Tomb ~ ^FF8000Jing Guai^000000  ["+getmapusers("lou_dun01")+"]"); 
+Pick("","lou_dun01");
+end;
+
+
+
+//-------------------------------------------MAGMA DUNGEON-----------------------------
+D25: setarray @c[2],126,68,47,30;
+
+if( #warpmagm ){cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Magma Dungeon:";
+Disp("- Magma Dungeon ~ ^FF8000Lava Golems^000000 ["+getmapusers("mag_dun01")+"]:- Magma Dungeon 2 ~ ^FF0000Diabolics^000000 ["+getmapusers("mag_dun02")+"]"); 
+Pick("mag_dun");
+end;
+}
+
+if( countitem(7098) < 25 )  goto Faltalivecoal;
+npctalk "Requiere 25 Live Coal";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Lo haz conseguido!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Magma Dungeons.";
+set #warpmagm,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Magma Dungeons!",bc_yellow|bc_self;
+delitem 7098,25;
+getitem 7539,5;
+Disp("- Magma Dungeon ~ ^FF8000Lava Golems^000000 ["+getmapusers("mag_dun01")+"]:- Magma Dungeon 2 ~ ^FF0000Diabolics^000000 ["+getmapusers("mag_dun02")+"]"); 
+Pick("mag_dun");
+end;
+
+Faltalivecoal:
+cutin "jpn_mid03",2;
+npctalk "Requiere 25 Live Coal";
+mes "^0000FFAgente Warp^000000";
+mes "Con 25 Live Coal puedes desbloquear los accesos directos.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],38,141;
+Disp("- Magma Dungeon Cave Entrance ["+getmapusers("mag_dun01")+"]"); 
+Pick("","yuno_fild03");
+end;
+
+//-------------------------------------------MALANGDO DUNGEON-----------------------------
+D26:
+setarray @c[2],33,230,154,234;
+if( #warpmaldun ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados de Malangdo:";
+Disp("- Lagoon at the Stars  ["+getmapusers("mal_dun01")+"]:- Octopus Cave Entrance  ["+getmapusers("mal_dun01")+"]"); 
+Pick("","mal_dun01","mal_dun01");
+end;
+}
+
+if( countitem(2241) < 1 )  goto Faltabarba;
+npctalk "Requiere 1 Grampa Beard";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido 1 Grampa Beard!";
+specialeffect 618;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Malangdo Dungeons.";
+set #warpmaldun,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Malangdo!",bc_yellow|bc_self;
+delitem 2241,1;
+getitem 7539,5;
+Disp("- Lagoon at the Stars  ["+getmapusers("mal_dun01")+"]:- Octopus Cave Entrance  ["+getmapusers("mal_dun01")+"]"); 
+Pick("","mal_dun01","mal_dun01");
+end;
+
+Faltabarba:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Grampa Beard";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 Grampa Beard puedes desbloquear los accesos directos.";
+next;
+specialeffect 543; specialeffect2 543; sleep2 250; 
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+specialeffect 543; specialeffect2 543; sleep2 250;
+setarray @c[2],198,300;
+Disp("Boat to Malangdo Starry Lagoon  ["+getmapusers("lasagna")+"]");
+Pick("","lasagna");	 
+end;
+
+//-------------------------------------------MALAYA HOSPITAL-----------------------------
+MAHOSP:
+Go("malaya",58,76);
+
+
+
+//-------------------------------------------MOSCOVIA DUNGEON-----------------------------
+D27: setarray @c[2],189,48,165,30,32,135;
+if( #warpmoskdun ){
+cutin "jpn_mid02",2;
+specialeffect 567; specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Moscovia Dun:";
+Disp("- Les Forest  ["+getmapusers("mosk_dun01")+"]:- Temny Forest  ["+getmapusers("mosk_dun02")+"]:- Dremuci Forest ~ ^4000FFGopinich^000000  ["+getmapusers("mosk_dun03")+"]"); 
+Pick("","mosk_dun01","mosk_dun02","mosk_dun03");
+end;
+}
+
+if( countitem(7099) < 5 )  goto Faltamoskdun;
+npctalk "Requiere 5 Worn-Out Magic Scroll";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Felicidades, haz conseguido 5 Worn-Out Magic Scroll!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Moscovia Dun.";
+set #warpmoskdun, 1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste los niveles de Moscovia Dungeon!",bc_yellow|bc_self;
+delitem 7099,5;
+getitem 7539,3;
+Disp("- Les Forest  ["+getmapusers("mosk_dun01")+"]:- Temny Forest  ["+getmapusers("mosk_dun02")+"]:- Dremuci Forest ~ ^4000FFGopinich^000000  ["+getmapusers("mosk_dun03")+"]"); 
+Pick("","mosk_dun01","mosk_dun02","mosk_dun03");
+end;
+
+Faltamoskdun:
+cutin "jpn_mid03",2;
+npctalk "Requiere 5 Worn-Out Magic Scroll";
+mes "^0000FFAgente Warp^000000";
+mes "Con 5 <ITEM>5 Worn-Out Magic Scroll<INFO>7099</INFO></ITEM>. puedes desbloquear los accesos directos.";
+next;
+mes "^0000FFWarp Agent^000000";
+mes "Sin haber desbloqueado, solo podras acceder a la entrada.";
+next;
+setarray @c[2],190,254;
+Disp("- ^0B6121Les Forest Entrance^000000  ["+getmapusers("mosk_dun01")+"]"); 
+Pick("","mosk_fild02");
+end; 
+
+//--------------------NYDHOGG DUNGEON NORMALON--------------------------------------------------------------
+D28: setarray @c[2],63,229,97,197,32,40,200,18;
+if( #warpnydo ){
+cutin "jpn_mid02",2;
+specialeffect 567; specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Nyd Dun:";
+Disp("- Nidhogg's Dungeon 1  ["+getmapusers("nyd_dun01")+"]:- Nidhogg's Dungeon 2  ["+getmapusers("nyd_dun02")+"]:- 1@nyd ~ ^086A87Ancient Trees^000000  ["+getmapusers("1@nyd")+"]:- 2@nyd ~ ^FF0000Nidhoggr's Shadow^000000  ["+getmapusers("2@nyd")+"]");
+Pick("","nyd_dun01","nyd_dun02","1@nyd","2@nyd");
+end;
+}
+
+if( countitem(7294) < 1 )  goto Faltanydo;
+npctalk "Requiere 1 Turquoise";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido 1 Turquoise!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Nyd Dungeon.";
+set #warpnydo, 1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Nyd Dun!",bc_yellow|bc_self;
+delitem 7294,1;
+getitem 7539,15;
+Disp("- Nidhogg's Dungeon 1  ["+getmapusers("nyd_dun01")+"]:- Nidhogg's Dungeon 2  ["+getmapusers("nyd_dun02")+"]:- 1@nyd ~ ^086A87Ancient Trees^000000  ["+getmapusers("1@nyd")+"]:- 2@nyd ~ ^FF0000Nidhoggr's Shadow^000000  ["+getmapusers("2@nyd")+"]");
+Pick("","nyd_dun01","nyd_dun02","1@nyd","2@nyd");
+end;
+
+Faltanydo:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Turquoise";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 <ITEM>Turquoise<INFO>7294</INFO></ITEM>. puedes desbloquear los accesos directos, con ello ganaras 15 Poring Coins.";
+next;
+mes "^0000FFWarp Agent^000000";
+mes "Sin haber desbloqueado, solo podras acceder a la entrada.";
+next;
+setarray @c[2],63,229;
+Disp("- ^0B6121Yggdrasil Root^000000  ["+getmapusers("nyd_dun01")+"]"); 
+Pick("","nyd_dun01");
+end; 
+
+
+//--------------------ODIN DESBLOQUEABLE-----------------------------------
+
+D29: setarray @c[2],298,167,224,149,266,280;
+if( #warpodin ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Odin Temple:";
+Disp("- Odin Shrine 1  ["+getmapusers("odin_tem01")+"]:- Odin Shrine 2  ["+getmapusers("odin_tem02")+"]:- Odin Shrine 3 ~ ^FF0040Valkyrie Randgris^000000  ["+getmapusers("odin_tem03")+"]"); 
+Pick("","odin_tem01","odin_tem02","odin_tem03");
+end;
+}
+
+if( countitem(7510) < 1 )  goto Faltaodin;
+npctalk "Requiere 1 Valhalla Flower";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Increible, haz conseguido 1 Valhalla Flower!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Odin Temple.";
+set #warpodin, 1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Odin Temple!",bc_yellow|bc_self;
+delitem 7510,1;
+getitem 7539,15;
+Disp("- Odin Shrine 1  ["+getmapusers("odin_tem01")+"]:- Odin Shrine 2  ["+getmapusers("odin_tem02")+"]:- Odin Shrine 3 ~ ^FF0040Valkyrie Randgris^000000  ["+getmapusers("odin_tem03")+"]"); 
+Pick("","odin_tem01","odin_tem02","odin_tem03");
+end;
+
+
+
+Faltaodin:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Valhalla Flower";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 <ITEM>Valhalla Flower<INFO>7510</INFO></ITEM>. puedes desbloquear los accesos directos, con ello ganaras 15 Poring Coins.";
+next;
+mes "^0000FFWarp Agent^000000";
+mes "Solo podras acceder a la entrada.";
+next;
+setarray @c[2],96,146;
+Disp("- ^0B6121Odin Temple Entrance^000000  ["+getmapusers("odin_tem01")+"]"); Pick("","odin_tem01");
+end; 
+	 
+	 
+//---------------ORCS NORMAL-------------------------------- 
+D30: setarray @c[2],74,334,32,168,21,185;
+mes "^0000FFWarp Agent^000000";
+mes "Este mapa esta desbloqueado por default!.";
+Disp("- Orcs Dungeon Entrance  ["+getmapusers("gef_fild10")+"]:- Orcs Dungeon 1 ~ Orc Zombies  ["+getmapusers("orcsdun01")+"]:- Orcs Dungeon 2 ~ Zenorcs ["+getmapusers("orcsdun02")+"]"); 
+Pick("","gef_fild10","orcsdun01","orcsdun02");	
+
+
+//---------------RACHEL------------------------
+D33: setarray @c[2],140,11,32,21,8,149,204,218,150,9;
+if( #warpratem ){
+cutin "jpn_mid02",2;
+specialeffect 567;
+specialeffect 618;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Rachel Temple:";
+Disp("- Freya's Precint 1 ~ ^0000FFVanberks^000000  ["+getmapusers("ra_san01")+"]:- Freya's Precint 2 ~ ^FF0080Isillas^000000  ["+getmapusers("ra_san02")+"]:- Freya's Precint 3 ~ ^610B0B Hodremlin/Seeker^000000  ["+getmapusers("ra_san03")+"]:- Freya's Precint 4 ~ ^610B5EAgav/Echios^000000  ["+getmapusers("ra_san04")+"]:- Freya's Precint 5 ~ ^FF4000Gloom Undernight^000000  ["+getmapusers("ra_san05")+"]"); 
+Pick("","ra_san01","ra_san01","ra_san03","ra_san04","ra_san05");
+end;
+}
+
+if( countitem(2289) < 1 )  goto Faltashit;
+npctalk "Requiere 1 Poo Poo Hat";
+progressbar "ffff00",1;
+specialeffect 567;
+cutin "jpn_mid02",2;
+npctalk "Que asco, conseguiste la shit!...";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Rachel Sanctuary.";
+set #warpratem, 1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los accesos de Rachel Sanctuary",bc_yellow|bc_self;
+delitem 2289,1;
+getitem 7539,5;
+Disp("- Freya's Precint 1 ~ ^0000FFVanberks^000000  ["+getmapusers("ra_san01")+"]:- Freya's Precint 2 ~ ^FF0080Isillas^000000  ["+getmapusers("ra_san02")+"]:- Freya's Precint 3 ~ ^610B0B Hodremlin/Seeker^000000  ["+getmapusers("ra_san03")+"]:- Freya's Precint 4 ~ ^610B5EAgav/Echios^000000  ["+getmapusers("ra_san04")+"]:- Freya's Precint 5 ~ ^FF4000Gloom Undernight^000000  ["+getmapusers("ra_san05")+"]"); 
+Pick("","ra_san01","ra_san01","ra_san03","ra_san04","ra_san05");
+end;
+
+Faltashit:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Poo Poo Hat";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 <ITEM>Poo Poo Hat<INFO>2289</INFO></ITEM>. puedes desbloquear los accesos directos, con ello ganaras 5 Poring Coins.";
+next;
+mes "^0000FFWarp Agent^000000";
+mes "Sin desbloquear solo podras acceder al primer nivel.";
+next;
+setarray @c[2],140,11;
+Disp("- Freya's Precint 1 ~ ^0000FFVanberks^000000  ["+getmapusers("ra_san01")+"]"); Pick("","ra_san01");
+end; 
+
+//-----------------Scaraba Hole----------------------
+
+D34: setarray @c[2],33,213,102,145,104,144;
+if( #warpscarab ){
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Scaraba Dungeon:";
+Disp("- Kamidal Tunnel ~ ^0000FFHorned Scarabs^000000 ["+getmapusers("dic_dun01")+"]:- Scaraba Hall ~ ^FF4000Scaraba Queen^000000  ["+getmapusers("dic_dun02")+"]:- Nightmare Scarab ~ ^FF8000Gold Scarabs^000000  ["+getmapusers("dic_dun03")+"]"); 
+Pick("","dic_dun01","dic_dun02","dic_dun03");
+end;
+}
+
+if( countitem(4114) < 1 )  goto Faltaagrio;
+npctalk "Requiere 1 Argiope Card para desbloquear";
+progressbar "ffff00",1;
+specialeffect 567;
+cutin "jpn_mid02",2;
+npctalk "Que bien, conseguiste mi carta favorita.";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Scaraba Dungeon.";
+set #warpscarab, 1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los confines de Scaraba Dungeon",bc_yellow|bc_self;
+delitem 4114,1;
+getitem 7539,5;
+Disp("- Kamidal Tunnel ~ ^0000FFHorned Scarabs^000000 ["+getmapusers("dic_dun01")+"]:- Scaraba Hall ~ ^FF4000Scaraba Queen^000000  ["+getmapusers("dic_dun02")+"]:- Nightmare Scarab ~ ^FF8000Gold Scarabs^000000  ["+getmapusers("dic_dun03")+"]"); 
+Pick("","dic_dun01","dic_dun02","dic_dun03");
+end;
+
+Faltaagrio:
+cutin "jpn_mid03",2;
+npctalk "Requiere 1 Argiope Card";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 <ITEM>Argiope Card<INFO>4114</INFO></ITEM>. puedes desbloquear todos los accesos, con ello ganaras 5 Poring Coins.";
+next;
+mes "^0000FFWarp Agent^000000";
+mes "Sin desbloquear solo podras acceder al primer nivel.";
+next;
+setarray @c[2],33,213;
+Disp("- Kamidal Tunnel Entrance  ["+getmapusers("dic_dun01")+"]"); Pick("","dic_dun01");
+end; 
+
+//--------------------------------SUNKEN SHIP-----------------------------------------------------
+D36: setarray @c[2],69,24,102,27;
+if( #warpsunk ){
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Sunken Ship:";
+Disp("Sunken Ship 1 ["+getmapusers("treasure01")+"]:Sunken Ship 2 ~ ^3A01DFDrake^000000 ["+getmapusers("treasure02")+"]"); 
+Pick("","treasure01","treasure02");
+end;
+}
+
+if( countitem(7013) < 10 )  goto Faltasunk;
+npctalk "Requiere 10 Coral Reef";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Conseguistes 10 Coral Reef!";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Sunken Ship.";
+set #warpsunk, 1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste todos los mapas de Sunken Ship!",bc_yellow|bc_self;
+delitem 7013,10;
+getitem 7539,5;
+Disp("Sunken Ship 1 ["+getmapusers("treasure01")+"]:Sunken Ship 2 ~ ^3A01DFDrake^000000 ["+getmapusers("treasure02")+"]"); 
+Pick("","treasure01","treasure02");
+end;
+
+Faltasunk:
+cutin "jpn_mid03",2;
+npctalk "Requiere 10 Coral Reef";
+mes "^0000FFAgente Warp^000000";
+mes "Con 10 Coral Reef puedes desbloquear mas accesos del mapa.";
+mes "De momento solo podras acceder a la entrada.";
+next;
+cutin "",255;
+setarray @c[2],69,24;
+Disp("- ^0000FFSunken Ship Entrance^000000 ["+getmapusers("treasure01")+"]"); Pick("","treasure01");
+end;
+
+
+
+
+
+// ---------------THANATHOS DESBLOQUEABLE----------------------------------- 
+D37:
+setarray @c[2],150,39,150,136,220,158,59,143,62,11,89,221,35,166,93,148,29,107,159,138,19,20,130,52,0,0;
+if( #warpthana ){
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Thanatos Tower:";
+Disp("- Level 1 ~ Musseum  ["+getmapusers("tha_t01")+"]:- Level 2 ~ ^DF7401Ancient Mimics^000000  ["+getmapusers("tha_t02")+"]:- Level 3 ~ ^240B3BDeathwords^000000  ["+getmapusers("tha_t03")+"]:- Level 4 ~ ^4000FFElders^000000  ["+getmapusers("tha_t04")+"]:- Level 5 ~ ^3A01DFOwl Dukes^000000  ["+getmapusers("tha_t05")+"]:- Level 6 ~ ^DF0101Owl Barons^000000  ["+getmapusers("tha_t06")+"]:- Level 7 ~ Room of Angel  ["+getmapusers("tha_t07")+"]:- Level 8 ~ Room of Angel 2  ["+getmapusers("tha_t08")+"]:- Level 9 ~ ^FF00BFSolaces^000000  ["+getmapusers("tha_t09")+"]:- Level 10 ~ ^61380BB. of Retribution^000000  ["+getmapusers("tha_t10")+"]:- Level 11 ~ ^FFBF00Mistress of Shelters^000000  ["+getmapusers("tha_t11")+"]:- Level 12 ~ ^FA8258Dame of Sentinels^000000  ["+getmapusers("tha_t12")+"]:- Thanatos Tower ~ ^FE2EC8Thanathos Boss^000000");
+Pick("","tha_t01","tha_t02","tha_t03","tha_t04","tha_t05","tha_t06","tha_t07","tha_t08","tha_t09","tha_t10","tha_t11","tha_t12","thana_boss");
+end;
+}
+
+
+if( countitem(7436) < 1 || countitem(7437) < 1 || countitem(7438) < 1 || countitem(7439) < 1) callsub Faltatafrag;
+cutin "jpn_mid03",2;
+npctalk "Requiere los 4 fragmentos, para desbloquear los pisos de Thanatos Tower.";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "No puede ser.. haz conseguido los 4 fragmentos!.";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Thanatos tower.";
+set #warpthana,1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Increible, "+strcharinfo(0)+" Ha desbloqueado Thanatos Tower.",bc_all,0xFF0040;
+delitem 7436,1;
+delitem 7437,1;
+delitem 7438,1;
+delitem 7439,1;
+getitem 7539,2;
+specialeffect2 18;
+sleep2 300;
+getitem 7539,2;
+specialeffect2 18;
+sleep2 300;
+getitem 7539,2;
+specialeffect2 18;
+sleep2 300;
+getitem 7539,2;
+specialeffect2 18;
+sleep2 300;
+getitem 7539,4;
+specialeffect2 18;
+sleep2 300;
+Disp("- Level 1 ~ Musseum  ["+getmapusers("tha_t01")+"]:- Level 2 ~ ^DF7401Ancient Mimics^000000  ["+getmapusers("tha_t02")+"]:- Level 3 ~ ^240B3BDeathwords^000000  ["+getmapusers("tha_t03")+"]:- Level 4 ~ ^4000FFElders^000000  ["+getmapusers("tha_t04")+"]:- Level 5 ~ ^3A01DFOwl Dukes^000000  ["+getmapusers("tha_t05")+"]:- Level 6 ~ ^DF0101Owl Barons^000000  ["+getmapusers("tha_t06")+"]:- Level 7 ~ Room of Angel  ["+getmapusers("tha_t07")+"]:- Level 8 ~ Room of Angel 2  ["+getmapusers("tha_t08")+"]:- Level 9 ~ ^FF00BFSolaces^000000  ["+getmapusers("tha_t09")+"]:- Level 10 ~ ^61380BB. of Retribution^000000  ["+getmapusers("tha_t10")+"]:- Level 11 ~ ^FFBF00Mistress of Shelters^000000  ["+getmapusers("tha_t11")+"]:- Level 12 ~ ^FA8258Dame of Sentinels^000000  ["+getmapusers("tha_t12")+"]:- Thanatos Tower ~ ^FE2EC8Thanathos Boss^000000");
+Pick("","tha_t01","tha_t02","tha_t03","tha_t04","tha_t05","tha_t06","tha_t07","tha_t08","tha_t09","tha_t10","tha_t11","tha_t12","thana_boss");
+end;
+
+Faltatafrag:
+if( countitem(7430) <1) callsub Faltatafrag2;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Tienes esta quest a medio camino, se han desbloqueado parcialmente algunos portales:";
+specialeffect 567;
+next;
+Disp("- Level 1 ~ Musseum  ["+getmapusers("tha_t01")+"]:- Level 2 ~ ^DF7401Ancient Mimics^000000  ["+getmapusers("tha_t02")+"]:- Level 3 ~ ^240B3BDeathwords^000000  ["+getmapusers("tha_t03")+"]:- Level 4 ~ ^4000FFElders^000000  ["+getmapusers("tha_t04")+"]:- Level 5 ~ ^3A01DFOwl Dukes^000000  ["+getmapusers("tha_t05")+"]:- Level 6 ~ ^DF0101Owl Barons^000000  ["+getmapusers("tha_t06")+"]:- Level 7 ~ Room of Angel  ["+getmapusers("tha_t07")+"]:- Level 8 ~ Room of Angel 2  ["+getmapusers("tha_t08")+"]");
+Pick("","tha_t01","tha_t02","tha_t03","tha_t04","tha_t05","tha_t06","tha_t07","tha_t08");
+end;
+
+
+Faltatafrag2:
+cutin "jpn_mid03",2;
+npctalk "Requiere los 4 fragmentos de Thanatos..";
+mes "^0000FFAgente Warp^000000";
+mes "Con los 4 fragmentos podras desbloquear todos los mapas de Thanatos tower.";
+mes "<ITEM>Fragment of Agony<INFO>7436</INFO></ITEM>.";
+mes "<ITEM>Fragment of Misery<INFO>7437</INFO></ITEM>.";
+mes "<ITEM>Fragment of Hatred<INFO>7438</INFO></ITEM>.";
+mes "<ITEM>Fragment of Despair<INFO>7439</INFO></ITEM>.";
+next;
+cutin "jpn_mid02",2;
+mes "^0000FFAgente Warp^000000";
+mes "Si te resulta imposible, recuerda que siempre puedes abrir cajas a ver si consigues alguna de las piezas!.";
+next;
+mes "^0000FFWarp Agent^000000";
+mes "De momento solo podras acceder a la entrada.";
+next;
+cutin "",255;
+setarray @c[2],140,159;
+Disp("- ^0000FFThanatos tower entrance^000000  ["+getmapusers("tha_t01")+"]"); Pick("","hu_fild01");
+end;
+
+//------------------------TOY FACTORY----------------------------------------------------
+
+D39: setarray @c[2],205,15,129,133;
+if( #warptoyf ){
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Toy Factory:";
+Disp("- Toy Factory 1 ~ ^FF0000Angeling/Chepet^000000  ["+getmapusers("xmas_dun01")+"]:- Toy Factory 2 ~ ^0000FFStormy Knight^000000  ["+getmapusers("xmas_dun02")+"]");
+Pick("","xmas_dun01","xmas_dun02");
+end;
+}
+
+if( countitem(5030) < 1 )  goto Faltapanda;
+npctalk "Requiere 1 Panda Hat";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Conseguistes 1 Panda Hat?";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Toy Factory.";
+set #warptoyf, 1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste los dungeons de Toy Factory!",bc_yellow|bc_self;
+delitem 5030,1;
+getitem 7539,3;
+Disp("- Toy Factory 1 ~ ^FF0000Angeling/Chepet^000000  ["+getmapusers("xmas_dun01")+"]:- Toy Factory 2 ~ ^0000FFStormy Knight^000000  ["+getmapusers("xmas_dun02")+"]");
+Pick("","xmas_dun01","xmas_dun02");
+end;
+
+Faltapanda:
+cutin "jpn_mid03",2;
+npctalk "Requiere 3 Panda Hat";
+mes "^0000FFAgente Warp^000000";
+mes "Con 1 Panda Hat puedes desbloquear los accesos rapidos del dungeon.";
+mes "De momento solo podras acceder a la entrada.";
+next;
+cutin "",255;
+setarray @c[2],143,310;
+Disp("- Toy Factory Warehouse  ["+getmapusers("xmas_dun01")+"]");
+Pick("","xmas");
+end;
+
+
+
+//-------------THOR COMING SOON-----------------------
+D38: setarray @c[2],21,228,75,205,34,272;
+if( #warpthor ){
+specialeffect 567;
+specialeffect 618;
+cutin "jpn_mid02",2;
+npctalk "Warper: Bienvenido otra vez, "+strcharinfo(0)+"!";
+mes "^0000FFWarp Agent^000000";
+mes "Estos son accesos desbloqueados para Thor Volcano:";
+Disp("- Thor Volcano 1 ~ ^FF8000Kasa^000000 ["+getmapusers("thor_v01")+"]:- Thor Volcano 2 ~ ^61380BKnockers^000000 ["+getmapusers("thor_v02")+"]:- Thor Volcano 1 ~ ^FF0000Ifrit^000000 ["+getmapusers("thor_v03")+"]");
+Pick("","thor_v01","thor_v02","thor_v03");
+end;
+}
+
+if( countitem(7122) < 25 )  goto Faltabhair;
+npctalk "Requiere 25 Burning Hairs";
+progressbar "ffff00",1;
+specialeffect 567;
+npctalk "Conseguistes los Burning Hair?";
+specialeffect 618;
+cutin "warper",2;
+mes "^0000FFAgente Warp^000000";
+mes "Haz desbloqueado Thor Volcano.";
+set #warpthor, 1;
+specialeffect2 367;
+specialeffect2 71;
+announce "Warper: Felicidades, desbloqueaste Thor Volcano!",bc_yellow|bc_self;
+delitem 7122,25;
+getitem 7539,3;
+Disp("- Thor Volcano 1 ~ ^FF8000Kasa^000000 ["+getmapusers("thor_v01")+"]:- Thor Volcano 2 ~ ^61380BKnockers^000000 ["+getmapusers("thor_v02")+"]:- Thor Volcano 1 ~ ^FF0000Ifrit^000000 ["+getmapusers("thor_v03")+"]");
+Pick("","thor_v01","thor_v02","thor_v03");
+end;
+
+Faltabhair:
+cutin "jpn_mid03",2;
+npctalk "Requiere 25 Burning Hairs";
+mes "^0000FFAgente Warp^000000";
+mes "Con 25 Burning Hairs puedes desbloquear los accesos rapidos del dungeon.";
+mes "De momento solo podras acceder a la entrada.";
+next;
+cutin "",255;
+setarray @c[2],168,234;
+Disp("- Thor Volcano Entrance ["+getmapusers("thor_v01")+"]"); 
+Pick("","ve_fild03");	
+end;
+
+
+// --------------------------------------------------
+	Instances:
+// --------------------------------------------------
+menu	
+
+
+"Bakonawa Lake",I1, 
+"Bangungot Hospital 2F",I2, 
+"Buwaya Cave",I3,
+"Endless Tower",I6,
+"Malangdo Culvert",I12,
+"Nidhoggur's Nest",I13,
+"Octopus Cave",I14,
+"Sara Memory",I18,
+"Sealed Shrine",I19;
+
+I1:
+if( #warpmalaya ){
+Go("ma_scene01",172,175);
+end;
+}
+mes "^0000FFAgente Warp^000000";
+cutin "jpn_mid03",2;
+mes "No haz desbloqueado Malaya Fields, no te puedo dejar en Ma_Scene!.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Cuando desbloquees Malaya Fields, podras acceder directamente a la instance aqui.!";
+cutin "",255;
+end;
+
+I2: Go("malaya",58,76);
+
+I3: 
+if( #warpmalaya ){
+Go("ma_fild02",316,317);
+end;
+}
+mes "^0000FFAgente Warp^000000";
+cutin "jpn_mid03",2;
+mes "No haz desbloqueado Malaya Fields, no te puedo dejar en Buwaya Cave!.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Cuando desbloquees Malaya Fields, podras acceder directamente a la instance aqui.!";
+cutin "",255;
+end;
+
+
+I12: Go("mal_in01",164,21);
+I13: Go("nyd_dun02",95,193);
+
+I14: 
+if( #warpmaldun ){
+Go("mal_dun01",152,230);
+end;
+}
+mes "^0000FFAgente Warp^000000";
+cutin "jpn_mid03",2;
+mes "No haz desbloqueado Malangdo Dungeons, no te puedo dejar en la Octopus Cave!.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Cuando desbloquees Malangdo dungeon, podras acceder directamente a la instance aqui.!";
+cutin "",255;
+end;
+
+//==================ENDLESS WARP OPTIONS==========================
+I6: 
+menu
+"Tower Protection Stone",endent,
+"Floor #100 Lucid Crystal",crys,
+"Naght Sieger Trial",nacht;
+
+endent:
+Go("e_tower",72,112);
+end;
+
+crys:
+mes "^0000FFAgente Warp^000000";
+mes "Este warp solo te lo recomiendo si cumples al menos una de estas 2 condiciones:";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Condicion #1:";
+mes "Entweihen ha muerto y aun tienes el memorial activo! Hablaste con Lucid Crystal por primera vez pero fuiste reenviado a Alberta";
+mes "DEBES VOLVER A HABLAR CON LUCID CRYSTAL..y no quieres volver a recorrer los 100 pisos. puedes usarlo.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Condicion #2:";
+mes "Haz muerto en el intento de derrotar a Entweihen! Todavia tienes el Memorial Activo, el Monstruo sigue en la Azotea y no quieres perder tiempo volviendo a subir 100 pisos,";
+mes "si es asi...Pues vuelve de inmediato usando este warp!.";
+next;
+menu
+
+"Ir al Piso 100 con Lucid Crystal",lucid,
+"Cancelar",novoy;
+
+lucid:
+Go("5@tower",103,108);
+end;
+
+novoy:
+cutin "",255;
+end;
+
+nacht:
+mes "^0000FFAgente Warp^000000";
+mes "Esta opcion es para aquellos que tienen la instance activa!";
+mes "Si el monstruo Naght Sieger sigue activo y te ha matado, puedes usar este warp para volver inmediatamente.";
+next;
+mes "^0000FFAgente Warp^000000";
+mes "Si no tienes instance activa, si no haz hablado con Lucid Crystal por segunda vez luego de derrotar a Entweihen";
+mes "no tendra sentido ir... pues los NPC no te abriran sus dialogos.!";
+mes "ahora dale a next y seras enviado.";
+next;
+menu
+
+"Ir al Piso de Naght Sieger",naghtpiso,
+"Cancelar",cancel;
+
+naghtpiso:
+Go("6@tower",32,89);
+end;
+
+cancel:
+cutin "",255;
+end;
+//====================FIN DE ENDLESS==============================
+
+
+I18: Go("dali",133,108);
+	
+
+I19: Go("monk_test",306,143);
+
+
+
+
+	
+// --------------------------------------------------
+	Special:
+// --------------------------------------------------
+menu	
+"- ^088A08Mercado NPC Basico^000000 ["+getmapusers("ayothaya")+"]",S1, 
+"- ^BF00FFKafra Mall^000000 ["+getmapusers("itemmall")+"]",S2,
+"- ^FF0080Poring Special Zone!^000000 ["+getmapusers("poring_w01")+"]",S5,
+"- ^DF7401Zona Quest #1^000000 ["+getmapusers("florian")+"]",S3,
+"- ^DF7401Zona Quest #2^000000 ["+getmapusers("celestiaj")+"]",S4;
+
+
+S1:
+Go("ayothaya",151,166);
+
+S2:
+Go("itemmall",179,56);
+
+S3: 
+Go("florian",171,112);
+
+S4: 
+Go("celestiaj",68,39);
+
+S5: 
+Go("poring_w01",110,137);
+
+
+
+OnInit:
+	.Satan_Morroc = true;	//	false will enable moc_fild 4,5,6,8,9,10,14,15 while disable moc_fild 20,21,22 Default is true.
+	.OnlyFirstFld = false;	//	true will teleport to the first level of the Fields  Default is false.
+	.OnlyFirstDun = false;	//	true will teleport to the first level of the Dungeons  Default is false.
+}
+
+// --------------------------------------------------
+//	Duplicates:
+// --------------------------------------------------
+alb2trea,57,70,6	duplicate(Warper)	Warper#tre	429
+alberta,32,240,4	duplicate(Warper)	Warper#alb	429
+aldebaran,145,118,4	duplicate(Warper)	Warper#alde	429
+amatsu,117,153,4	duplicate(Warper)	Warper#ama	429
+ayothaya,212,169,4	duplicate(Warper)	Warper#ayo	429
+brasilis,200,222,4	duplicate(Warper)	Warper#bra	429
+dewata,207,182,4	duplicate(Warper)	Warper#dew	429
+comodo,192,163,4	duplicate(Warper)	Warper#com	429
+einbech,142,246,4	duplicate(Warper)	Warper#einbe	429
+einbroch,69,202,4	duplicate(Warper)	Warper#einbr	429
+gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	429
+geffen,124,72,4	duplicate(Warper)	Warper#gef	429
+glast_01,372,308,4	duplicate(Warper)	Warper#glh	429
+gonryun,162,122,4	duplicate(Warper)	Warper#gon	429
+hugel,101,158,4	duplicate(Warper)	Warper#hug	429
+izlude,133,150,4	duplicate(Warper)	Warper#izl	429
+jawaii,253,138,4	duplicate(Warper)	Warper#jaw	429
+lighthalzen,165,96,4	duplicate(Warper)	Warper#lhz	429
+louyang,221,100,4	duplicate(Warper)	Warper#lou	429
+malaya,217,210,4	duplicate(Warper)	Warper#ma	429
+manuk,274,146,6	duplicate(Warper)	Warper#man	429
+//mid_camp,216,288,4	duplicate(Warper)	Warper#mid	429
+mjolnir_02,85,364,4	duplicate(Warper)	Warper#mjo	429
+morocc,163,103,4	duplicate(Warper)	Warper#mor	429
+moscovia,229,191,4	duplicate(Warper)	Warper#mos	429
+//nameless_n,259,213,4	duplicate(Warper)	Warper#nam	429
+niflheim,205,179,4	duplicate(Warper)	Warper#nif	429
+pay_arche,44,136,6	duplicate(Warper)	Warper#arc	429
+payon,177,106,4	duplicate(Warper)	Warper#pay	429
+prontera,159,192,4	duplicate(Warper)	Warper#prt	429
+prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	429
+rachel,135,114,4	duplicate(Warper)	Warper#rac	429
+splendide,205,153,4	duplicate(Warper)	Warper#spl	429
+thor_camp,249,76,4	duplicate(Warper)	Warper#thor	429
+umbala,106,150,3	duplicate(Warper)	Warper#umb	429
+veins,222,134,4	duplicate(Warper)	Warper#ve	429
+xmas,143,134,6	duplicate(Warper)	Warper#xmas	429
+yuno,161,176,4	duplicate(Warper)	Warper#yuno	429
+mid_camp,207,234,6	duplicate(Warper)	Warper#midc	429
+
+
+// --------------------------------------------------
+//	Duplicates (Renewal):
+// --------------------------------------------------
+
+
+dicastes01,194,191,6	duplicate(Warper)	Warper#dic	429
+ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	811
+lasagna,208,188,6	duplicate(Warper)	Warper#las	429
+malangdo,169,134,6	duplicate(Warper)	Warper#mal	429
+
+mora,57,152,4	duplicate(Warper)	Warper#mora	811
